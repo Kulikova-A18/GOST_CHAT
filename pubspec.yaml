@@ -10,6 +10,13 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  
+  window_size:
+    git:
+      url: git://github.com/google/flutter-desktop-embedding.git
+      path: plugins/window_size
+  
+  animated_text_kit: ^4.2.1
       
   cupertino_icons: ^1.0.2
   
@@ -25,5 +32,10 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
-
-  
+    # To add assets to your application, add an assets section, like this:
+  assets:
+     - images/
+  fonts:
+    - family: Source_Code_Pro     
+      fonts:
+        - asset: assets/PressStart2P-Regular.ttf

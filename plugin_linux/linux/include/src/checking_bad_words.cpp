@@ -78,7 +78,7 @@ string list_words()
 }
 
 extern "C" __attribute__((visibility("default"))) __attribute__((used))
-const char *_check(char *a)
+int _check(char *a)
 {
     string list = list_words();
     string text = a;
@@ -130,7 +130,7 @@ const char *_check(char *a)
         {
             if (array_list[j] == array[i])
             {
-                array[i] = "***";
+                array[i] = "[x.x.x.x]";
                 //cout << "***\n";
             }
         }
@@ -145,9 +145,11 @@ const char *_check(char *a)
     }
     
     cout << _result << endl;
-
+    string _text = "echo " + _result + " | socat - udp-sendto:127.0.0.1:55555";
+    system(_text.c_str());
     //const char cstr = _result.c_str();
-    return _result.c_str();
+    //return _result.c_str();
+    return 0;
 }
 
 /*
