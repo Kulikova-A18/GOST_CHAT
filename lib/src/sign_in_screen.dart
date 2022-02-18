@@ -94,7 +94,7 @@ class SignInPageState extends State<SignInPage> {
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Text("Sign in to \n\tGOST CHAT",
+                                  Text("Sign in to \nGOST CHAT",
                                       style: const TextStyle(
                                           color:
                                               Color.fromARGB(255, 88, 12, 104),

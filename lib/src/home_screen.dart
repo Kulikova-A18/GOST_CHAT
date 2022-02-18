@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import '../dynamic_library/dynamic_library_linux.dart';
 
 import 'package:flutter/material.dart';
@@ -6,6 +8,9 @@ import 'dart:ui';
 import 'dart:async';
 import 'dart:io';
 import 'dart:convert';
+
+import 'package:path/path.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
   runApp(HomePage());
@@ -29,10 +34,43 @@ class HomePageState extends State<HomePage> {
   List<String> litems = [];
   ScrollController _scrollController = ScrollController();
 
+  var nameUser = "";
+
   @override
   void initState() {
     _RawDatagramSocket();
     super.initState();
+  }
+
+  final List<IconData> iconData = <IconData>[
+    Icons.airplanemode_active,
+    Icons.beach_access,
+    Icons.directions_run,
+    Icons.public,
+    Icons.insert_emoticon,
+    Icons.directions_car,
+    Icons.brightness_5,
+    Icons.pets
+  ];
+  final Random r = Random();
+  Icon randomIcon2() => Icon(iconData[r.nextInt(iconData.length)]);
+
+  late SharedPreferences prefs;
+  fun_file_write(var _text) async {
+    prefs = await SharedPreferences.getInstance();
+    prefs.setString('fname', _text);
+
+    fun_file_read();
+  }
+
+  fun_file_read() async {
+    prefs = await SharedPreferences.getInstance();
+    setState(() {
+      var a = prefs.getString('fname');
+      print("received ${prefs.getString('fname')}");
+      nameUser = "alexey";
+      litems.add(a!);
+    });
   }
 
   // ----------- udp -----------
@@ -47,8 +85,9 @@ class HomePageState extends State<HomePage> {
       udpSocket.listen((e) {
         Datagram? dg = udpSocket.receive();
         if (dg != null) {
-          print("received ${String.fromCharCodes(dg.data)}");
-          setState(() => litems.add(String.fromCharCodes(dg.data)));
+          fun_file_write(String.fromCharCodes(dg.data));
+          //print("received ${String.fromCharCodes(dg.data)}");
+          //setState(() => litems.add(String.fromCharCodes(dg.data)));
         }
       });
     });
@@ -121,10 +160,21 @@ class HomePageState extends State<HomePage> {
                                               mainAxisSize: MainAxisSize.min,
                                               children: <Widget>[
                                                 Container(width: 10),
-                                                const Icon(
-                                                  Icons.people,
-                                                  color: Colors.black,
-                                                  size: 50.0,
+                                                Column(
+                                                  children: [
+                                                    const SizedBox(
+                                                      height: 30.0,
+                                                    ),
+                                                    randomIcon2(),
+                                                    /*
+                                                    const Icon(
+                                                      Icons.people,
+                                                      color: Colors.black,
+                                                      size: 50.0,
+                                                    ),*/
+                                                    Text(nameUser,
+                                                        style: _TextStyle),
+                                                  ],
                                                 ),
                                                 const SizedBox(
                                                   width: 10.0,

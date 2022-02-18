@@ -23,6 +23,7 @@ dependencies:
   plugin_global:
     path: plugin_global
   ffi: ^1.1.2
+  shared_preferences: ^2.0.13
 
 dev_dependencies:
   flutter_test:

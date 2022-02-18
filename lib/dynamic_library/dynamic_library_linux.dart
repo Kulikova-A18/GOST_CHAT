@@ -6,12 +6,14 @@ import 'dart:ffi';
 import 'dart:io';
 import 'dart:ffi' as ffi;
 
+typedef _Func = ffi.Pointer<Utf8> Function();
+
 final DynamicLibrary plugin_linuxLib = Platform.isAndroid
     ? DynamicLibrary.open('libplugin_linux.so')
     : DynamicLibrary.process();
 
 final int Function(Pointer<Utf8> str) fun_check = plugin_linuxLib
-    .lookup<NativeFunction<Int8 Function(ffi.Pointer<Utf8>)>>("_check")
+    .lookup<NativeFunction<Int32 Function(ffi.Pointer<Utf8>)>>("_check")
     .asFunction();
 
 final int Function(int x, int y) nativeAdd = plugin_linuxLib
