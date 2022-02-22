@@ -39,6 +39,31 @@ class SignInPageState extends State<SignInPage> {
     );
   }
 
+  var message = "";
+
+  void _fun_sign(var argv1, var argv2) {
+    int a = fun_sign_in_linux(StringUtf8Pointer(argv1).toNativeUtf8(),
+        StringUtf8Pointer(argv2).toNativeUtf8());
+    switch (a) {
+      case 0:
+        message = "successfully";
+        performNavigator_HomePage();
+        break;
+      case 1:
+        message = "fields are empty";
+        break;
+      case 2:
+        message = "login field is empty";
+        break;
+      case 3:
+        message = "password field is empty";
+        break;
+      default:
+        break;
+    }
+    simpleDialog(context);
+  }
+
 // simpleDialog(context);
   Future simpleDialog(BuildContext context) {
     return showDialog(
@@ -46,7 +71,7 @@ class SignInPageState extends State<SignInPage> {
       builder: (BuildContext context) {
         return AlertDialog(
           //title: Text('Title'),
-          content: Text("fun_alert"),
+          content: Text(message),
           actions: <Widget>[
             FlatButton(
               child: Text('Ok'),
@@ -209,7 +234,8 @@ class SignInPageState extends State<SignInPage> {
                                                     BorderRadius.circular(20.0),
                                               ))),
                                           onPressed: () {
-                                            performNavigator_HomePage();
+                                            _fun_sign(_loginController.text,
+                                                _passwordController.text);
                                           }))
                                 ],
                               ),

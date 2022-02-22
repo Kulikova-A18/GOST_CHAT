@@ -11,8 +11,11 @@ add_library(${PLUGIN_NAME} SHARED
 
   #src/checking_bad_words.cpp
   "include/src/checking_bad_words.cpp"
-  "include/src/native_add.cpp"
+  "include/src/checking_json.cpp"
+  "include/src/logger.cpp"
+  "include/src/sign_in.cpp"
 )
+
 apply_standard_settings(${PLUGIN_NAME})
 set_target_properties(${PLUGIN_NAME} PROPERTIES
   CXX_VISIBILITY_PRESET hidden)

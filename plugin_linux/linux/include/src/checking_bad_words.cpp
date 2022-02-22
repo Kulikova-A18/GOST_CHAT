@@ -1,18 +1,5 @@
-#define _CRT_SECURE_NO_WARNINGS
-
-#include <sstream>
-#include <string>
-#include <fstream>
-#include <ctime>
-
-//#include <Windows.h> // Обязательно для SetConsoleCP() и SetConsoleOutputCP()
-#include <clocale> //Обязательно для функции setlocale()
-//#include <conio.h>
-#include <stdio.h>
-
-#include <vector>
-
-#include <iostream>
+#include "../gost_chat.h"
+#include "../export.h"
 
 using namespace std;
 
