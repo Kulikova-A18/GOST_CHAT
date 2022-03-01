@@ -10,6 +10,8 @@ list of return:
 1 - all variables are empty
 */
 
+int find(std::string argv1, std::string argv2);
+
 LIBRARY_API
 int _sign_in_linux (char *argv1, char *argv2) {
     //_logger_void = "_sign_in_linux()";

@@ -93,7 +93,7 @@ class SignInPageState extends State<SignInPage> {
           return DecoratedBox(
             decoration: const BoxDecoration(
               image: DecorationImage(
-                  image: AssetImage("images/ai_image_gen_with_woombo_art.jpg"),
+                  image: AssetImage("images/oranzhevyy_fon_2.jpg"),
                   fit: BoxFit.cover),
             ),
             child: Center(
@@ -113,32 +113,36 @@ class SignInPageState extends State<SignInPage> {
                             Container(
                               padding: const EdgeInsets.symmetric(
                                   vertical: 30.0, horizontal: 25.0),
-                              width: 400,
-                              height: 500,
+                              width: 600,
+                              height: 550,
                               color: Colors.white.withOpacity(0.9),
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Text("Sign in to \nGOST CHAT",
+                                  Image.asset(
+                                    "images/sfu.png",
+                                    //width: 900,
+                                    height: 180,
+                                  ),
+                                  Text("Sign in",
                                       style: const TextStyle(
-                                          color:
-                                              Color.fromARGB(255, 88, 12, 104),
+                                          color: Colors.black,
                                           fontSize: 35,
                                           fontFamily: 'Source_Code_Pro')),
-                                  const SizedBox(
-                                    height: 40,
+                                  SizedBox(
+                                    height: 30,
                                   ),
-                                  Text(
+                                  /*Text(
                                     "Login",
                                     style: _TextStyle,
-                                  ),
+                                  ),*/
                                   Container(
-                                    width: 350,
-                                    height: 60,
+                                    width: 450,
+                                    height: 70,
                                     decoration: BoxDecoration(
                                       border: Border.all(
                                         color: Colors.black,
-                                        width: 5,
+                                        width: 1,
                                       ),
                                     ),
                                     child: Column(
@@ -149,11 +153,12 @@ class SignInPageState extends State<SignInPage> {
                                             style: _TextStyle,
                                             controller: _loginController,
                                             decoration: const InputDecoration(
+                                              hintText: "Login",
                                               border: InputBorder.none,
                                             ),
                                           ),
                                           height: 50,
-                                          width: 300.0,
+                                          width: 400,
                                           padding:
                                               const EdgeInsets.only(top: 10.0),
                                         ),
@@ -161,19 +166,19 @@ class SignInPageState extends State<SignInPage> {
                                     ),
                                   ),
                                   const SizedBox(
-                                    height: 20,
+                                    height: 10,
                                   ),
-                                  Text(
+                                  /*Text(
                                     "Password",
                                     style: _TextStyle,
-                                  ),
+                                  ),*/
                                   Container(
-                                    width: 350,
+                                    width: 450,
                                     height: 70,
                                     decoration: BoxDecoration(
                                       border: Border.all(
                                         color: Colors.black,
-                                        width: 5,
+                                        width: 1,
                                       ),
                                     ),
                                     child: Column(
@@ -185,6 +190,7 @@ class SignInPageState extends State<SignInPage> {
                                             controller: _passwordController,
                                             obscureText: !_passwordVisible,
                                             decoration: InputDecoration(
+                                              hintText: "Password",
                                               border: InputBorder.none,
                                               suffixIcon: IconButton(
                                                 icon: Icon(
@@ -192,7 +198,7 @@ class SignInPageState extends State<SignInPage> {
                                                       ? Icons.mood_bad
                                                       : Icons.mood,
                                                   color: Colors.black,
-                                                  size: 25,
+                                                  size: 35,
                                                 ),
                                                 onPressed: () {
                                                   // Update the state i.e. toogle the state of passwordVisible variable
@@ -205,7 +211,7 @@ class SignInPageState extends State<SignInPage> {
                                             ),
                                           ),
                                           height: 55,
-                                          width: 300,
+                                          width: 400,
                                           padding:
                                               const EdgeInsets.only(top: 10.0),
                                         ),
@@ -226,7 +232,7 @@ class SignInPageState extends State<SignInPage> {
                                                   MaterialStateProperty.all<
                                                           Color>(
                                                       Color.fromARGB(
-                                                          255, 88, 12, 104)),
+                                                          255, 255, 81, 0)),
                                               shape: MaterialStateProperty.all<
                                                       RoundedRectangleBorder>(
                                                   RoundedRectangleBorder(

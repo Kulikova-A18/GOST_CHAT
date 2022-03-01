@@ -9,12 +9,15 @@ set(PLUGIN_NAME "plugin_linux_plugin")
 add_library(${PLUGIN_NAME} SHARED
   "plugin_linux_plugin.cc"
 
-  #src/checking_bad_words.cpp
-  "include/src/checking_bad_words.cpp"
-  "include/src/checking_json.cpp"
   "include/src/logger.cpp"
   "include/src/sign_in.cpp"
+  "include/src/create_data.cpp"
+  "include/src/checking_json.cpp"
+  "include/src/checking_bad_words.cpp"
 )
+
+#set_property(TARGET ${PLUGIN_NAME} PROPERTY CXX_STANDARD 17)
+#set_property(TARGET ${PLUGIN_NAME} PROPERTY CXX_STANDARD_REQUIRED ON)
 
 apply_standard_settings(${PLUGIN_NAME})
 set_target_properties(${PLUGIN_NAME} PROPERTIES

@@ -27,3 +27,14 @@ int find(std::string argv1, std::string argv2);
 int _cleaning_logger_linux();
 const std::string currentDateTime();
 int _logger_linux(char* argv1, char* argv2);
+
+int _create_data_linux();
+void create_Moiseev();
+void create_Zimin();
+void create_Guseva();
+void create_Bykova();
+void create_Romanov();
+void create_Kulikova();
+void create_Doronina();
+void create_Doronin();
+void create_Kryukova();

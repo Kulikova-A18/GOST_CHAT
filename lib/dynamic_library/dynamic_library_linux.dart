@@ -6,8 +6,6 @@ import 'dart:ffi';
 import 'dart:io';
 import 'dart:ffi' as ffi;
 
-typedef _Func = ffi.Pointer<Utf8> Function();
-
 final DynamicLibrary plugin_linuxLib = Platform.isAndroid
     ? DynamicLibrary.open('libplugin_linux.so')
     : DynamicLibrary.process();

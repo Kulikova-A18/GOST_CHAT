@@ -39,4 +39,4 @@ flutter:
   fonts:
     - family: Source_Code_Pro     
       fonts:
-        - asset: assets/PressStart2P-Regular.ttf
+        - asset: assets/DotGothic16-Regular.ttf

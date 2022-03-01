@@ -5,7 +5,7 @@ using namespace std;
 
 using json = nlohmann::json;
 
-namespace ns {
+namespace ns_checking {
     struct person {
         int id; // id employee
         std::string surname; // surname employee
@@ -43,9 +43,6 @@ namespace ns {
 
     }
 }
-
-int _logger_linux(char* argv1, char* argv2);
-
 std::string ReplaceString(
     std::string subject,
     const std::string& search,
@@ -65,6 +62,13 @@ void entrance_audit(
 {
     std::string file = "entrance.json";
     std::string line, text;
+
+
+    std::ifstream _in(file);
+    if (!_in.is_open()) {
+        std::ofstream o(file);
+        o.close();
+    }
 
     std::ifstream in(file);
     if (in.is_open()) {
@@ -110,6 +114,12 @@ void entrance_person_audit(
     std::string file = "entrance_person.json";
     std::string line, text;
 
+    std::ifstream _in(file);
+    if (!_in.is_open()) {
+        std::ofstream o(file);
+        o.close();
+    }
+
     std::ifstream in(file);
     if (in.is_open()) {
         while (getline(in, line)) {
@@ -148,34 +158,27 @@ void entrance_person_audit(
 std::string find_json(std::string _login, std::string _password) {
     const char* list_person [] = 
     {
-        "plugin_linux/linux/include/src/data/data_persons/data_persons/Moiseev.json" ,
-        "plugin_linux/linux/include/src/data/data_persons/data_persons/Zimin.json",
-        "plugin_linux/linux/include/src/data/data_persons/data_persons/Isaev.json",
-        "plugin_linux/linux/include/src/data/data_persons/data_persons/Naumova.json",
-        "plugin_linux/linux/include/src/data/data_persons/data_persons/Osipov.json",
-        "plugin_linux/linux/include/src/data/data_persons/data_persons/Seliverstov.json",
-        "plugin_linux/linux/include/src/data/data_persons/data_persons/Myshkin.json",
-        "plugin_linux/linux/include/src/data/data_persons/data_persons/Vasiliev.json",
-        "plugin_linux/linux/include/src/data/data_persons/data_persons/Zuev.json",
-        "plugin_linux/linux/include/src/data/data_persons/data_persons/Pavlov.json",
-        "plugin_linux/linux/include/src/data/data_persons/data_persons/Mukhina.json",
-        "plugin_linux/linux/include/src/data/data_persons/data_persons/Rybakova.json ",
-        "plugin_linux/linux/include/src/data/data_persons/data_persons/Kryukova.json",
-        "plugin_linux/linux/include/src/data/data_persons/data_persons/Doronina.json",
-        "plugin_linux/linux/include/src/data/data_persons/data_persons/Guseva.json",
-        "plugin_linux/linux/include/src/data/data_persons/data_persons/Bykova.json",          
-        "plugin_linux/linux/include/src/data/data_persons/data_persons/Romanov.json"
+        "Moiseev.json" ,
+        "Zimin.json",
+        "Isaev.json",
+        "Guseva.json",
+        "Bykova.json",          
+        "Romanov.json",
+        "Kulikova.json",
+        "Doronina.json",
+        "Doronin.json",
+        "Kryukova.json"
     };
 
     json j;
     std::string username = "";
     std::string message = "";
 
-    for (int i = 0; i < 17; i++) {
+    for (int i = 0; i < 8; i++) {
         std::ifstream in(list_person[i]);
         if (in.is_open()) {
             in >> j;
-            auto conversion = j.get<ns::person>();
+            auto conversion = j.get<ns_checking::person>();
             if (conversion.login == _login && conversion.password == _password) {
                 username = conversion.name + conversion.surname;
                 message = "successful login";
@@ -193,10 +196,12 @@ std::string find_json(std::string _login, std::string _password) {
 }
 
 int find(std::string argv1, std::string argv2) {
+    _create_data_linux();
+
     // argv1 - login
     // argv2 - password
     std::string line, text;
-    std::string file = "plugin_linux/linux/include/src/data/data.json";
+    std::string file = "data.json";
     std::string message = "";
 
     std::ifstream in(file);
