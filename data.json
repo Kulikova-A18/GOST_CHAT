@@ -1,0 +1,325 @@
+{
+    "id": 0,
+    "login": "moiseev@gost_chat.ru",
+    "name": "Samuil",
+    "password": "2CEBsDWZpJui0t",
+    "patronymic": "Yulianovich",
+    "position": "tester",
+    "surname": "Moiseev",
+    "year of birth": "01/07/1995"
+}{
+    "id": 1,
+    "login": "zimin@gost_chat.ru",
+    "name": "Varlaam",
+    "password": "td5EdLseze2r9y",
+    "patronymic": "Danilovich",
+    "position": "developer",
+    "surname": "Zimin",
+    "year of birth": "11/07/1990"
+},{
+    "id": 2,
+    "login": "guseva@gost_chat.ru",
+    "name": "Eris",
+    "password": "UQMdK2KMidq9wi",
+    "patronymic": "Davidovna",
+    "position": "technical manager",
+    "surname": "Guseva",
+    "year of birth": "17/01/1998"
+},{
+    "id": 3,
+    "login": "bykova@gost_chat.ru",
+    "name": "Faya",
+    "password": "BprrD0jmhHMEwE",
+    "patronymic": "Stanislavovna",
+    "position": "developer",
+    "surname": "Bykova",
+    "year of birth": "05/10/1993"
+},{
+    "id": 4,
+    "login": "romanov@gost_chat.ru",
+    "name": "Akim",
+    "password": "tUf99axPMTvBhB",
+    "patronymic": "Aleksandrovich",
+    "position": "developer",
+    "surname": "Romanov",
+    "year of birth": "05/10/1999"
+},{
+    "id": 5,
+    "login": "kulikova@gost_chat.ru",
+    "name": "Alyona",
+    "password": "BprrD7jmhHEEwE",
+    "patronymic": "Vladimirovna",
+    "position": "developer",
+    "surname": "Kulikova",
+    "year of birth": "10/04/2000"
+},{
+    "id": 6,
+    "login": "dorina@gost_chat.ru",
+    "name": "Sasha",
+    "password": "Bpr1D7jmhHEEwE",
+    "patronymic": "Vladimirovna",
+    "position": "tester",
+    "surname": "Doronina",
+    "year of birth": "1/04/1997"
+},{
+    "id": 7,
+    "login": "dorin@gost_chat.ru",
+    "name": "Maxim",
+    "password": "Bp12D7jmhHEEwE",
+    "patronymic": "Vladimirov",
+    "position": "team leader",
+    "surname": "Doronin",
+    "year of birth": "1/04/1997"
+},{
+    "id": 8,
+    "login": "kulikova@gost_chat.ru",
+    "name": "Alyona",
+    "password": "Bp17D7jmhHEEwE",
+    "patronymic": "Vladimirovna",
+    "position": "developer",
+    "surname": "Kryukova",
+    "year of birth": "10/04/2000"
+},{
+    "id": 0,
+    "login": "moiseev@gost_chat.ru",
+    "name": "Samuil",
+    "password": "2CEBsDWZpJui0t",
+    "patronymic": "Yulianovich",
+    "position": "tester",
+    "surname": "Moiseev",
+    "year of birth": "01/07/1995"
+}{
+    "id": 1,
+    "login": "zimin@gost_chat.ru",
+    "name": "Varlaam",
+    "password": "td5EdLseze2r9y",
+    "patronymic": "Danilovich",
+    "position": "developer",
+    "surname": "Zimin",
+    "year of birth": "11/07/1990"
+},{
+    "id": 2,
+    "login": "guseva@gost_chat.ru",
+    "name": "Eris",
+    "password": "UQMdK2KMidq9wi",
+    "patronymic": "Davidovna",
+    "position": "technical manager",
+    "surname": "Guseva",
+    "year of birth": "17/01/1998"
+},{
+    "id": 3,
+    "login": "bykova@gost_chat.ru",
+    "name": "Faya",
+    "password": "BprrD0jmhHMEwE",
+    "patronymic": "Stanislavovna",
+    "position": "developer",
+    "surname": "Bykova",
+    "year of birth": "05/10/1993"
+},{
+    "id": 4,
+    "login": "romanov@gost_chat.ru",
+    "name": "Akim",
+    "password": "tUf99axPMTvBhB",
+    "patronymic": "Aleksandrovich",
+    "position": "developer",
+    "surname": "Romanov",
+    "year of birth": "05/10/1999"
+},{
+    "id": 5,
+    "login": "kulikova@gost_chat.ru",
+    "name": "Alyona",
+    "password": "BprrD7jmhHEEwE",
+    "patronymic": "Vladimirovna",
+    "position": "developer",
+    "surname": "Kulikova",
+    "year of birth": "10/04/2000"
+},{
+    "id": 6,
+    "login": "dorina@gost_chat.ru",
+    "name": "Sasha",
+    "password": "Bpr1D7jmhHEEwE",
+    "patronymic": "Vladimirovna",
+    "position": "tester",
+    "surname": "Doronina",
+    "year of birth": "1/04/1997"
+},{
+    "id": 7,
+    "login": "dorin@gost_chat.ru",
+    "name": "Maxim",
+    "password": "Bp12D7jmhHEEwE",
+    "patronymic": "Vladimirov",
+    "position": "team leader",
+    "surname": "Doronin",
+    "year of birth": "1/04/1997"
+},{
+    "id": 8,
+    "login": "kulikova@gost_chat.ru",
+    "name": "Alyona",
+    "password": "Bp17D7jmhHEEwE",
+    "patronymic": "Vladimirovna",
+    "position": "developer",
+    "surname": "Kryukova",
+    "year of birth": "10/04/2000"
+},{
+    "id": 0,
+    "login": "moiseev@gost_chat.ru",
+    "name": "Samuil",
+    "password": "2CEBsDWZpJui0t",
+    "patronymic": "Yulianovich",
+    "position": "tester",
+    "surname": "Moiseev",
+    "year of birth": "01/07/1995"
+}{
+    "id": 1,
+    "login": "zimin@gost_chat.ru",
+    "name": "Varlaam",
+    "password": "td5EdLseze2r9y",
+    "patronymic": "Danilovich",
+    "position": "developer",
+    "surname": "Zimin",
+    "year of birth": "11/07/1990"
+},{
+    "id": 2,
+    "login": "guseva@gost_chat.ru",
+    "name": "Eris",
+    "password": "UQMdK2KMidq9wi",
+    "patronymic": "Davidovna",
+    "position": "technical manager",
+    "surname": "Guseva",
+    "year of birth": "17/01/1998"
+},{
+    "id": 3,
+    "login": "bykova@gost_chat.ru",
+    "name": "Faya",
+    "password": "BprrD0jmhHMEwE",
+    "patronymic": "Stanislavovna",
+    "position": "developer",
+    "surname": "Bykova",
+    "year of birth": "05/10/1993"
+},{
+    "id": 4,
+    "login": "romanov@gost_chat.ru",
+    "name": "Akim",
+    "password": "tUf99axPMTvBhB",
+    "patronymic": "Aleksandrovich",
+    "position": "developer",
+    "surname": "Romanov",
+    "year of birth": "05/10/1999"
+},{
+    "id": 5,
+    "login": "kulikova@gost_chat.ru",
+    "name": "Alyona",
+    "password": "BprrD7jmhHEEwE",
+    "patronymic": "Vladimirovna",
+    "position": "developer",
+    "surname": "Kulikova",
+    "year of birth": "10/04/2000"
+},{
+    "id": 6,
+    "login": "dorina@gost_chat.ru",
+    "name": "Sasha",
+    "password": "Bpr1D7jmhHEEwE",
+    "patronymic": "Vladimirovna",
+    "position": "tester",
+    "surname": "Doronina",
+    "year of birth": "1/04/1997"
+},{
+    "id": 7,
+    "login": "dorin@gost_chat.ru",
+    "name": "Maxim",
+    "password": "Bp12D7jmhHEEwE",
+    "patronymic": "Vladimirov",
+    "position": "team leader",
+    "surname": "Doronin",
+    "year of birth": "1/04/1997"
+},{
+    "id": 8,
+    "login": "kulikova@gost_chat.ru",
+    "name": "Alyona",
+    "password": "Bp17D7jmhHEEwE",
+    "patronymic": "Vladimirovna",
+    "position": "developer",
+    "surname": "Kryukova",
+    "year of birth": "10/04/2000"
+},{
+    "id": 0,
+    "login": "moiseev@gost_chat.ru",
+    "name": "Samuil",
+    "password": "2CEBsDWZpJui0t",
+    "patronymic": "Yulianovich",
+    "position": "tester",
+    "surname": "Moiseev",
+    "year of birth": "01/07/1995"
+}{
+    "id": 1,
+    "login": "zimin@gost_chat.ru",
+    "name": "Varlaam",
+    "password": "td5EdLseze2r9y",
+    "patronymic": "Danilovich",
+    "position": "developer",
+    "surname": "Zimin",
+    "year of birth": "11/07/1990"
+},{
+    "id": 2,
+    "login": "guseva@gost_chat.ru",
+    "name": "Eris",
+    "password": "UQMdK2KMidq9wi",
+    "patronymic": "Davidovna",
+    "position": "technical manager",
+    "surname": "Guseva",
+    "year of birth": "17/01/1998"
+},{
+    "id": 3,
+    "login": "bykova@gost_chat.ru",
+    "name": "Faya",
+    "password": "BprrD0jmhHMEwE",
+    "patronymic": "Stanislavovna",
+    "position": "developer",
+    "surname": "Bykova",
+    "year of birth": "05/10/1993"
+},{
+    "id": 4,
+    "login": "romanov@gost_chat.ru",
+    "name": "Akim",
+    "password": "tUf99axPMTvBhB",
+    "patronymic": "Aleksandrovich",
+    "position": "developer",
+    "surname": "Romanov",
+    "year of birth": "05/10/1999"
+},{
+    "id": 5,
+    "login": "kulikova@gost_chat.ru",
+    "name": "Alyona",
+    "password": "BprrD7jmhHEEwE",
+    "patronymic": "Vladimirovna",
+    "position": "developer",
+    "surname": "Kulikova",
+    "year of birth": "10/04/2000"
+},{
+    "id": 6,
+    "login": "dorina@gost_chat.ru",
+    "name": "Sasha",
+    "password": "Bpr1D7jmhHEEwE",
+    "patronymic": "Vladimirovna",
+    "position": "tester",
+    "surname": "Doronina",
+    "year of birth": "1/04/1997"
+},{
+    "id": 7,
+    "login": "dorin@gost_chat.ru",
+    "name": "Maxim",
+    "password": "Bp12D7jmhHEEwE",
+    "patronymic": "Vladimirov",
+    "position": "team leader",
+    "surname": "Doronin",
+    "year of birth": "1/04/1997"
+},{
+    "id": 8,
+    "login": "kulikova@gost_chat.ru",
+    "name": "Alyona",
+    "password": "Bp17D7jmhHEEwE",
+    "patronymic": "Vladimirovna",
+    "position": "developer",
+    "surname": "Kryukova",
+    "year of birth": "10/04/2000"
+},

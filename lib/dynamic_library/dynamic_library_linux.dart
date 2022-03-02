@@ -21,3 +21,7 @@ final int Function(Pointer<Utf8> str1, Pointer<Utf8> str2) fun_sign_in_linux =
                 Int32 Function(
                     ffi.Pointer<Utf8>, ffi.Pointer<Utf8>)>>("_sign_in_linux")
         .asFunction();
+
+final Pointer<Utf8> Function() fun_print_user_linux = plugin_linuxLib
+    .lookupFunction<Pointer<Utf8> Function(), Pointer<Utf8> Function()>(
+        '_print_user_linux');

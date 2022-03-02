@@ -151,13 +151,11 @@ class HomePageState extends State<HomePage> {
                                       const SizedBox(
                                         height: 30.0,
                                       ),
-                                      randomIcon2(),
-                                      /*
-                                                    const Icon(
-                                                      Icons.people,
-                                                      color: Colors.black,
-                                                      size: 50.0,
-                                                    ),*/
+                                      const Icon(
+                                        Icons.people,
+                                        color: Colors.black,
+                                        size: 50.0,
+                                      ),
                                       Text(nameUser, style: _TextStyle),
                                     ],
                                   ),

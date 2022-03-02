@@ -174,6 +174,8 @@ std::string find_json(std::string _login, std::string _password) {
     std::string username = "";
     std::string message = "";
 
+    std::string _username = "";
+    
     for (int i = 0; i < 8; i++) {
         std::ifstream in(list_person[i]);
         if (in.is_open()) {
@@ -181,6 +183,13 @@ std::string find_json(std::string _login, std::string _password) {
             auto conversion = j.get<ns_checking::person>();
             if (conversion.login == _login && conversion.password == _password) {
                 username = conversion.name + conversion.surname;
+
+                _username = conversion.name + " " + conversion.surname;
+
+                std::ofstream o("user.txt");
+                o << _username;
+                o.close();
+
                 message = "successful login";
                 entrance_person_audit(conversion.id, conversion.surname, conversion.name, conversion.patronymic, message);
             }
@@ -194,6 +203,7 @@ std::string find_json(std::string _login, std::string _password) {
 
     return username;
 }
+
 
 int find(std::string argv1, std::string argv2) {
     _create_data_linux();
@@ -216,6 +226,7 @@ int find(std::string argv1, std::string argv2) {
         && text.find(argv2) != std::string::npos) 
     {
         find_json(argv1, argv2);
+        
         message = "successfully";
         entrance_audit(argv1, argv2, message);
     }
@@ -223,6 +234,7 @@ int find(std::string argv1, std::string argv2) {
         && text.find(argv2) == std::string::npos)
     {
         find_json(argv1, argv2);
+
         message = "not successful";
         entrance_audit(argv1, argv2, message);
         return 1;
@@ -236,3 +248,23 @@ int find(std::string argv1, std::string argv2) {
     }
     return 0;
 }
+
+LIBRARY_API
+char *_print_user_linux() {
+    std::string line, text;
+    
+    std::ifstream in("user.txt");
+     if (in.is_open()) {
+        while (getline(in, line)) {
+            text += line;
+        }
+    }
+    in.close();
+    
+    char* c = const_cast<char*>(text.c_str());
+    char* result_argv = (char*) malloc(strlen(c)+1); 
+    strcpy(result_argv,c);
+    
+    return result_argv;
+}
+

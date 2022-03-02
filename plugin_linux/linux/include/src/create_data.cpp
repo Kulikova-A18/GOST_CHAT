@@ -131,7 +131,7 @@ void create_Doronin() {
     d.close();
 }
 void create_Kryukova() {
-    ns_create::person p {8,"Kryukova", "Alyona","Vladimirovna","10/04/2000","developer","kulikova@gost_chat.ru","Bp17D7jmhHEEwE"};
+    ns_create::person p {8,"Kryukova", "Alyona","Vladimirovna","10/04/2000","developer","kryukova@gost_chat.ru","Bp17D7jmhHEEwE"};
     json j = p;
     std::ofstream o("Kryukova.json");
     o << std::setw(4) << j;
