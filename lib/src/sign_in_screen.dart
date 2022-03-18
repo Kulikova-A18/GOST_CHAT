@@ -53,10 +53,7 @@ class SignInPageState extends State<SignInPage> {
         message = "fields are empty";
         break;
       case 2:
-        message = "login field is empty";
-        break;
-      case 3:
-        message = "password field is empty";
+        message = "unsuccessful";
         break;
       default:
         break;
@@ -71,10 +68,16 @@ class SignInPageState extends State<SignInPage> {
       builder: (BuildContext context) {
         return AlertDialog(
           //title: Text('Title'),
-          content: Text(message),
+          content: Text(
+            message,
+            style: _TextStyle,
+          ),
           actions: <Widget>[
             FlatButton(
-              child: Text('Ok'),
+              child: Text(
+                'Ok',
+                style: _TextStyle,
+              ),
               onPressed: () {
                 Navigator.of(context).pop();
               },

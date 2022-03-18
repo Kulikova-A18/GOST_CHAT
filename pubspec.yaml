@@ -39,4 +39,4 @@ flutter:
   fonts:
     - family: Source_Code_Pro     
       fonts:
-        - asset: assets/DotGothic16-Regular.ttf
+        - asset: assets/Jost-ExtraLight.ttf

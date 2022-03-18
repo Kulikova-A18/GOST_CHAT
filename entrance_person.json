@@ -1,9 +1,0 @@
-[{    "id": 5,    "message": "Invalid password",    "name": "Alyona",    "patronymic": "Vladimirovna",    "surname": "Kulikova"}, 
-{
-    "id": 3,
-    "message": "successful login",
-    "name": "Faya",
-    "patronymic": "Stanislavovna",
-    "surname": "Bykova"
-},
-]

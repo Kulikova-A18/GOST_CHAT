@@ -1,52 +1,46 @@
-/* echo "hello" | socat - udp-sendto:127.0.0.1:55555 */
+/*
+import 'dart:math';
 
-import 'dart:async';
+import '../dynamic_library/dynamic_library_linux.dart';
 
 import 'package:flutter/material.dart';
+import 'package:ffi/ffi.dart';
+import 'dart:ui';
+import 'dart:async';
 import 'dart:io';
 import 'dart:convert';
-import 'package:ffi/ffi.dart';
 
-/* 
-$ flutter pub add window_size 
-$ flutter pub get
-*/
-import 'package:window_size/window_size.dart';
+import 'package:path/path.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-import 'dynamic_library/dynamic_library_linux.dart';
+import 'package:flutter/cupertino.dart';
+
+// !!!!!
+import 'widgets/about.dart';
 
 void main() {
-  WidgetsFlutterBinding.ensureInitialized();
-  /*if (Platform.isLinux) {
-    setWindowMaxSize(const Size(520, 800));
-    setWindowMinSize(const Size(520, 800));
-    /*
-    Future<Null>.delayed(Duration(seconds: 1), () {
-        setWindowFrame(Rect.fromCenter(center: Offset(1000, 500), width: 600, height: 1000));
-    });*/
-  }*/
-  runApp(new MyApp());
+  runApp(HomePage());
 }
 
-// void main() => runApp(new MyApp());
-
-class MyApp extends StatelessWidget {
+class HomePage extends StatefulWidget {
   @override
-  Widget build(BuildContext ctxt) {
-    return new MaterialApp(
-      home: new ListDisplay(),
-    );
-  }
+  createState() => HomePageState();
 }
 
-class ListDisplay extends StatefulWidget {
-  @override
-  State createState() => new DyanmicList();
-}
+class HomePageState extends State<HomePage> {
+  final _TextStyle = const TextStyle(
+    color: Colors.black,
+    fontSize: 10,
+    fontFamily: 'Source_Code_Pro',
+    height: 1.5,
+  );
 
-class DyanmicList extends State<ListDisplay> {
+  late bool _passwordVisible = false;
+
   List<String> litems = [];
   ScrollController _scrollController = ScrollController();
+
+  var nameUser = "";
 
   @override
   void initState() {
@@ -54,21 +48,42 @@ class DyanmicList extends State<ListDisplay> {
     super.initState();
   }
 
+  final List<IconData> iconData = <IconData>[
+    Icons.airplanemode_active,
+    Icons.beach_access,
+    Icons.directions_run,
+    Icons.public,
+    Icons.insert_emoticon,
+    Icons.directions_car,
+    Icons.brightness_5,
+    Icons.pets
+  ];
+  final Random r = Random();
+  Icon randomIcon2() => Icon(iconData[r.nextInt(iconData.length)]);
+
+  late SharedPreferences prefs;
+  fun_file_write(var _text) async {
+    prefs = await SharedPreferences.getInstance();
+    prefs.setString('fname', _text);
+
+    fun_file_read();
+  }
+
+  fun_file_read() async {
+    prefs = await SharedPreferences.getInstance();
+    setState(() {
+      var a = prefs.getString('fname');
+      print("received ${prefs.getString('fname')}");
+      nameUser = "alexey";
+      litems.add(a!);
+    });
+  }
+
   // ----------- udp -----------
   TextEditingController _messageController = TextEditingController();
 
   var DESTINATION_ADDRESS = InternetAddress("255.255.255.255");
 
-/*
-  void _Send_RawDatagramSocket(var _message) {
-    RawDatagramSocket.bind(InternetAddress.anyIPv4, 55555)
-        .then((RawDatagramSocket udpSocket) {
-      udpSocket.broadcastEnabled = true;
-      udpSocket.send(
-          _message.codeUnits, InternetAddress('255.255.255.255'), 55555);
-    });
-  }
-*/
   void _RawDatagramSocket() {
     RawDatagramSocket.bind(InternetAddress.anyIPv4, 55555)
         .then((RawDatagramSocket udpSocket) {
@@ -76,92 +91,159 @@ class DyanmicList extends State<ListDisplay> {
       udpSocket.listen((e) {
         Datagram? dg = udpSocket.receive();
         if (dg != null) {
-          print("received ${String.fromCharCodes(dg.data)}");
-          setState(() => litems.add(String.fromCharCodes(dg.data)));
+          fun_file_write(String.fromCharCodes(dg.data));
+          //print("received ${String.fromCharCodes(dg.data)}");
+          //setState(() => litems.add(String.fromCharCodes(dg.data)));
         }
       });
     });
   }
 
+// simpleDialog(context);
+  Future simpleDialog(BuildContext context) {
+    return showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          //title: Text('Title'),
+          content: Text("fun_alert"),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('Ok'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
-  Widget build(BuildContext ctxt) {
-    return Scaffold(
-        appBar: AppBar(
-          title: const Text("Dynamic Demo"),
-        ),
-        body: Column(
-          children: <Widget>[
-            Expanded(
-                child: ListView.builder(
-                    itemCount: litems.length,
-                    itemExtent: 90.0,
-                    itemBuilder: (BuildContext ctxt, int Index) {
-                      return Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.min,
-                        children: <Widget>[
-                          Container(width: 15),
-                          const Icon(
-                            Icons.people,
-                            color: Colors.black,
-                            size: 50.0,
-                          ),
-                          const SizedBox(
-                            width: 10.0,
-                          ),
-                          Container(
-                              margin: const EdgeInsets.all(10),
+  Widget build(BuildContext context) {
+    return MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: Scaffold(
+            appBar: AppBar(
+              elevation: 0.0,
+              backgroundColor: Color.fromARGB(255, 255, 81, 0),
+              title: const Text('GOST CHAR'),
+            ),
+            body: LayoutBuilder(builder: (context, constraints) {
+              return Container(
+                color: Colors.white.withOpacity(0.9),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      width: 59,
+                      height: 50,
+                      child: Row(
+                        children: [Text("data")],
+                      ),
+                    ),
+                    Row(
+                      children: [Text("data")],
+                    ),
+                    buildContent(),
+                    Expanded(
+                        child: ListView.builder(
+                            itemCount: litems.length,
+                            itemExtent: 120.0,
+                            itemBuilder: (BuildContext ctxt, int Index) {
+                              return Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                mainAxisSize: MainAxisSize.min,
+                                children: <Widget>[
+                                  Container(width: 10),
+                                  Column(
+                                    children: [
+                                      const SizedBox(
+                                        height: 30.0,
+                                      ),
+                                      const Icon(
+                                        Icons.people,
+                                        color: Colors.black,
+                                        size: 50.0,
+                                      ),
+                                      Text(nameUser, style: _TextStyle),
+                                    ],
+                                  ),
+                                  const SizedBox(
+                                    width: 10.0,
+                                  ),
+                                  Container(
+                                      margin: const EdgeInsets.all(10),
+                                      decoration: BoxDecoration(
+                                        border: Border.all(
+                                            width: 5, color: Colors.black),
+                                        //color: Colors.grey,
+                                      ),
+                                      width: 700,
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Container(
+                                            height: 2,
+                                          ),
+                                          Flexible(
+                                            child: Text(litems[Index],
+                                                style: _TextStyle),
+                                          ),
+                                        ],
+                                      ))
+                                ],
+                              );
+                            })),
+                    Container(
+                        width: 900.0,
+                        child: Row(
+                          children: [
+                            Container(width: 200),
+                            Container(
+                              width: 350,
+                              height: 60,
                               decoration: BoxDecoration(
-                                border: Border.all(color: Colors.grey),
-                                //color: Colors.grey,
-                                borderRadius: BorderRadius.circular(12),
+                                border: Border.all(
+                                  color: Colors.black,
+                                  width: 5,
+                                ),
                               ),
-                              width: 370,
                               child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Container(height: 7),
-                                  Flexible(
-                                    child: Text(litems[Index],
-                                        style: const TextStyle(
-                                            color: Colors.black, fontSize: 20)),
+                                  Container(
+                                    child: TextFormField(
+                                      autofocus: true,
+                                      style: _TextStyle,
+                                      controller: _messageController,
+                                      decoration: const InputDecoration(
+                                        border: InputBorder.none,
+                                      ),
+                                    ),
+                                    height: 50,
+                                    width: 300.0,
+                                    padding: const EdgeInsets.only(top: 10.0),
                                   ),
                                 ],
-                              ))
-                        ],
-                      );
-                    })),
-            Container(
-                width: 500.0,
-                child: Row(
-                  children: [
-                    Container(width: 15),
-                    Container(
-                      width: 390,
-                      child: TextFormField(
-                          controller: _messageController,
-                          decoration: const InputDecoration(
-                            border: OutlineInputBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(12))),
-                            hintText: "send message",
-                          )),
-                    ),
-                    Container(width: 15),
-                    IconButton(
-                        onPressed: () {
-                          var a = _messageController.text;
-                          var check_a =
-                              fun_check(StringUtf8Pointer(a).toNativeUtf8());
-
-                          //_Send_RawDatagramSocket(check_a);
-                          //_Send_RawDatagramSocket("_text");
-                        },
-                        icon: const Icon(Icons.send)),
+                              ),
+                            ),
+                            Container(width: 15),
+                            IconButton(
+                              onPressed: () {
+                                var a = _messageController.text;
+                                fun_check(StringUtf8Pointer(a).toNativeUtf8());
+                              },
+                              icon: const Icon(Icons.arrow_forward_ios),
+                              iconSize: 50,
+                            ),
+                          ],
+                        )),
                   ],
-                )),
-            Container(height: 20),
-          ],
-        ));
+                ),
+              );
+            })));
   }
 }
+*/

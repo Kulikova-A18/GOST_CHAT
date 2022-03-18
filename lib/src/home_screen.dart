@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import '../dynamic_library/dynamic_library_linux.dart';
+import "authorization_screen.dart";
 
 import 'package:flutter/material.dart';
 import 'package:ffi/ffi.dart';
@@ -29,7 +30,7 @@ class HomePage extends StatefulWidget {
 class HomePageState extends State<HomePage> {
   final _TextStyle = const TextStyle(
     color: Colors.black,
-    fontSize: 10,
+    fontSize: 18,
     fontFamily: 'Source_Code_Pro',
     height: 1.5,
   );
@@ -40,6 +41,14 @@ class HomePageState extends State<HomePage> {
   ScrollController _scrollController = ScrollController();
 
   var nameUser = "";
+
+  void performNavigator_AuthorizationPage() {
+    runApp(
+      MaterialApp(
+        home: AuthorizationPage(),
+      ),
+    );
+  }
 
   @override
   void initState() {
@@ -119,6 +128,31 @@ class HomePageState extends State<HomePage> {
     );
   }
 
+  final controller = ScrollController();
+
+  List<String> peopleName = [
+    "Kulikova Alyona",
+    "Maximov Oleg",
+    "Konovalov Grigory",
+    "Kiseleva Amelia",
+    "Voronin Konstantin",
+    "Kasatkina Amelia",
+    "Homeland Matvey",
+    "Glebov Oleg",
+    "Grigoriev Oleg",
+    "Pavlov Matvey",
+    "Antipova Grigory",
+    "Ilina Daria",
+    "Klimov Sergey",
+    "Kulikov Nikita",
+    "Ilkina Grigory",
+    "Markov Sergey",
+    "Popova Daria",
+    "Sidorov Dmitry",
+    "Siporov Grigory",
+    "Bogdanova Amelia",
+  ];
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -128,6 +162,18 @@ class HomePageState extends State<HomePage> {
               elevation: 0.0,
               backgroundColor: Color.fromARGB(255, 255, 81, 0),
               title: const Text('GOST CHAR'),
+              actions: <Widget>[
+                IconButton(
+                  icon: Icon(Icons.keyboard_return),
+                  onPressed: () {
+                    performNavigator_AuthorizationPage();
+                  },
+                ),
+                IconButton(
+                  icon: Icon(Icons.exit_to_app),
+                  onPressed: () {},
+                ),
+              ],
             ),
             body: LayoutBuilder(builder: (context, constraints) {
               return Container(
@@ -135,69 +181,124 @@ class HomePageState extends State<HomePage> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    buildContent(),
-                    Expanded(
-                        child: ListView.builder(
-                            itemCount: litems.length,
-                            itemExtent: 120.0,
-                            itemBuilder: (BuildContext ctxt, int Index) {
-                              return Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                mainAxisSize: MainAxisSize.min,
-                                children: <Widget>[
-                                  Container(width: 10),
-                                  Column(
-                                    children: [
-                                      const SizedBox(
-                                        height: 30.0,
-                                      ),
-                                      const Icon(
-                                        Icons.people,
-                                        color: Colors.black,
-                                        size: 50.0,
-                                      ),
-                                      Text(nameUser, style: _TextStyle),
-                                    ],
-                                  ),
-                                  const SizedBox(
-                                    width: 10.0,
-                                  ),
-                                  Container(
-                                      margin: const EdgeInsets.all(10),
-                                      decoration: BoxDecoration(
-                                        border: Border.all(
-                                            width: 5, color: Colors.black),
-                                        //color: Colors.grey,
-                                      ),
-                                      width: 700,
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
+                    SizedBox(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                            width: 660,
+                            height: 540,
+                            color: Colors.red.withOpacity(0.9),
+                            child: Expanded(
+                                child: ListView.builder(
+                                    itemCount: litems.length,
+                                    itemExtent: 120.0,
+                                    itemBuilder:
+                                        (BuildContext ctxt, int Index) {
+                                      return Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: <Widget>[
+                                          Container(width: 10),
+                                          Column(
+                                            children: [
+                                              const SizedBox(
+                                                height: 30.0,
+                                              ),
+                                              const Icon(
+                                                Icons.people,
+                                                color: Colors.black,
+                                                size: 50.0,
+                                              ),
+                                              Text(nameUser, style: _TextStyle),
+                                            ],
+                                          ),
+                                          const SizedBox(
+                                            width: 10.0,
+                                          ),
                                           Container(
-                                            height: 2,
-                                          ),
-                                          Flexible(
-                                            child: Text(litems[Index],
-                                                style: _TextStyle),
-                                          ),
+                                              margin: const EdgeInsets.all(10),
+                                              decoration: BoxDecoration(
+                                                border: Border.all(
+                                                    width: 2,
+                                                    color: Colors.black),
+                                                //color: Colors.grey,
+                                              ),
+                                              width: 560,
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Container(
+                                                    height: 2,
+                                                  ),
+                                                  Flexible(
+                                                    child: Text(litems[Index],
+                                                        style: _TextStyle),
+                                                  ),
+                                                ],
+                                              ))
                                         ],
-                                      ))
-                                ],
-                              );
-                            })),
+                                      );
+                                    })),
+                          ),
+                          Column(
+                            children: [
+                              buildContent(),
+                              Container(
+                                  width: 260,
+                                  height: 400,
+                                  child: Expanded(
+                                    child: ListView.builder(
+                                      controller: controller,
+                                      itemBuilder: (context, index) {
+                                        return Container(
+                                            //padding: EdgeInsets.symmetric(
+                                            //vertical: 10),
+                                            child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            ListTile(
+                                              leading: FittedBox(
+                                                fit: BoxFit.fill,
+                                                child: Row(
+                                                  children: <Widget>[
+                                                    Icon(
+                                                      Icons.people,
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                              title: Text(peopleName[index],
+                                                  style: _TextStyle),
+                                            ),
+                                          ],
+                                        ));
+                                      },
+                                      itemCount: peopleName.length,
+                                    ),
+                                  )),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
                     Container(
-                        width: 900.0,
+                        color:
+                            Color.fromARGB(255, 219, 219, 219).withOpacity(0.9),
+                        width: 1000.0,
                         child: Row(
                           children: [
-                            Container(width: 200),
+                            Container(width: 100),
                             Container(
-                              width: 350,
+                              width: 750,
                               height: 60,
                               decoration: BoxDecoration(
                                 border: Border.all(
                                   color: Colors.black,
-                                  width: 5,
+                                  width: 2,
                                 ),
                               ),
                               child: Column(
@@ -212,7 +313,7 @@ class HomePageState extends State<HomePage> {
                                       ),
                                     ),
                                     height: 50,
-                                    width: 300.0,
+                                    width: 700.0,
                                     padding: const EdgeInsets.only(top: 10.0),
                                   ),
                                 ],

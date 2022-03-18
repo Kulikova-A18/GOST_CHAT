@@ -15,7 +15,7 @@ Widget buildContent() {
   return Container(
       //color: Color.fromARGB(255, 255, 81, 0),
       alignment: Alignment.center,
-      padding: EdgeInsets.all(10),
+      padding: EdgeInsets.all(8),
       child: Column(
         children: [
           CircleAvatar(
