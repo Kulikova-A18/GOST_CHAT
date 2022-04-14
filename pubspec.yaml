@@ -36,7 +36,11 @@ flutter:
     # To add assets to your application, add an assets section, like this:
   assets:
      - images/
+     #- images/logo.png
   fonts:
     - family: Source_Code_Pro     
       fonts:
         - asset: assets/Jost-ExtraLight.ttf
+    - family: Code_Auth     
+      fonts:
+        - asset: assets/stencil.ttf

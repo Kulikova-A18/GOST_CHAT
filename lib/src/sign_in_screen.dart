@@ -16,20 +16,12 @@ class SignInPage extends StatefulWidget {
 }
 
 class SignInPageState extends State<SignInPage> {
-  final TextEditingController _loginController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
-
-  final _TextStyle = const TextStyle(
-      color: Colors.black, fontSize: 30, fontFamily: 'Source_Code_Pro');
-  final _TextStyle_Button = const TextStyle(
-      color: Colors.white, fontSize: 30, fontFamily: 'Source_Code_Pro');
-  late bool _passwordVisible = false;
-
   @override
   void initState() {
-    //printController();
     super.initState();
   }
+
+  late bool _passwordVisible = false;
 
   void performNavigator_HomePage() {
     runApp(
@@ -39,228 +31,148 @@ class SignInPageState extends State<SignInPage> {
     );
   }
 
-  var message = "";
-
-  void _fun_sign(var argv1, var argv2) {
-    int a = fun_sign_in_linux(StringUtf8Pointer(argv1).toNativeUtf8(),
-        StringUtf8Pointer(argv2).toNativeUtf8());
-    switch (a) {
-      case 0:
-        message = "successfully";
-        performNavigator_HomePage();
-        break;
-      case 1:
-        message = "fields are empty";
-        break;
-      case 2:
-        message = "unsuccessful";
-        break;
-      default:
-        break;
-    }
-    simpleDialog(context);
-  }
-
-// simpleDialog(context);
-  Future simpleDialog(BuildContext context) {
-    return showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          //title: Text('Title'),
-          content: Text(
-            message,
-            style: _TextStyle,
-          ),
-          actions: <Widget>[
-            FlatButton(
-              child: Text(
-                'Ok',
-                style: _TextStyle,
-              ),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: Scaffold(body: LayoutBuilder(builder: (context, constraints) {
-          return DecoratedBox(
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                  image: AssetImage("images/oranzhevyy_fon_2.jpg"),
-                  fit: BoxFit.cover),
+      home: Scaffold(
+        body: Stack(
+          children: [
+            Container(
+              width: 1400,
+              height: 900,
+              color: Colors.white,
             ),
-            child: Center(
-              child: BackdropFilter(
-                filter: ImageFilter.blur(sigmaX: 1.0, sigmaY: 1.0),
+            Align(
+                alignment: const FractionalOffset(0.0, 0.3),
                 child: Container(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                        height: 50,
+                  height: 1400,
+                  width: 1400,
+                  color: Colors.white,
+                )),
+            Align(
+                alignment: const FractionalOffset(0.5, 0.7),
+                child: Container(
+                  padding: const EdgeInsets.symmetric(
+                      vertical: 30.0, horizontal: 25.0),
+                  width: 650,
+                  height: 600,
+                  color: Colors.white,
+                  child: Column(children: [
+                    Text("Добро пожаловать \n       в ГОСТ ЧАТ".toUpperCase(),
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 60,
+                            fontFamily: 'Code_Auth')),
+                    const SizedBox(height: 30),
+                    Container(
+                      width: 450,
+                      height: 80,
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: Colors.black,
+                          width: 1,
+                        ),
+                        borderRadius: BorderRadius.all(Radius.circular(30.0)),
                       ),
-                      SizedBox(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Container(
-                              padding: const EdgeInsets.symmetric(
-                                  vertical: 30.0, horizontal: 25.0),
-                              width: 600,
-                              height: 550,
-                              color: Colors.white.withOpacity(0.9),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Image.asset(
-                                    "images/sfu.png",
-                                    //width: 900,
-                                    height: 180,
-                                  ),
-                                  Text("Sign in",
-                                      style: const TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 35,
-                                          fontFamily: 'Source_Code_Pro')),
-                                  SizedBox(
-                                    height: 30,
-                                  ),
-                                  /*Text(
-                                    "Login",
-                                    style: _TextStyle,
-                                  ),*/
-                                  Container(
-                                    width: 450,
-                                    height: 70,
-                                    decoration: BoxDecoration(
-                                      border: Border.all(
-                                        color: Colors.black,
-                                        width: 1,
-                                      ),
-                                    ),
-                                    child: Column(
-                                      children: [
-                                        Container(
-                                          child: TextFormField(
-                                            autofocus: true,
-                                            style: _TextStyle,
-                                            controller: _loginController,
-                                            decoration: const InputDecoration(
-                                              hintText: "Login",
-                                              border: InputBorder.none,
-                                            ),
-                                          ),
-                                          height: 50,
-                                          width: 400,
-                                          padding:
-                                              const EdgeInsets.only(top: 10.0),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    height: 10,
-                                  ),
-                                  /*Text(
-                                    "Password",
-                                    style: _TextStyle,
-                                  ),*/
-                                  Container(
-                                    width: 450,
-                                    height: 70,
-                                    decoration: BoxDecoration(
-                                      border: Border.all(
-                                        color: Colors.black,
-                                        width: 1,
-                                      ),
-                                    ),
-                                    child: Column(
-                                      children: [
-                                        Container(
-                                          child: TextFormField(
-                                            autofocus: true,
-                                            style: _TextStyle,
-                                            controller: _passwordController,
-                                            obscureText: !_passwordVisible,
-                                            decoration: InputDecoration(
-                                              hintText: "Password",
-                                              border: InputBorder.none,
-                                              suffixIcon: IconButton(
-                                                icon: Icon(
-                                                  _passwordVisible
-                                                      ? Icons.mood_bad
-                                                      : Icons.mood,
-                                                  color: Colors.black,
-                                                  size: 35,
-                                                ),
-                                                onPressed: () {
-                                                  // Update the state i.e. toogle the state of passwordVisible variable
-                                                  setState(() {
-                                                    _passwordVisible =
-                                                        !_passwordVisible;
-                                                  });
-                                                },
-                                              ),
-                                            ),
-                                          ),
-                                          height: 55,
-                                          width: 400,
-                                          padding:
-                                              const EdgeInsets.only(top: 10.0),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    height: 20,
-                                  ),
-                                  Container(
-                                      height: 50,
-                                      padding: const EdgeInsets.all(0.0),
-                                      child: ElevatedButton(
-                                          child: Text("Sign in".toUpperCase(),
-                                              style: _TextStyle_Button),
-                                          style: ButtonStyle(
-                                              backgroundColor:
-                                                  MaterialStateProperty.all<
-                                                          Color>(
-                                                      Color.fromARGB(
-                                                          255, 255, 81, 0)),
-                                              shape: MaterialStateProperty.all<
-                                                      RoundedRectangleBorder>(
-                                                  RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(20.0),
-                                              ))),
-                                          onPressed: () {
-                                            _fun_sign(_loginController.text,
-                                                _passwordController.text);
-                                          }))
-                                ],
+                      child: Column(
+                        children: [
+                          Container(
+                            color: Colors.white,
+                            child: TextFormField(
+                              autofocus: true,
+                              //controller: _loginController,
+                              decoration: const InputDecoration(
+                                hintText: "логин",
+                                border: InputBorder.none,
                               ),
                             ),
-                          ],
+                            height: 50,
+                            width: 400,
+                            padding: const EdgeInsets.only(top: 20.0),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Container(
+                      width: 450,
+                      height: 80,
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: Colors.black,
+                          width: 1,
                         ),
+                        borderRadius: BorderRadius.all(Radius.circular(30.0)),
                       ),
-                      Container(
+                      child: Column(
+                        children: [
+                          Container(
+                            child: TextFormField(
+                              autofocus: true,
+                              //controller: _passwordController,
+                              obscureText: !_passwordVisible,
+                              decoration: InputDecoration(
+                                hintText: "пароль",
+                                border: InputBorder.none,
+                                suffixIcon: IconButton(
+                                  icon: Icon(
+                                    _passwordVisible
+                                        ? Icons.lock_open
+                                        : Icons.lock_outline,
+                                    color: Colors.black,
+                                    size: 25,
+                                  ),
+                                  onPressed: () {
+                                    // Update the state i.e. toogle the state of passwordVisible variable
+                                    setState(() {
+                                      _passwordVisible = !_passwordVisible;
+                                    });
+                                  },
+                                ),
+                              ),
+                            ),
+                            height: 55,
+                            width: 400,
+                            padding: const EdgeInsets.only(top: 20.0),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Container(
                         height: 50,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          );
-        })));
+                        width: 250,
+                        padding: const EdgeInsets.all(0.0),
+                        child: ElevatedButton(
+                            child: Text(
+                              "Войти".toUpperCase(),
+                              style: const TextStyle(
+                                fontSize: 50,
+                                color: Colors.white,
+                                fontFamily: 'Code_Auth',
+                              ),
+                            ),
+                            style: ButtonStyle(
+                                backgroundColor:
+                                    MaterialStateProperty.all<Color>(
+                                        Color.fromARGB(255, 255, 81, 0)),
+                                shape: MaterialStateProperty.all<
+                                        RoundedRectangleBorder>(
+                                    RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(20.0),
+                                ))),
+                            onPressed: () {
+                              performNavigator_HomePage();
+                            }))
+                  ]),
+                )),
+          ],
+        ),
+      ),
+    );
   }
 }

@@ -1,4 +1,5 @@
 import '../dynamic_library/dynamic_library_linux.dart';
+import 'widgets/ClipPath.dart';
 
 import 'sign_in_screen.dart';
 
@@ -19,12 +20,7 @@ class AuthorizationPage extends StatefulWidget {
 }
 
 class AuthorizationPageState extends State<AuthorizationPage> {
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  void performNavigator_SignInPage() {
+  void performNavigator_SignPage() {
     runApp(
       MaterialApp(
         home: SignInPage(),
@@ -32,71 +28,59 @@ class AuthorizationPageState extends State<AuthorizationPage> {
     );
   }
 
+//child: Image.asset("images/5d3d40efed8e2.jpg", fit: BoxFit.fill),
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: Scaffold(body: LayoutBuilder(builder: (context, constraints) {
-          return DecoratedBox(
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                  image: AssetImage("images/oranzhevyy_fon.jpg"),
-                  fit: BoxFit.cover),
-            ),
-            child: Center(
-              child: BackdropFilter(
-                filter: ImageFilter.blur(sigmaX: 1.0, sigmaY: 1.0),
+      home: Scaffold(
+        body: Stack(
+          children: [
+            ClipPath(
+                clipper: ClipPathClass_Auth(),
                 child: Container(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                        width: 300,
-                        height: 50,
-                      ),
-                      SizedBox(
-                          child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Container(
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 30.0, horizontal: 25.0),
-                            width: 900,
-                            height: 450,
-                            //color: Colors.white.withOpacity(0.9),
-                            child: Column(children: [
-                              Container(
-                                width: 800,
-                                height: 380,
-                                child: Column(children: [
-                                  ElevatedButton(
-                                      child: Image.asset(
-                                        "images/logo.gif",
-                                        width: 900,
-                                        height: 380,
-                                      ),
-                                      style: ElevatedButton.styleFrom(
-                                        primary: Colors.white,
-                                      ),
-                                      onPressed: () {
-                                        performNavigator_SignInPage();
-                                      })
-                                ]),
-                              ),
-                            ]),
+                  height: 700,
+                  width: 1400,
+                  child:
+                      Image.asset("images/5d3d40efed8e2.jpg", fit: BoxFit.fill),
+                )),
+            Align(
+                alignment: FractionalOffset(0.97, 0.85),
+                child: Text('ГОСТ ЧАТ'.toUpperCase(),
+                    textDirection: TextDirection.ltr, // текст слева направо
+                    style: const TextStyle(
+                      fontSize: 200,
+                      color: Colors.white,
+                      fontFamily: 'Code_Auth',
+                      height: 1.5,
+                    ))),
+            Align(
+                alignment: FractionalOffset(0.1, 0.9),
+                child: Container(
+                    height: 90,
+                    width: 450,
+                    padding: const EdgeInsets.all(0.0),
+                    child: ElevatedButton(
+                        child: Text(
+                          "начать".toUpperCase(),
+                          style: const TextStyle(
+                            fontSize: 70,
+                            color: Colors.white,
+                            fontFamily: 'Code_Auth',
                           ),
-                        ],
-                      )),
-                      Container(
-                        width: 300,
-                        height: 50,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          );
-        })));
+                        ),
+                        style: ButtonStyle(
+                            backgroundColor:
+                                MaterialStateProperty.all<Color>(Colors.black),
+                            shape: MaterialStateProperty.all<
+                                RoundedRectangleBorder>(RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20.0),
+                            ))),
+                        onPressed: () {
+                          performNavigator_SignPage();
+                        })))
+          ],
+        ),
+      ),
+    );
   }
 }
