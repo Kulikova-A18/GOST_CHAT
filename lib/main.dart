@@ -13,6 +13,6 @@ void main() {
     setWindowMaxSize(const Size(1400, 900));
     setWindowMinSize(const Size(1400, 900));
   }
-  runApp(AuthorizationPage());
-  //runApp(HomePage());
+  //runApp(AuthorizationPage());
+  runApp(Home());
 }

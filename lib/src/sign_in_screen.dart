@@ -26,7 +26,7 @@ class SignInPageState extends State<SignInPage> {
   void performNavigator_HomePage() {
     runApp(
       MaterialApp(
-        home: HomePage(),
+        home: Home(),
       ),
     );
   }

@@ -1,6 +1,6 @@
 import '../dynamic_library/dynamic_library_linux.dart';
 
-import 'home_screen.dart';
+//import 'home_screen.dart';
 
 import 'package:flutter/material.dart';
 import 'package:ffi/ffi.dart';
@@ -20,9 +20,9 @@ class SignInPageState extends State<SignInPage> {
   final TextEditingController _passwordController = TextEditingController();
 
   final _TextStyle = const TextStyle(
-      color: Colors.black, fontSize: 30, fontFamily: 'Source_Code_Pro');
+      color: Colors.black, fontSize: 15, fontFamily: 'Source_Code_Pro');
   final _TextStyle_Button = const TextStyle(
-      color: Colors.white, fontSize: 30, fontFamily: 'Source_Code_Pro');
+      color: Colors.white, fontSize: 15, fontFamily: 'Source_Code_Pro');
   late bool _passwordVisible = false;
 
   @override
@@ -34,8 +34,8 @@ class SignInPageState extends State<SignInPage> {
   void performNavigator_HomePage() {
     runApp(
       MaterialApp(
-        home: HomePage(),
-      ),
+          ////home: Home()),
+          ),
     );
   }
 
