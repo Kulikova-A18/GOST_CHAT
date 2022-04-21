@@ -11,16 +11,16 @@ find_package(OpenSSL REQUIRED)
 add_library(${PLUGIN_NAME} SHARED
   "plugin_linux_plugin.cc"
 
-  "include/src/logger.cpp"
-  "include/src/sign_in.cpp"
+  "src/logger.cpp"
+  "src/sign_in.cpp"
   # "include/src/create_data.cpp"
   # "include/src/checking_json.cpp"
-  "include/src/checking_bad_words.cpp"
+  "src/checking_bad_words.cpp"
 
-  "include/src/send_server/client-authorization.cpp"
-  "include/src/send_server/client-EVP-PKEY.cpp"
-  "include/src/send_server/client-symmetric-key.cpp"
-  "include/src/send_server/client-create-message.cpp"
+  "src/send_server/client-authorization.cpp"
+  "src/send_server/client-EVP-PKEY.cpp"
+  "src/send_server/client-symmetric-key.cpp"
+  "src/send_server/client-create-message.cpp"
   # "include/src/send_server/client-gost-chat.cpp"
 )
 
