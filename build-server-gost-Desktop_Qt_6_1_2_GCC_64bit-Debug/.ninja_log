@@ -1,0 +1,10 @@
+# ninja log v5
+0	173	1650567107823337858	CMakeFiles/server-gost.dir/servlet.cpp.o	eb6528c5b80dfff6
+0	224	1650567107871337689	CMakeFiles/server-gost.dir/server-gost.cpp.o	b21ed2c91e6013bc
+0	269	1650567107919337519	CMakeFiles/server-gost.dir/ssl.cpp.o	84fd37b8fd44f1df
+269	311	1650567107959337378	server-gost	31e4d10e60b2fffa
+0	166	1650567199178992523	CMakeFiles/server-gost.dir/servlet.cpp.o	eb6528c5b80dfff6
+1	95	1650567206022964968	CMakeFiles/server-gost.dir/server-gost.cpp.o	b21ed2c91e6013bc
+95	138	1650567206066964790	server-gost	31e4d10e60b2fffa
+0	93	1650567360738289119	CMakeFiles/server-gost.dir/server-gost.cpp.o	b21ed2c91e6013bc
+93	138	1650567360782288915	server-gost	31e4d10e60b2fffa
