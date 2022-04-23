@@ -2,7 +2,8 @@
 
 ClassServerGost SERVER_GOST_SERVLET;
 
-void ClassServerGost::servlet(SSL* ssl) {   char buf[1024];
+void ClassServerGost::servlet(SSL* ssl) {
+    char buf[1024];
     char reply[1024];
     int sd, bytes;
     const char* HTMLecho= "%s";
@@ -14,9 +15,8 @@ void ClassServerGost::servlet(SSL* ssl) {   char buf[1024];
         SERVER_GOST_SERVLET.show_certs(ssl);
         while(1)
         {
-
             bytes = SSL_read(ssl, buf, sizeof(buf)); // get request
-            if ( bytes > 0 )
+            if (bytes > 0)
             {
                 buf[bytes] = 0;
                 printf("Client msg:%s", buf);

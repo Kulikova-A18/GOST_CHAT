@@ -9,7 +9,7 @@ echo delete old /etc/ssl/certs/server_gost_ca.pem ...
 rm /etc/ssl/certs/server_gost_ca.pem
 echo ok
 
-# creating a certificate and private key for st client service
+# creating a certificate and private key 
 echo creating /etc/ssl/certs/server_gost_ca.pem ...
 openssl genrsa -out /etc/ssl/private/server_gost_privateKey.pem 4096
 echo ok

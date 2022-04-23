@@ -24,6 +24,9 @@ SSL_CTX* ClassServerGost::init_server_CTX(void) {
     const SSL_METHOD *method;
     SSL_CTX *ctx;
 
+    SSL_library_init();
+    SSL_load_error_strings();
+
     OpenSSL_add_all_algorithms();  /* load & register all cryptos, etc. */
     SSL_load_error_strings();   /* load all error messages */
     method = TLS_server_method();  /* create new server-method instance */
