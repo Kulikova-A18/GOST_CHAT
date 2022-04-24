@@ -1,8 +1,7 @@
-#ifndef SERVERGOST_H
-#define SERVERGOST_H
+#ifndef CLIENTGOST_H
+#define CLIENTGOST_H
 
 #include <iostream>
-#include <errno.h>
 #include <unistd.h>
 #include <malloc.h>
 #include <string.h>
@@ -20,17 +19,17 @@
 #include <openssl/aes.h>
 #include <string.h>
 
+#include <stdio.h>
+#include <errno.h>
+#include <resolv.h>
+#include <netdb.h>
+
 #define FAIL    -1
 
-class ClassServerGost {
+class ClassClientGost {
     public:
-        //servlet.cpp
-        void servlet(SSL* ssl);
-        //ssl.cpp
-        int open_listener(int port);
-        SSL_CTX* init_server_CTX(void);
-        void load_certificates(SSL_CTX* ctx, char* CertFile, char* KeyFile);
-        void show_certs(SSL* ssl);
+        int open_connection(const char *hostname, int port);
+        SSL_CTX* init_CTX(void);
 
         int decrypt(unsigned char *ciphertext, int ciphertext_len, unsigned char *key,
                     unsigned char *iv, unsigned char *plaintext);
@@ -38,11 +37,10 @@ class ClassServerGost {
                     unsigned char *iv, unsigned char *ciphertext);
 
         unsigned char *create_EVP_PKEY();
-        int write_client_pubkey_EVP_PKEY(unsigned char *clientkey);
+        int write_server_pubkey_EVP_PKEY(unsigned char *clientkey);
         unsigned char *read_EVP_PKEY();
 
         unsigned char *create_encrypt(unsigned char *plaintext, unsigned char private_key);
         unsigned char *create_decrypt(unsigned char *plaintext, unsigned char private_key);
 };
-
-#endif // SERVERGOST_H
+#endif // CLIENTGOST_H

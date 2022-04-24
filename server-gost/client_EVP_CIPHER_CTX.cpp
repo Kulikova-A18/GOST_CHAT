@@ -1,19 +1,14 @@
-#include "server-gost.h"
+#include "client-gost.h"
 
 void handleErrors() {
     printf("Error occured");
     return;
 }
 
-/* A 256 bit key */
-unsigned char *key = (unsigned char *)"01234567890123456789012345678901";
-
 /* A 128 bit IV */
 unsigned char *iv = (unsigned char *)"0123456789012345";
 
-ClassServerGost SERVER_GOST_CTX;
-
-int ClassServerGost::decrypt(unsigned char *ciphertext, int ciphertext_len, unsigned char *key,
+int ClassClientGost::decrypt(unsigned char *ciphertext, int ciphertext_len, unsigned char *key,
             unsigned char *iv, unsigned char *plaintext)
 {
     EVP_CIPHER_CTX *ctx;
@@ -59,7 +54,7 @@ int ClassServerGost::decrypt(unsigned char *ciphertext, int ciphertext_len, unsi
     return plaintext_len;
 }
 
-int ClassServerGost::encrypt(unsigned char *plaintext, int plaintext_len, unsigned char *key,
+int ClassClientGost::encrypt(unsigned char *plaintext, int plaintext_len, unsigned char *key,
             unsigned char *iv, unsigned char *ciphertext)
 {
     EVP_CIPHER_CTX *ctx;
@@ -104,7 +99,7 @@ int ClassServerGost::encrypt(unsigned char *plaintext, int plaintext_len, unsign
     return ciphertext_len;
 }
 
-unsigned char *ClassServerGost::create_encrypt(unsigned char *plaintext, unsigned char private_key) {
+unsigned char *ClassClientGost::create_encrypt(unsigned char *plaintext, unsigned char private_key) {
     size_t plain_len = strlen ((char *)plaintext);
 
    /*
@@ -119,13 +114,13 @@ unsigned char *ClassServerGost::create_encrypt(unsigned char *plaintext, unsigne
    int ciphertext_len;
 
    /* Encrypt the plaintext */
-   ciphertext_len = encrypt (plaintext, strlen ((char *)plaintext), key, iv,
+   ciphertext_len = encrypt (plaintext, strlen ((char *)plaintext), (unsigned char *)private_key, iv,
                              ciphertext);
 
     return ciphertext;
 }
 
-unsigned char *ClassServerGost::create_decrypt(unsigned char *plaintext, unsigned char private_key) {
+unsigned char *ClassClientGost::create_decrypt(unsigned char *plaintext, unsigned char private_key) {
     size_t plain_len = strlen ((char *)plaintext);
 
     /* Buffer for the decrypted text */
@@ -138,7 +133,7 @@ unsigned char *ClassServerGost::create_decrypt(unsigned char *plaintext, unsigne
     int decryptedtext_len;
 
     /* Decrypt the ciphertext */
-    decryptedtext_len = decrypt(plaintext, strlen((char *)plaintext), key, iv,
+    decryptedtext_len = decrypt(plaintext, strlen((char *)plaintext), (unsigned char *)private_key, iv,
                                 decryptedtext);
 
     /* Add a NULL terminator. We are expecting printable text */

@@ -1,4 +1,4 @@
-#include "server-gost.h"
+#include "client-gost.h"
 
 EVP_PKEY *pkey = NULL;
 
@@ -6,7 +6,7 @@ EVP_PKEY *pkey = NULL;
 std::string pubkey_server = "pubkey-server.pem";
 std::string pubkey_client = "pubkey-client.pem";
 
-unsigned char *ClassServerGost::create_EVP_PKEY() {
+unsigned char *ClassClientGost::create_EVP_PKEY() {
     /* Generate private and public keys */
     EVP_PKEY_CTX *pctx = EVP_PKEY_CTX_new_id(NID_X25519, NULL);
     EVP_PKEY_keygen_init(pctx);
@@ -15,14 +15,16 @@ unsigned char *ClassServerGost::create_EVP_PKEY() {
 
     /* Print keys to stdout */
     PEM_write_PrivateKey(stdout, pkey, NULL, NULL, 0, NULL, NULL);
+
     printf("\n");
+
     PEM_write_PUBKEY(stdout, pkey);
 
     printf("\n");
 
     /* Write public key to file */
     BIO *out;
-    out = BIO_new_file(pubkey_server.c_str(), "w+");
+    out = BIO_new_file(pubkey_client.c_str(), "w+");
 
     if (!out) {
         printf("BIO out is empty\n");
@@ -35,18 +37,19 @@ unsigned char *ClassServerGost::create_EVP_PKEY() {
     return (unsigned char *)pkey;
 }
 
-int ClassServerGost::write_client_pubkey_EVP_PKEY(unsigned char *clientkey) {
+int ClassClientGost::write_server_pubkey_EVP_PKEY(unsigned char *clientkey) {
     /* Write public key to file */
     BIO *out = (BIO *)clientkey;
-    out = BIO_new_file(pubkey_client.c_str(), "w+");
+    out = BIO_new_file(pubkey_server.c_str(), "w+");
 }
 
-unsigned char *ClassServerGost::read_EVP_PKEY() {
-    /* Read Client's public key */
-    FILE *keyfile = fopen(pubkey_client.c_str(), "r");
+unsigned char *ClassClientGost::read_EVP_PKEY() {
+    /* Read Server's public key */
+    FILE *keyfile = fopen(pubkey_server.c_str(), "r");
     EVP_PKEY *peerkey = NULL;
     peerkey = PEM_read_PUBKEY(keyfile, NULL, NULL, NULL);
 
+    //logger_EVP_PKEY.string_message = "CLIENT'S PUBKEY:";
     PEM_write_PUBKEY(stdout, peerkey);
 
     /* Generate shared secret */

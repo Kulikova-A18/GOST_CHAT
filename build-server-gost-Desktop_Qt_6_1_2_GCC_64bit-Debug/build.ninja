@@ -46,6 +46,62 @@ build CMakeFiles/rebuild_cache.util: CUSTOM_COMMAND
 
 build rebuild_cache: phony CMakeFiles/rebuild_cache.util
 
+# =============================================================================
+# Object build statements for EXECUTABLE target client-gost
+
+
+#############################################
+# Order-only phony target for client-gost
+
+build cmake_object_order_depends_target_client-gost: phony || CMakeFiles/client-gost.dir
+
+build CMakeFiles/client-gost.dir/client-gost.cpp.o: CXX_COMPILER__client-gost_Debug /home/alyona/GOST_CHAT/server-gost/client-gost.cpp || cmake_object_order_depends_target_client-gost
+  DEP_FILE = CMakeFiles/client-gost.dir/client-gost.cpp.o.d
+  FLAGS = -g
+  OBJECT_DIR = CMakeFiles/client-gost.dir
+  OBJECT_FILE_DIR = CMakeFiles/client-gost.dir
+
+build CMakeFiles/client-gost.dir/send.cpp.o: CXX_COMPILER__client-gost_Debug /home/alyona/GOST_CHAT/server-gost/send.cpp || cmake_object_order_depends_target_client-gost
+  DEP_FILE = CMakeFiles/client-gost.dir/send.cpp.o.d
+  FLAGS = -g
+  OBJECT_DIR = CMakeFiles/client-gost.dir
+  OBJECT_FILE_DIR = CMakeFiles/client-gost.dir
+
+build CMakeFiles/client-gost.dir/client_ssl.cpp.o: CXX_COMPILER__client-gost_Debug /home/alyona/GOST_CHAT/server-gost/client_ssl.cpp || cmake_object_order_depends_target_client-gost
+  DEP_FILE = CMakeFiles/client-gost.dir/client_ssl.cpp.o.d
+  FLAGS = -g
+  OBJECT_DIR = CMakeFiles/client-gost.dir
+  OBJECT_FILE_DIR = CMakeFiles/client-gost.dir
+
+build CMakeFiles/client-gost.dir/client_EVP_CIPHER_CTX.cpp.o: CXX_COMPILER__client-gost_Debug /home/alyona/GOST_CHAT/server-gost/client_EVP_CIPHER_CTX.cpp || cmake_object_order_depends_target_client-gost
+  DEP_FILE = CMakeFiles/client-gost.dir/client_EVP_CIPHER_CTX.cpp.o.d
+  FLAGS = -g
+  OBJECT_DIR = CMakeFiles/client-gost.dir
+  OBJECT_FILE_DIR = CMakeFiles/client-gost.dir
+
+build CMakeFiles/client-gost.dir/client_EVP_PKEY.cpp.o: CXX_COMPILER__client-gost_Debug /home/alyona/GOST_CHAT/server-gost/client_EVP_PKEY.cpp || cmake_object_order_depends_target_client-gost
+  DEP_FILE = CMakeFiles/client-gost.dir/client_EVP_PKEY.cpp.o.d
+  FLAGS = -g
+  OBJECT_DIR = CMakeFiles/client-gost.dir
+  OBJECT_FILE_DIR = CMakeFiles/client-gost.dir
+
+
+# =============================================================================
+# Link build statements for EXECUTABLE target client-gost
+
+
+#############################################
+# Link the executable client-gost
+
+build client-gost: CXX_EXECUTABLE_LINKER__client-gost_Debug CMakeFiles/client-gost.dir/client-gost.cpp.o CMakeFiles/client-gost.dir/send.cpp.o CMakeFiles/client-gost.dir/client_ssl.cpp.o CMakeFiles/client-gost.dir/client_EVP_CIPHER_CTX.cpp.o CMakeFiles/client-gost.dir/client_EVP_PKEY.cpp.o | /usr/lib/x86_64-linux-gnu/libssl.so /usr/lib/x86_64-linux-gnu/libcrypto.so
+  FLAGS = -g
+  LINK_LIBRARIES = /usr/lib/x86_64-linux-gnu/libssl.so  /usr/lib/x86_64-linux-gnu/libcrypto.so
+  OBJECT_DIR = CMakeFiles/client-gost.dir
+  POST_BUILD = :
+  PRE_LINK = :
+  TARGET_FILE = client-gost
+  TARGET_PDB = client-gost.dbg
+
 
 #############################################
 # Utility command for edit_cache
@@ -125,7 +181,7 @@ build server-gost: CXX_EXECUTABLE_LINKER__server-gost_Debug CMakeFiles/server-go
 #############################################
 # Folder: /home/alyona/GOST_CHAT/build-server-gost-Desktop_Qt_6_1_2_GCC_64bit-Debug
 
-build all: phony server-gost
+build all: phony client-gost server-gost
 
 # =============================================================================
 # Built-in targets
