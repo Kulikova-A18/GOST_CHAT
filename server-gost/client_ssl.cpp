@@ -6,19 +6,17 @@ int ClassClientGost::open_connection(const char *hostname, int port)
     struct hostent *host;
     struct sockaddr_in addr;
 
-    printf("HELLO!!\n");
-    if ((host = gethostbyname(hostname)) == NULL) {
-        printf("HELLO!!\n");
+    if ((host = gethostbyname(hostname)) == NULL) {        
         perror(hostname);
         abort();
     }
-    printf("HELLO!!\n");
+
     sd = socket(PF_INET, SOCK_STREAM, 0);
     bzero(&addr, sizeof(addr));
     addr.sin_family = AF_INET;
     addr.sin_port = htons(port);
     addr.sin_addr.s_addr = *(long*)(host->h_addr);
-    printf("HELLO!!\n");
+
     if ( connect(sd, (struct sockaddr*)&addr, sizeof(addr)) != 0 )
     {
         close(sd);

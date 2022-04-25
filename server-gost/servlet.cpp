@@ -21,8 +21,14 @@ void ClassServerGost::servlet(SSL* ssl) {
                 buf[bytes] = 0;
                 printf("Client msg:%s", buf);
 
-                strcpy(reply,buf);
-                SSL_write(ssl, reply, strlen(reply));
+                SERVER_GOST_SERVLET.write_client_pubkey_EVP_PKEY((char *)buf);
+                //strcpy(reply,buf);
+
+                std::string a = SERVER_GOST_SERVLET.send_server_EVP_PKEY();
+                char arr[a.length() + 1];
+                strcpy(arr, a.c_str());
+
+                SSL_write(ssl, arr, sizeof(arr));
             }
             else
                 ERR_print_errors_fp(stderr);

@@ -35,8 +35,9 @@ int ClassClientGost::decrypt(unsigned char *ciphertext, int ciphertext_len, unsi
      * Provide the message to be decrypted, and obtain the plaintext output.
      * EVP_DecryptUpdate can be called multiple times if necessary.
      */
-    if(1 != EVP_DecryptUpdate(ctx, plaintext, &len, ciphertext, ciphertext_len))
+    if(1 != EVP_DecryptUpdate(ctx, plaintext, &len, ciphertext, ciphertext_len)) {
         handleErrors();
+    }
     plaintext_len = len;
 
     /*

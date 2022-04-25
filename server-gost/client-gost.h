@@ -36,8 +36,9 @@ class ClassClientGost {
         int encrypt(unsigned char *plaintext, int plaintext_len, unsigned char *key,
                     unsigned char *iv, unsigned char *ciphertext);
 
-        unsigned char *create_EVP_PKEY();
-        int write_server_pubkey_EVP_PKEY(unsigned char *clientkey);
+        int create_EVP_PKEY();
+        std::string send_client_EVP_PKEY();
+        int write_server_pubkey_EVP_PKEY(char *clientkey);
         unsigned char *read_EVP_PKEY();
 
         unsigned char *create_encrypt(unsigned char *plaintext, unsigned char private_key);

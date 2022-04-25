@@ -1,12 +1,36 @@
 #include "client-gost.h"
 
+#include <iostream>
+#include <fstream>
+
 EVP_PKEY *pkey = NULL;
 
 // specifying the path to the keys
-std::string pubkey_server = "pubkey-server.pem";
-std::string pubkey_client = "pubkey-client.pem";
+std::string pubkey_server = "client-pubkey-server.pem";
+std::string pubkey_client = "client-pubkey-client.pem";
 
-unsigned char *ClassClientGost::create_EVP_PKEY() {
+std::string ClassClientGost::send_client_EVP_PKEY() {
+    std::string line;
+    std::string result;
+
+    std::ifstream in(pubkey_client);
+    if (in.is_open())
+    {
+        result += "-----BEGIN PUBLIC KEY-----\n";
+        while (getline(in, line))
+        {
+            if(line != "-----BEGIN PUBLIC KEY-----" &&
+                    line != "-----END PUBLIC KEY-----"){
+                result += line;
+            }
+        }
+        result += "\n-----END PUBLIC KEY-----";
+    }
+    in.close();
+    return result;
+}
+
+int ClassClientGost::create_EVP_PKEY() {
     /* Generate private and public keys */
     EVP_PKEY_CTX *pctx = EVP_PKEY_CTX_new_id(NID_X25519, NULL);
     EVP_PKEY_keygen_init(pctx);
@@ -34,13 +58,17 @@ unsigned char *ClassClientGost::create_EVP_PKEY() {
     BIO_flush(out);
 
     // return to pubkey from client
-    return (unsigned char *)pkey;
+    return 0;
 }
 
-int ClassClientGost::write_server_pubkey_EVP_PKEY(unsigned char *clientkey) {
-    /* Write public key to file */
-    BIO *out = (BIO *)clientkey;
-    out = BIO_new_file(pubkey_server.c_str(), "w+");
+int ClassClientGost::write_server_pubkey_EVP_PKEY(char *clientkey) {
+    std::ofstream out;
+    out.open(pubkey_server);
+    if (out.is_open())
+    {
+        out << clientkey;
+    }
+    return 0;
 }
 
 unsigned char *ClassClientGost::read_EVP_PKEY() {
