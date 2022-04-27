@@ -41,8 +41,8 @@ class ClassServerGost {
         int write_client_pubkey_EVP_PKEY(char *clientkey);
         unsigned char *read_EVP_PKEY();
         std::string send_server_EVP_PKEY();
-        unsigned char *create_encrypt(unsigned char *plaintext, unsigned char private_key);
-        unsigned char *create_decrypt(unsigned char *plaintext, unsigned char private_key);
+        unsigned char *create_encrypt(unsigned char *plaintext, unsigned char *private_key);
+        unsigned char *create_decrypt(unsigned char *plaintext, unsigned char *private_key);
 };
 
 #endif // SERVERGOST_H

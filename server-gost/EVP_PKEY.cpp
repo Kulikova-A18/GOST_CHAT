@@ -10,15 +10,13 @@ std::string pubkey_server = "server-pubkey-server.pem";
 std::string pubkey_client = "server-pubkey-client.pem";
 
 std::string ClassServerGost::send_server_EVP_PKEY() {
-    std::string line;
-    std::string result;
+    std::string line = "";
+    std::string result = "";
 
     std::ifstream in(pubkey_server);
-    if (in.is_open())
-    {
+    if (in.is_open()) {
         result += "-----BEGIN PUBLIC KEY-----\n";
-        while (getline(in, line))
-        {
+        while (getline(in, line)) {
             if(line != "-----BEGIN PUBLIC KEY-----" &&
                     line != "-----END PUBLIC KEY-----"){
                 result += line;
@@ -109,7 +107,7 @@ unsigned char *ClassServerGost::read_EVP_PKEY() {
         //logger_EVP_PKEY.string_message = "EVP_PKEY_derive(): Shared key derivation failed";
     }
 
-    //printf("\nShared secret:\n");
+    printf("\nShared secret:\n");
     //logger_EVP_PKEY.string_message = "SHARED SECRET: ";
 
     for (size_t i = 0; i < skeylen; i++) {

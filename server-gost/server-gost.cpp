@@ -14,7 +14,8 @@ int is_root() {
 }
 
 int main(int arvc, char *argv[])
-{   SSL_CTX *ctx;
+{
+    SSL_CTX *ctx;
     int server;
     char *PORT_NUM = (char *)"8081";
 
