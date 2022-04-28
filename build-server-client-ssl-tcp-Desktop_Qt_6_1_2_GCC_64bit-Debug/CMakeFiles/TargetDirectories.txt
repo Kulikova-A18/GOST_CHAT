@@ -1,0 +1,4 @@
+/home/alyona/GOST_CHAT/build-server-client-ssl-tcp-Desktop_Qt_6_1_2_GCC_64bit-Debug/CMakeFiles/rebuild_cache.dir
+/home/alyona/GOST_CHAT/build-server-client-ssl-tcp-Desktop_Qt_6_1_2_GCC_64bit-Debug/CMakeFiles/client-gost.dir
+/home/alyona/GOST_CHAT/build-server-client-ssl-tcp-Desktop_Qt_6_1_2_GCC_64bit-Debug/CMakeFiles/edit_cache.dir
+/home/alyona/GOST_CHAT/build-server-client-ssl-tcp-Desktop_Qt_6_1_2_GCC_64bit-Debug/CMakeFiles/server-gost.dir

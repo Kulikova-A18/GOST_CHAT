@@ -33,7 +33,16 @@ int ClassServerGost::decrypt(unsigned char *ciphertext, int ciphertext_len, unsi
      * IV size for *most* modes is the same as the block size. For AES this
      * is 128 bits
      */
-    if(1 != EVP_DecryptInit_ex(ctx, EVP_aes_256_cbc(), NULL, key, iv))
+    auto cipher = EVP_get_cipherbynid(NID_grasshopper_cbc);
+
+    if (!cipher) {
+        //qWarning("[ChatCrypt::decrypt] Could not initialize Grasshopper cipher. Is the GOST library loaded?");
+    }
+
+    if(1 != EVP_DecryptInit_ex(ctx,
+                               cipher,
+                               //EVP_aes_256_cbc(),
+                               NULL, key, iv))
         handleErrors();
 
     /*
@@ -79,7 +88,16 @@ int ClassServerGost::encrypt(unsigned char *plaintext, int plaintext_len, unsign
      * IV size for *most* modes is the same as the block size. For AES this
      * is 128 bits
      */
-    if(1 != EVP_EncryptInit_ex(ctx, EVP_aes_256_cbc(), NULL, key, iv))
+    auto cipher = EVP_get_cipherbynid(NID_grasshopper_cbc);
+
+    if (!cipher) {
+        //qWarning("[ChatCrypt::decrypt] Could not initialize Grasshopper cipher. Is the GOST library loaded?");
+    }
+
+    if(1 != EVP_EncryptInit_ex(ctx,
+                               cipher,
+                               //EVP_aes_256_cbc(),
+                               NULL, key, iv))
         handleErrors();
 
     /*
@@ -104,7 +122,7 @@ int ClassServerGost::encrypt(unsigned char *plaintext, int plaintext_len, unsign
     return ciphertext_len;
 }
 
-unsigned char *ClassServerGost::create_encrypt(unsigned char *plaintext) {
+unsigned char *ClassServerGost::create_encrypt(unsigned char *plaintext, unsigned char *private_key) {
     size_t plain_len = strlen ((char *)plaintext);
 
    /*
@@ -114,31 +132,31 @@ unsigned char *ClassServerGost::create_encrypt(unsigned char *plaintext) {
     */
    unsigned char *ciphertext;
 
-   ciphertext = new unsigned char[plain_len+AES_BLOCK_SIZE];
+   ciphertext = new unsigned char[plain_len + AES_BLOCK_SIZE];
 
    int ciphertext_len;
 
    /* Encrypt the plaintext */
-   ciphertext_len = encrypt (plaintext, strlen ((char *)plaintext), key, iv,
+   ciphertext_len = SERVER_GOST_CTX.encrypt(plaintext, strlen ((char *)plaintext), key, iv,
                              ciphertext);
 
     return ciphertext;
 }
 
-unsigned char *ClassServerGost::create_decrypt(unsigned char *plaintext) {
+unsigned char *ClassServerGost::create_decrypt(unsigned char *plaintext, unsigned char *private_key) {
     size_t plain_len = strlen ((char *)plaintext);
 
     /* Buffer for the decrypted text */
     unsigned char *decryptedtext;
-    decryptedtext = new unsigned char[plain_len+AES_BLOCK_SIZE];
+    decryptedtext = new unsigned char[plain_len + AES_BLOCK_SIZE];
 
     /* fill buffer with zeros */
-    memset(decryptedtext,0,plain_len+AES_BLOCK_SIZE);
+    memset(decryptedtext,0,plain_len + AES_BLOCK_SIZE);
 
     int decryptedtext_len;
 
     /* Decrypt the ciphertext */
-    decryptedtext_len = decrypt(plaintext, strlen((char *)plaintext), key, iv,
+    decryptedtext_len = SERVER_GOST_CTX.decrypt(plaintext, strlen((char *)plaintext), key, iv,
                                 decryptedtext);
 
     /* Add a NULL terminator. We are expecting printable text */

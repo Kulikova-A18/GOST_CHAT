@@ -14,9 +14,12 @@ int is_root() {
 }
 
 int main(int arvc, char *argv[])
-{   SSL_CTX *ctx;
+{
+    SSL_CTX *ctx;
     int server;
-    char *PORT_NUM = "8081";
+    char *PORT_NUM = (char *)"8081";
+
+    SERVER_GOST.create_EVP_PKEY(); // create public and private evp pkey
 
     if(!is_root()) {
         printf("This program must be run as root/sudo user!!");
@@ -32,11 +35,12 @@ int main(int arvc, char *argv[])
         socklen_t len = sizeof(addr);
         SSL *ssl;
 
+        int err;
+
         int client = accept(server, (struct sockaddr*)&addr, &len);  //accept connection as usual
         printf("Connection: %s:%d\n",inet_ntoa(addr.sin_addr), ntohs(addr.sin_port));
         ssl = SSL_new(ctx);             //get new SSL state with context
         SSL_set_fd(ssl, client);        //set connection socket to SSL state
-
         SERVER_GOST.servlet(ssl);       //service connection
 
     close(server);              //close server socket
