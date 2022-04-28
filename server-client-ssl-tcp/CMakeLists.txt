@@ -9,6 +9,10 @@ add_executable(server-gost
     servlet.cpp
     ssl.cpp
     server_send.cpp
+
+    #data
+    data/check-json-data.cpp
+    data/create-json-data.cpp
     )
 target_link_libraries(server-gost OpenSSL::SSL OpenSSL::Crypto)
 

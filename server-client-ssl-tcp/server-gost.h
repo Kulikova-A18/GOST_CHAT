@@ -1,6 +1,8 @@
 #ifndef SERVERGOST_H
 #define SERVERGOST_H
 
+#define _CRT_SECURE_NO_WARNINGS
+
 #include <iostream>
 #include <errno.h>
 #include <unistd.h>
@@ -21,6 +23,9 @@
 #include <string.h>
 
 #define FAIL    -1
+#define MAXLINE 1024
+
+#define SIMMETRIC_KEY "mH70oa3013"
 
 class ClassServerGost {
     public:
@@ -33,8 +38,16 @@ class ClassServerGost {
         void show_certs(SSL* ssl);
 
         // send.cpp
-        std::string check_authorization(std::string login, std::string password);
-        void get_authorization(std::string a);
+        std::string check_authorization(std::string login, std::string password, std::string response);
+        std::string check_json_message(char *message);
+
+        // data/check-json-data.cpp
+        std::string check_data(std::string _message);
+        std::string find_json(std::string _login, std::string _password);
+        std::string _find(std::string argv1, std::string argv2);
+
+        // data/create-json-data.cpp
+        void create_all();
 };
 
 #endif // SERVERGOST_H

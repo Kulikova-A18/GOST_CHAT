@@ -142,6 +142,20 @@ build CMakeFiles/server-gost.dir/server_send.cpp.o: CXX_COMPILER__server-gost_De
   OBJECT_DIR = CMakeFiles/server-gost.dir
   OBJECT_FILE_DIR = CMakeFiles/server-gost.dir
 
+build CMakeFiles/server-gost.dir/data/check-json-data.cpp.o: CXX_COMPILER__server-gost_Debug /home/alyona/GOST_CHAT/server-client-ssl-tcp/data/check-json-data.cpp || cmake_object_order_depends_target_server-gost
+  DEP_FILE = CMakeFiles/server-gost.dir/data/check-json-data.cpp.o.d
+  FLAGS = -g
+  INCLUDES = -isystem /opt/TLSGate/include
+  OBJECT_DIR = CMakeFiles/server-gost.dir
+  OBJECT_FILE_DIR = CMakeFiles/server-gost.dir/data
+
+build CMakeFiles/server-gost.dir/data/create-json-data.cpp.o: CXX_COMPILER__server-gost_Debug /home/alyona/GOST_CHAT/server-client-ssl-tcp/data/create-json-data.cpp || cmake_object_order_depends_target_server-gost
+  DEP_FILE = CMakeFiles/server-gost.dir/data/create-json-data.cpp.o.d
+  FLAGS = -g
+  INCLUDES = -isystem /opt/TLSGate/include
+  OBJECT_DIR = CMakeFiles/server-gost.dir
+  OBJECT_FILE_DIR = CMakeFiles/server-gost.dir/data
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target server-gost
@@ -150,7 +164,7 @@ build CMakeFiles/server-gost.dir/server_send.cpp.o: CXX_COMPILER__server-gost_De
 #############################################
 # Link the executable server-gost
 
-build server-gost: CXX_EXECUTABLE_LINKER__server-gost_Debug CMakeFiles/server-gost.dir/server-gost.cpp.o CMakeFiles/server-gost.dir/servlet.cpp.o CMakeFiles/server-gost.dir/ssl.cpp.o CMakeFiles/server-gost.dir/server_send.cpp.o | /opt/TLSGate/lib/libssl.so /opt/TLSGate/lib/libcrypto.so
+build server-gost: CXX_EXECUTABLE_LINKER__server-gost_Debug CMakeFiles/server-gost.dir/server-gost.cpp.o CMakeFiles/server-gost.dir/servlet.cpp.o CMakeFiles/server-gost.dir/ssl.cpp.o CMakeFiles/server-gost.dir/server_send.cpp.o CMakeFiles/server-gost.dir/data/check-json-data.cpp.o CMakeFiles/server-gost.dir/data/create-json-data.cpp.o | /opt/TLSGate/lib/libssl.so /opt/TLSGate/lib/libcrypto.so
   FLAGS = -g
   LINK_LIBRARIES = -Wl,-rpath,/opt/TLSGate/lib  /opt/TLSGate/lib/libssl.so  /opt/TLSGate/lib/libcrypto.so
   OBJECT_DIR = CMakeFiles/server-gost.dir

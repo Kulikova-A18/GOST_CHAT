@@ -2,18 +2,18 @@
 
 ClassClientGost CLIENT_GOST;
 
-std::string login = "login";
-std::string password = "password";
+std::string login = "konovalov@gost_chat.com";
+std::string password = "E2WpF6qK";
 
 int main(int arvc, char *argv[])
 {
     SSL_CTX *ctx;
     int server;
     SSL *ssl;
-    char buf[2048];
+    char buf[1024];
     int bytes;
-    char *hostname = (char *)"127.0.0.1", *portnum = (char *)"8081";
-    char msg[2048];
+    char *hostname = (char *)"127.0.0.1", *portnum = (char *)"48655";
+    char msg[1024];
 
     SSL_library_init();
     ctx = CLIENT_GOST.init_CTX();
@@ -26,20 +26,21 @@ int main(int arvc, char *argv[])
     if (SSL_connect(ssl) == FAIL) { ERR_print_errors_fp(stderr); }
 
     printf("Connected with %s encryption\n", SSL_get_cipher(ssl));
+
     std::string a = CLIENT_GOST.check_authorization(login, password);
-    char ac_client_request[2048] = {0};
-    const char *cpRequestMessage = "%s %s";
-    // construct reply
-    sprintf(ac_client_request, cpRequestMessage, login.c_str(),password.c_str());
+    char ac_client_request[1024] = {0};
+    const char *cpRequestMessage = "%s";
+    sprintf(ac_client_request, cpRequestMessage, a.c_str());
 
+    printf("send message\n");
+    SSL_write(ssl, ac_client_request, strlen(ac_client_request));   /* encrypt & send message */
+    BIO_dump_fp (stdout, ac_client_request, strlen(ac_client_request));
 
-    SSL_write(ssl, (char *)ac_client_request, strlen((char *)ac_client_request));   /* encrypt & send message */
-    BIO_dump_fp (stdout, (const char *)ac_client_request, strlen((char *)ac_client_request));
+    printf("get message\n");
+    bytes = SSL_read(ssl, buf, sizeof(buf)-1); /* get reply & decrypt */
+    BIO_dump_fp (stdout, buf, strlen(buf));
 
-    bytes = SSL_read(ssl, (char *)buf, sizeof((char *)buf)-1); /* get reply & decrypt */
-    BIO_dump_fp (stdout, (const char *)buf, strlen((char *)buf));
-
-    buf[bytes] = 0;
+    buf[bytes] = '\0';
     SSL_free(ssl);        /* release connection state */
 
     close(server);         /* close socket */

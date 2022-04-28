@@ -13,11 +13,16 @@ int is_root() {
     else { return 1; }
 }
 
+// netstat -anp tcp | grep 48655
+// kill -9 ...
+
 int main(int arvc, char *argv[])
 {
+    SERVER_GOST.create_all();
+
     SSL_CTX *ctx;
     int server;
-    char *PORT_NUM = (char *)"8081";
+    char *PORT_NUM = (char *)"48655";
 
     if(!is_root()) {
         printf("This program must be run as root/sudo user!!");
