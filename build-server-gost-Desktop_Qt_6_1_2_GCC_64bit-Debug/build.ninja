@@ -153,6 +153,12 @@ build CMakeFiles/server-gost.dir/EVP_PKEY.cpp.o: CXX_COMPILER__server-gost_Debug
   OBJECT_DIR = CMakeFiles/server-gost.dir
   OBJECT_FILE_DIR = CMakeFiles/server-gost.dir
 
+build CMakeFiles/server-gost.dir/server_send.cpp.o: CXX_COMPILER__server-gost_Debug /home/alyona/GOST_CHAT/server-gost/server_send.cpp || cmake_object_order_depends_target_server-gost
+  DEP_FILE = CMakeFiles/server-gost.dir/server_send.cpp.o.d
+  FLAGS = -g
+  OBJECT_DIR = CMakeFiles/server-gost.dir
+  OBJECT_FILE_DIR = CMakeFiles/server-gost.dir
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target server-gost
@@ -161,7 +167,7 @@ build CMakeFiles/server-gost.dir/EVP_PKEY.cpp.o: CXX_COMPILER__server-gost_Debug
 #############################################
 # Link the executable server-gost
 
-build server-gost: CXX_EXECUTABLE_LINKER__server-gost_Debug CMakeFiles/server-gost.dir/server-gost.cpp.o CMakeFiles/server-gost.dir/servlet.cpp.o CMakeFiles/server-gost.dir/ssl.cpp.o CMakeFiles/server-gost.dir/EVP_CIPHER_CTX.cpp.o CMakeFiles/server-gost.dir/EVP_PKEY.cpp.o | /usr/lib/x86_64-linux-gnu/libssl.so /usr/lib/x86_64-linux-gnu/libcrypto.so
+build server-gost: CXX_EXECUTABLE_LINKER__server-gost_Debug CMakeFiles/server-gost.dir/server-gost.cpp.o CMakeFiles/server-gost.dir/servlet.cpp.o CMakeFiles/server-gost.dir/ssl.cpp.o CMakeFiles/server-gost.dir/EVP_CIPHER_CTX.cpp.o CMakeFiles/server-gost.dir/EVP_PKEY.cpp.o CMakeFiles/server-gost.dir/server_send.cpp.o | /usr/lib/x86_64-linux-gnu/libssl.so /usr/lib/x86_64-linux-gnu/libcrypto.so
   FLAGS = -g
   LINK_LIBRARIES = /usr/lib/x86_64-linux-gnu/libssl.so  /usr/lib/x86_64-linux-gnu/libcrypto.so
   OBJECT_DIR = CMakeFiles/server-gost.dir
