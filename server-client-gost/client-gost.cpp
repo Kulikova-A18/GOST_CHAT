@@ -62,6 +62,9 @@ int main(int arvc, char *argv[])
         CLIENT_GOST.write_server_pubkey_EVP_PKEY((char *)buf);
         bool_get_symmetric_key = true;
     }
+
+    memset(buf, 0, sizeof(buf));
+
     if(bool_get_symmetric_key) {
         unsigned char secretKey[AES_BLOCK_SIZE * 2] = {0,}; //32
         unsigned char salt[] = {'G','O','S','T','-','C','H','A','T'}; // "GOST-CHAT"
@@ -72,18 +75,40 @@ int main(int arvc, char *argv[])
         PKCS5_PBKDF2_HMAC_SHA1((const char *)key, strlen((char *)key),
                                       salt, sizeof(salt),
                                       20000 , AES_BLOCK_SIZE * 2, (unsigned char *)secretKey);
-        unsigned char* a = CLIENT_GOST.create_encrypt(
-                                (unsigned char *)CLIENT_GOST.check_authorization(login, password).c_str(),secretKey);
-        BIO_dump_fp (stdout, (const char *)a, strlen((char *)a));
-        SSL_write(ssl, (char *)a, sizeof((char *)a));   /* encrypt & send message */
+
+        size_t plain_len = strlen ((char *)CLIENT_GOST.check_authorization(login, password).c_str());
+       /*
+        * Buffer for ciphertext. Ensure the buffer is long enough for the
+        * ciphertext which may be longer than the plaintext, depending on the
+        * algorithm and mode.
+        */
+       unsigned char *ciphertext;
+       ciphertext = new unsigned char[plain_len+AES_BLOCK_SIZE];
+
+       int ciphertext_len;
+
+       /* Encrypt the plaintext */
+       CLIENT_GOST.encrypt(
+                   (unsigned char *)CLIENT_GOST.check_authorization(login, password).c_str(),
+                   strlen ((char *)CLIENT_GOST.check_authorization(login, password).c_str()),
+                   (unsigned char *)secretKey, (unsigned char *)"0123456789012345",
+                                 ciphertext);
+
+       printf("send message\n");
+       char ciphertext_request[1024] = {0};
+       sprintf(ciphertext_request, "%s", ciphertext);
+
+       SSL_write(ssl, ciphertext_request, sizeof(ciphertext_request));   /* encrypt & send message */
+       BIO_dump_fp (stdout, (const char *)ciphertext, strlen((char *)ciphertext));
 
         bytes = SSL_read(ssl, buf, sizeof(buf)-1); /* get reply & decrypt */
         buf[bytes] = '\0';
         if (bytes < 0) { ERR_print_errors_fp(stderr); }
-
-        unsigned char* b = CLIENT_GOST.create_decrypt((unsigned char *)buf, secretKey);
-        BIO_dump_fp (stdout, (char *)b, strlen((char *)b));
-        CLIENT_GOST.get_authorization((char *)b);
+        else {
+            unsigned char* b = CLIENT_GOST.create_decrypt((unsigned char *)buf, secretKey);
+            BIO_dump_fp (stdout, (char *)b, strlen((char *)b));
+            CLIENT_GOST.get_authorization((char *)b);
+        }
     }
 
 

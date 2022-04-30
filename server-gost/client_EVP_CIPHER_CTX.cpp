@@ -137,8 +137,6 @@ unsigned char *ClassClientGost::create_encrypt(unsigned char *plaintext, unsigne
    /* Encrypt the plaintext */
    ciphertext_len = CLIENT_GOST_CTX.encrypt(plaintext, strlen ((char *)plaintext), (unsigned char *)private_key, iv,
                              ciphertext);
-
-   printf("!!!!!!!!11\n");
     return ciphertext;
 }
 

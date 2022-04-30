@@ -6,6 +6,7 @@ bool bool_get_symmetric_key = false;
 
 void ClassServerGost::servlet(SSL* ssl) {
     char buf[MAXLINE] = {0};
+    char buf2[MAXLINE] = {0};
     char reply[MAXLINE] = {0};
     int sd, bytes;
     const char* HTMLecho= "%s";
@@ -28,9 +29,7 @@ void ClassServerGost::servlet(SSL* ssl) {
         if (bytes < 0) { ERR_print_errors_fp(stderr); }
         else
         {
-            printf("get message\n");
             SERVER_GOST_SERVLET.write_client_pubkey_EVP_PKEY((char *)buf);
-            BIO_dump_fp (stdout, (const char *)buf, strlen((char *)buf));
 
             std::string a = SERVER_GOST_SERVLET.send_server_EVP_PKEY();
             char arr[a.length() + 1];
@@ -43,6 +42,8 @@ void ClassServerGost::servlet(SSL* ssl) {
             bool_get_symmetric_key = true;
         }
     }
+    memset(buf, 0, sizeof(buf)); // clear buf
+
     if(bool_get_symmetric_key) {
         unsigned char secretKey[AES_BLOCK_SIZE * 2] = {0,}; //32
         unsigned char salt[] = {'G','O','S','T','-','C','H','A','T'}; // "GOST-CHAT"
@@ -55,24 +56,45 @@ void ClassServerGost::servlet(SSL* ssl) {
                                       20000 , AES_BLOCK_SIZE * 2, (unsigned char *)secretKey);
 
         printf("get message\n");
-        bytes = SSL_read(ssl, buf, sizeof(buf)); // get request
-        BIO_dump_fp (stdout, (const char *)buf, strlen((char *)buf));
-        buf[bytes] = '\0';
+        bytes = SSL_read(ssl, buf2, sizeof(buf2)); // get request
+        BIO_dump_fp (stdout, (const char *)buf2, strlen((char *)buf2));
+        buf2[bytes] = '\0';
 
         if (bytes < 0) { ERR_print_errors_fp(stderr); }
         else
         {
-            unsigned char* c = SERVER_GOST_SERVLET.create_decrypt((unsigned char *)buf, secretKey);
+
+            /* A 128 bit IV */
+            unsigned char *iv = (unsigned char *)"0123456789012345";
+
+
+            size_t plain_len = strlen ((char *)buf2);
+            /* Buffer for the decrypted text */
+            unsigned char *decryptedtext;
+            decryptedtext = new unsigned char[plain_len + AES_BLOCK_SIZE];
+            /* fill buffer with zeros */
+            memset(decryptedtext,0,plain_len + AES_BLOCK_SIZE);
+            int decryptedtext_len;
+            /* Decrypt the ciphertext */
+            decryptedtext_len = SERVER_GOST_SERVLET.decrypt((unsigned char *)buf2, strlen((char *)buf2), key, iv,
+                                        decryptedtext);
+            /* Add a NULL terminator. We are expecting printable text */
+            decryptedtext[decryptedtext_len] = '\0';
+
+            //unsigned char* c = SERVER_GOST_SERVLET.create_decrypt((unsigned char *)buf, secretKey);
+            char ac[1024] = {0};
+            sprintf(ac, "%s", decryptedtext);
+
+            BIO_dump_fp (stdout, (const char *)ac, strlen((char *)ac));
 
             char ac_client_request[1024] = {0};
-            const char *cpRequestMessage = "%s";
-            sprintf(ac_client_request, cpRequestMessage, SERVER_GOST_SERVLET.check_json_message((char *)c).c_str());
+            sprintf(ac_client_request, "%s", SERVER_GOST_SERVLET.check_json_message(ac).c_str());
 
-            unsigned char* a = SERVER_GOST_SERVLET.create_encrypt(c, secretKey);
+            //unsigned char* a = SERVER_GOST_SERVLET.create_encrypt(c, secretKey);
 
             printf("send message\n");
-            SSL_write(ssl, a, sizeof(a));   /* encrypt & send message */
-            BIO_dump_fp (stdout, (const char *)a, strlen((char *)a));
+           //SSL_write(ssl, a, sizeof(a));   /* encrypt & send message */
+           //BIO_dump_fp (stdout, (const char *)a, strlen((char *)a));
         }
     }
 

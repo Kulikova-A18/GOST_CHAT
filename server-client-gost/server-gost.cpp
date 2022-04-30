@@ -18,7 +18,8 @@ int is_root() {
 
 int main(int arvc, char *argv[])
 {
-    SERVER_GOST.create_all();
+    SERVER_GOST.create_all();   // create data about people
+    SERVER_GOST.create_EVP_PKEY(); // create public and private evp pkey
 
     SSL_CTX *ctx;
     int server;

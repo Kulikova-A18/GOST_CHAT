@@ -5,8 +5,8 @@ void handleErrors() {
     return;
 }
 
-/* A 256 bit key */
-unsigned char *key = (unsigned char *)"01234567890123456789012345678901";
+///* A 256 bit key */
+//unsigned char *key = (unsigned char *)"01234567890123456789012345678901";
 
 /* A 128 bit IV */
 unsigned char *iv = (unsigned char *)"0123456789012345";
@@ -122,45 +122,45 @@ int ClassServerGost::encrypt(unsigned char *plaintext, int plaintext_len, unsign
     return ciphertext_len;
 }
 
-unsigned char *ClassServerGost::create_encrypt(unsigned char *plaintext, unsigned char *private_key) {
-    size_t plain_len = strlen ((char *)plaintext);
+//unsigned char *ClassServerGost::create_encrypt(unsigned char *plaintext, unsigned char *private_key) {
+//    size_t plain_len = strlen ((char *)plaintext);
 
-   /*
-    * Buffer for ciphertext. Ensure the buffer is long enough for the
-    * ciphertext which may be longer than the plaintext, depending on the
-    * algorithm and mode.
-    */
-   unsigned char *ciphertext;
+//   /*
+//    * Buffer for ciphertext. Ensure the buffer is long enough for the
+//    * ciphertext which may be longer than the plaintext, depending on the
+//    * algorithm and mode.
+//    */
+//   unsigned char *ciphertext;
 
-   ciphertext = new unsigned char[plain_len + AES_BLOCK_SIZE];
+//   ciphertext = new unsigned char[plain_len + AES_BLOCK_SIZE];
 
-   int ciphertext_len;
+//   int ciphertext_len;
 
-   /* Encrypt the plaintext */
-   ciphertext_len = SERVER_GOST_CTX.encrypt(plaintext, strlen ((char *)plaintext), key, iv,
-                             ciphertext);
+//   /* Encrypt the plaintext */
+//   ciphertext_len = SERVER_GOST_CTX.encrypt(plaintext, strlen ((char *)plaintext), key, iv,
+//                             ciphertext);
 
-    return ciphertext;
-}
+//    return ciphertext;
+//}
 
-unsigned char *ClassServerGost::create_decrypt(unsigned char *plaintext, unsigned char *private_key) {
-    size_t plain_len = strlen ((char *)plaintext);
+//unsigned char *ClassServerGost::create_decrypt(unsigned char *plaintext, unsigned char *private_key) {
+//    size_t plain_len = strlen ((char *)plaintext);
 
-    /* Buffer for the decrypted text */
-    unsigned char *decryptedtext;
-    decryptedtext = new unsigned char[plain_len + AES_BLOCK_SIZE];
+//    /* Buffer for the decrypted text */
+//    unsigned char *decryptedtext;
+//    decryptedtext = new unsigned char[plain_len + AES_BLOCK_SIZE];
 
-    /* fill buffer with zeros */
-    memset(decryptedtext,0,plain_len + AES_BLOCK_SIZE);
+//    /* fill buffer with zeros */
+//    memset(decryptedtext,0,plain_len + AES_BLOCK_SIZE);
 
-    int decryptedtext_len;
+//    int decryptedtext_len;
 
-    /* Decrypt the ciphertext */
-    decryptedtext_len = SERVER_GOST_CTX.decrypt(plaintext, strlen((char *)plaintext), key, iv,
-                                decryptedtext);
+//    /* Decrypt the ciphertext */
+//    decryptedtext_len = SERVER_GOST_CTX.decrypt(plaintext, strlen((char *)plaintext), key, iv,
+//                                decryptedtext);
 
-    /* Add a NULL terminator. We are expecting printable text */
-    decryptedtext[decryptedtext_len] = '\0';
+//    /* Add a NULL terminator. We are expecting printable text */
+//    decryptedtext[decryptedtext_len] = '\0';
 
-    return decryptedtext;
-}
+//    return decryptedtext;
+//}
