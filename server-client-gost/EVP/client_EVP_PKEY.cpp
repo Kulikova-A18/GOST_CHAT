@@ -29,7 +29,7 @@ std::string ClassClientGost::send_client_EVP_PKEY() {
 }
 
 int ClassClientGost::create_EVP_PKEY() {
-    printf("client EVP_PKEY\n");
+    std::cout << "=============== client EVP_PKEY ===============" << std::endl;
     /* Generate private and public keys */
     EVP_PKEY_CTX *pctx = EVP_PKEY_CTX_new_id(NID_X25519, NULL);
     EVP_PKEY_keygen_init(pctx);
@@ -75,8 +75,9 @@ unsigned char *ClassClientGost::read_EVP_PKEY() {
     EVP_PKEY *peerkey = NULL;
     peerkey = PEM_read_PUBKEY(keyfile, NULL, NULL, NULL);
 
-    printf("server EVP_PKEY\n");
+    std::cout << "=============== server EVP_PKEY ===============" << std::endl;
     PEM_write_PUBKEY(stdout, peerkey);
+    std::cout << std::endl << std::endl;
 
     /* Generate shared secret */
     EVP_PKEY_CTX *ctx;
@@ -110,12 +111,10 @@ unsigned char *ClassClientGost::read_EVP_PKEY() {
         //logger_EVP_PKEY.string_message = "EVP_PKEY_derive(): Shared key derivation failed";
     }
 
-    printf("shared secret\n");
-    //logger_EVP_PKEY.string_message = "SHARED SECRET: ";
-
+    std::cout << "=============== shared secret ===============" << std::endl;
     for (size_t i = 0; i < skeylen; i++) {
         printf("%02x", skey[i]);
     }
-    printf("\n");
+    printf("\n\n");
     return (unsigned char *)skey;
 }

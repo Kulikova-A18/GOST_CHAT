@@ -29,7 +29,7 @@ std::string ClassServerGost::send_server_EVP_PKEY() {
 }
 
 unsigned char *ClassServerGost::create_EVP_PKEY() {
-    printf("server EVP_PKEY\n");
+    std::cout << "=============== server EVP_PKEY ===============" << std::endl;
 
     /* Generate private and public keys */
     EVP_PKEY_CTX *pctx = EVP_PKEY_CTX_new_id(NID_X25519, NULL);
@@ -75,8 +75,9 @@ unsigned char *ClassServerGost::read_EVP_PKEY() {
     EVP_PKEY *peerkey = NULL;
     peerkey = PEM_read_PUBKEY(keyfile, NULL, NULL, NULL);
 
-    printf("client EVP_PKEY\n");
+    std::cout << "=============== client EVP_PKEY ===============" << std::endl;
     PEM_write_PUBKEY(stdout, peerkey);
+    std::cout << std::endl << std::endl;
 
     /* Generate shared secret */
     EVP_PKEY_CTX *ctx;
@@ -85,39 +86,36 @@ unsigned char *ClassServerGost::read_EVP_PKEY() {
     ctx = EVP_PKEY_CTX_new(pkey, NULL);
 
     if (!ctx) {
-        //logger_EVP_PKEY.string_message = "CTX is empty";
+        printf("CTX is empty\n");
     }
 
     if (EVP_PKEY_derive_init(ctx) <= 0) {
-        //logger_EVP_PKEY.string_message = "EVP_PKEY_derive_init(): EVP derive initialization failed";
+        printf("EVP_PKEY_derive_init(): EVP derive initialization failed\n");
     }
 
     if (EVP_PKEY_derive_set_peer(ctx, peerkey) <= 0) {
-        //logger_EVP_PKEY.string_message = "EVP_PKEY_derive_set_peer(): EVP derive set peer failed";
+        printf("EVP_PKEY_derive_set_peer(): EVP derive set peer failed\n");
     }
 
     /* Determine buffer length */
     if (EVP_PKEY_derive(ctx, NULL, &skeylen) <= 0) {
-        //logger_EVP_PKEY.string_message = "EVP_PKEY_derive(): EVP derive failed";
+        printf("EVP_PKEY_derive(): EVP derive failed\n");
     }
     skey = static_cast<uint8_t *>(OPENSSL_malloc(skeylen));
 
     if (!skey) {
-        //logger_EVP_PKEY.string_message = "OpenSSL Malloc failed";
+        printf("OpenSSL Malloc failed\n");
     }
 
     if (EVP_PKEY_derive(ctx, skey, &skeylen) <= 0) {
-        //logger_EVP_PKEY.string_message = "EVP_PKEY_derive(): Shared key derivation failed";
+        printf("EVP_PKEY_derive(): Shared key derivation failed\n");
     }
 
-    printf("\shared secret\n");
-    //logger_EVP_PKEY.string_message = "SHARED SECRET: ";
-
+    std::cout << "=============== shared secret ===============" << std::endl;
     for (size_t i = 0; i < skeylen; i++) {
         printf("%02x", skey[i]);
     }
 
-    printf("\n");
-
+    printf("\n\n");
     return skey;
 }

@@ -2,30 +2,34 @@
 #define CLIENTGOST_H
 
 #include <iostream>
-#include <unistd.h>
-#include <malloc.h>
-#include <string.h>
-#include <arpa/inet.h>
-#include <sys/socket.h>
+#include <string>
+#include <stdio.h>
 #include <sys/types.h>
+#include <sys/socket.h>
 #include <netinet/in.h>
-#include <resolv.h>
+#include <arpa/inet.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <string.h>
+#include <netdb.h>
+#include <sys/uio.h>
+#include <sys/time.h>
+#include <sys/wait.h>
+#include <fcntl.h>
 #include <fstream>
+#include <malloc.h>
+#include <resolv.h>
+#include <errno.h>
 
 #include "openssl/ssl.h"
 #include "openssl/err.h"
-
 #include <openssl/bio.h>
 #include <openssl/evp.h>
 #include <openssl/aes.h>
-#include <string.h>
-
-#include <stdio.h>
-#include <errno.h>
-#include <resolv.h>
-#include <netdb.h>
 
 #define FAIL    -1
+#define MAXLINE 1024
+#define PORT 48655
 
 class ClassClientGost {
     public:

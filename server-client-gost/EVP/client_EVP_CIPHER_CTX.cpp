@@ -3,7 +3,7 @@
 ClassClientGost CLIENT_GOST_CTX;
 
 void handleErrors() {
-    printf("Error occured");
+    printf("Error occured\n");
     return;
 }
 
@@ -31,14 +31,14 @@ int ClassClientGost::decrypt(unsigned char *ciphertext, int ciphertext_len, unsi
      * is 128 bits
      */
 
-    auto cipher = EVP_get_cipherbynid(NID_grasshopper_cbc);
-    if (!cipher) {
-        //qWarning("[ChatCrypt::decrypt] Could not initialize Grasshopper cipher. Is the GOST library loaded?");
-    }
+//    auto cipher = EVP_get_cipherbynid(NID_grasshopper_cbc);
+//    if (!cipher) {
+//        //qWarning("[ChatCrypt::decrypt] Could not initialize Grasshopper cipher. Is the GOST library loaded?");
+//    }
 
     if(1 != EVP_DecryptInit_ex(ctx,
-                               cipher,
-                               //EVP_aes_256_cbc(),
+                               //cipher,
+                               EVP_aes_256_cbc(),
                                NULL, key, iv))
         handleErrors();
 
@@ -87,14 +87,14 @@ int ClassClientGost::encrypt(unsigned char *plaintext, int plaintext_len, unsign
      * is 128 bits
      */
 
-    auto cipher = EVP_get_cipherbynid(NID_grasshopper_cbc);
-    if (!cipher) {
-        printf("[ChatCrypt::decrypt] Could not initialize Grasshopper cipher. Is the GOST library loaded?");
-    }
+//    auto cipher = EVP_get_cipherbynid(NID_grasshopper_cbc);
+//    if (!cipher) {
+//        printf("Could not initialize Grasshopper cipher. Is the GOST library loaded?\n");
+//    }
 
     if(1 != EVP_EncryptInit_ex(ctx,
-                               cipher,
-                               //EVP_aes_256_cbc(),
+                               //cipher,
+                               EVP_aes_256_cbc(),
                                NULL, key, iv))
         handleErrors();
 
@@ -137,8 +137,6 @@ unsigned char *ClassClientGost::create_encrypt(unsigned char *plaintext, unsigne
    /* Encrypt the plaintext */
    ciphertext_len = CLIENT_GOST_CTX.encrypt(plaintext, strlen ((char *)plaintext), (unsigned char *)private_key, iv,
                              ciphertext);
-
-   printf("!!!!!!!!11\n");
     return ciphertext;
 }
 

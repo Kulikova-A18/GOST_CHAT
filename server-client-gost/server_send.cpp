@@ -22,7 +22,7 @@ std::string ClassServerGost::check_authorization(std::string login, std::string 
         };
     message_text = j.dump();
 
-    cout << message_text << endl;
+    //cout << message_text << endl;
     return message_text;
 }
 

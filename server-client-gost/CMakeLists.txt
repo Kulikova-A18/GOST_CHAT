@@ -6,8 +6,6 @@ find_package(OpenSSL REQUIRED)
 
 add_executable(server-gost
     server-gost.cpp
-    servlet.cpp
-    ssl.cpp
     server_send.cpp
 
     #data
@@ -23,7 +21,6 @@ target_link_libraries(server-gost OpenSSL::SSL OpenSSL::Crypto)
 add_executable(client-gost
     client-gost.cpp
     send.cpp
-    client_ssl.cpp
 
     #EVP
     EVP/client_EVP_CIPHER_CTX.cpp
