@@ -23,6 +23,9 @@
 #include <malloc.h>
 #include <resolv.h>
 #include <filesystem>
+#include <fstream>
+#include <ctime>
+#include <time.h>
 
 #include "openssl/ssl.h"
 #include "openssl/err.h"
@@ -35,6 +38,8 @@
 #define PORT 48655
 
 #define SIMMETRIC_KEY "mH70oa3013"
+
+using namespace std;
 
 class ClassServerGost {
     public:
@@ -61,6 +66,33 @@ class ClassServerGost {
         int write_client_pubkey_EVP_PKEY(char *clientkey);
         unsigned char *read_EVP_PKEY();
         std::string send_server_EVP_PKEY();
+};
+
+class ClassServerGostLog {
+    public:
+        std::string string_void;
+        std::string string_message;
+        std::string file_name = "server-gost-chat.log";
+
+        void logger() {
+            time_t     now = time(0);
+            struct tm  tstruct;
+            char       buf[80];
+            tstruct = *localtime(&now);
+            strftime(buf, sizeof(buf), "%Y-%m-%d.%X", &tstruct);
+
+            ofstream o(file_name,ios::ate|ios::out|ios::app);
+            o << buf << " " << string_void << " " << string_message << std::endl;
+            o.close();
+
+            if(string_void == "ClassServerGost::decrypt()" || string_void == "ClassServerGost::encrypt()"
+                    || string_void == "ClassServerGost::find_json()")
+            {
+                printf("\n========== ATTENTION ==========\n");
+                printf("%s %s/%s\n", buf, string_void.c_str(), string_message.c_str());
+                printf("=================================\n\n");
+            }
+        }
 };
 
 #endif // SERVERGOST_H

@@ -1,6 +1,7 @@
 #include "../client-gost.h"
 
 ClassClientGost CLIENT_GOST_CTX;
+ClassClientGostLog CLIENT_GOST_CTX_LOG;
 
 void handleErrors() {
     printf("Error occured\n");
@@ -13,6 +14,7 @@ unsigned char *iv = (unsigned char *)"0123456789012345";
 int ClassClientGost::decrypt(unsigned char *ciphertext, int ciphertext_len, unsigned char *key,
             unsigned char *iv, unsigned char *plaintext)
 {
+    CLIENT_GOST_CTX_LOG.string_void = "ClassServerGost::decrypt()";
     EVP_CIPHER_CTX *ctx;
 
     int len;
@@ -20,8 +22,10 @@ int ClassClientGost::decrypt(unsigned char *ciphertext, int ciphertext_len, unsi
     int plaintext_len;
 
     /* Create and initialise the context */
-    if(!(ctx = EVP_CIPHER_CTX_new()))
-        handleErrors();
+    if(!(ctx = EVP_CIPHER_CTX_new())) {
+        CLIENT_GOST_CTX_LOG.string_message = "EVP_CIPHER_CTX_new(): ERROR";
+        CLIENT_GOST_CTX_LOG.logger();
+    }
 
     /*
      * Initialise the decryption operation. IMPORTANT - ensure you use a key
@@ -33,21 +37,25 @@ int ClassClientGost::decrypt(unsigned char *ciphertext, int ciphertext_len, unsi
 
 //    auto cipher = EVP_get_cipherbynid(NID_grasshopper_cbc);
 //    if (!cipher) {
-//        //qWarning("[ChatCrypt::decrypt] Could not initialize Grasshopper cipher. Is the GOST library loaded?");
+//        CLIENT_GOST_CTX_LOG.string_message =
+//                "EVP_get_cipherbynid(): Could not initialize Grasshopper cipher. Is the GOST library loaded?";
+//        CLIENT_GOST_CTX_LOG.logger();
 //    }
 
-    if(1 != EVP_DecryptInit_ex(ctx,
-                               //cipher,
-                               EVP_aes_256_cbc(),
-                               NULL, key, iv))
-        handleErrors();
+    if(1 != EVP_DecryptInit_ex(ctx, /*cipher,*/ EVP_aes_256_cbc(), NULL, key, iv)) {
+        CLIENT_GOST_CTX_LOG.string_message = "EVP_DecryptInit_ex(): ERROR";
+        CLIENT_GOST_CTX_LOG.logger();
+    }
 
     /*
      * Provide the message to be decrypted, and obtain the plaintext output.
      * EVP_DecryptUpdate can be called multiple times if necessary.
      */
-    if(1 != EVP_DecryptUpdate(ctx, plaintext, &len, ciphertext, ciphertext_len))
-        handleErrors();
+
+    if(1 != EVP_DecryptUpdate(ctx, plaintext, &len, ciphertext, ciphertext_len)) {
+        CLIENT_GOST_CTX_LOG.string_message = "EVP_DecryptUpdate(): ERROR";
+        CLIENT_GOST_CTX_LOG.logger();
+    }
 
     plaintext_len = len;
 
@@ -55,11 +63,14 @@ int ClassClientGost::decrypt(unsigned char *ciphertext, int ciphertext_len, unsi
      * Finalise the decryption. Further plaintext bytes may be written at
      * this stage.
      */
-    if(1 != EVP_DecryptFinal_ex(ctx, plaintext + len, &len))
-        handleErrors();
+
+    if(1 != EVP_DecryptFinal_ex(ctx, plaintext + len, &len)){
+        CLIENT_GOST_CTX_LOG.string_message = "EVP_DecryptFinal_ex(): ERROR";
+        CLIENT_GOST_CTX_LOG.logger();
+    }
+
     plaintext_len += len;
 
-    //EVP_CIPHER
     /* Clean up */
     EVP_CIPHER_CTX_free(ctx);
 
@@ -69,6 +80,7 @@ int ClassClientGost::decrypt(unsigned char *ciphertext, int ciphertext_len, unsi
 int ClassClientGost::encrypt(unsigned char *plaintext, int plaintext_len, unsigned char *key,
             unsigned char *iv, unsigned char *ciphertext)
 {
+    CLIENT_GOST_CTX_LOG.string_void = "ClassServerGost::encrypt()";
     EVP_CIPHER_CTX *ctx;
 
     int len;
@@ -76,8 +88,10 @@ int ClassClientGost::encrypt(unsigned char *plaintext, int plaintext_len, unsign
     int ciphertext_len;
 
     /* Create and initialise the context */
-    if(!(ctx = EVP_CIPHER_CTX_new()))
-        handleErrors();
+    if(!(ctx = EVP_CIPHER_CTX_new())) {
+        CLIENT_GOST_CTX_LOG.string_message = "EVP_CIPHER_CTX_new(): ERROR";
+        CLIENT_GOST_CTX_LOG.logger();
+    }
 
     /*
      * Initialise the encryption operation. IMPORTANT - ensure you use a key
@@ -89,29 +103,37 @@ int ClassClientGost::encrypt(unsigned char *plaintext, int plaintext_len, unsign
 
 //    auto cipher = EVP_get_cipherbynid(NID_grasshopper_cbc);
 //    if (!cipher) {
-//        printf("Could not initialize Grasshopper cipher. Is the GOST library loaded?\n");
+//        CLIENT_GOST_CTX_LOG.string_message =
+//                "EVP_get_cipherbynid(): Could not initialize Grasshopper cipher. Is the GOST library loaded?";
 //    }
 
-    if(1 != EVP_EncryptInit_ex(ctx,
-                               //cipher,
-                               EVP_aes_256_cbc(),
-                               NULL, key, iv))
-        handleErrors();
+    if(1 != EVP_EncryptInit_ex(ctx, /*cipher,*/ EVP_aes_256_cbc(), NULL, key, iv)) {
+        CLIENT_GOST_CTX_LOG.string_message = "EVP_EncryptInit_ex(): ERROR";
+        CLIENT_GOST_CTX_LOG.logger();
+    }
 
     /*
      * Provide the message to be encrypted, and obtain the encrypted output.
      * EVP_EncryptUpdate can be called multiple times if necessary
      */
-    if(1 != EVP_EncryptUpdate(ctx, ciphertext, &len, plaintext, plaintext_len))
-        handleErrors();
+
+    if(1 != EVP_EncryptUpdate(ctx, ciphertext, &len, plaintext, plaintext_len)) {
+        CLIENT_GOST_CTX_LOG.string_message = "EVP_EncryptUpdate(): ERROR";
+        CLIENT_GOST_CTX_LOG.logger();
+    }
+
     ciphertext_len = len;
 
     /*
      * Finalise the encryption. Further ciphertext bytes may be written at
      * this stage.
      */
-    if(1 != EVP_EncryptFinal_ex(ctx, ciphertext + len, &len))
-        handleErrors();
+
+    if(1 != EVP_EncryptFinal_ex(ctx, ciphertext + len, &len)) {
+        CLIENT_GOST_CTX_LOG.string_message = "EVP_EncryptFinal_ex(): ERROR";
+        CLIENT_GOST_CTX_LOG.logger();
+    }
+
     ciphertext_len += len;
 
     /* Clean up */

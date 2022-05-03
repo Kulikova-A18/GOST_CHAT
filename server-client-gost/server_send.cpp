@@ -21,8 +21,6 @@ std::string ClassServerGost::check_authorization(std::string login, std::string 
             { "response server" , response },
         };
     message_text = j.dump();
-
-    //cout << message_text << endl;
     return message_text;
 }
 

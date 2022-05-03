@@ -1,7 +1,7 @@
 #include "../server-gost.h"
 
 void handleErrors() {
-    printf("Error occured");
+    printf("occured");
     return;
 }
 
@@ -12,10 +12,12 @@ void handleErrors() {
 unsigned char *iv = (unsigned char *)"0123456789012345";
 
 ClassServerGost SERVER_GOST_CTX;
+ClassServerGostLog SERVER_GOST_CTX_LOG;
 
 int ClassServerGost::decrypt(unsigned char *ciphertext, int ciphertext_len, unsigned char *key,
             unsigned char *iv, unsigned char *plaintext)
 {
+    SERVER_GOST_CTX_LOG.string_void = "ClassServerGost::decrypt()";
     EVP_CIPHER_CTX *ctx;
 
     int len;
@@ -23,8 +25,10 @@ int ClassServerGost::decrypt(unsigned char *ciphertext, int ciphertext_len, unsi
     int plaintext_len;
 
     /* Create and initialise the context */
-    if(!(ctx = EVP_CIPHER_CTX_new()))
-        handleErrors();
+    if(!(ctx = EVP_CIPHER_CTX_new())) {
+        SERVER_GOST_CTX_LOG.string_message = "EVP_CIPHER_CTX_new(): ERROR";
+        SERVER_GOST_CTX_LOG.logger();
+    }
 
     /*
      * Initialise the decryption operation. IMPORTANT - ensure you use a key
@@ -33,35 +37,43 @@ int ClassServerGost::decrypt(unsigned char *ciphertext, int ciphertext_len, unsi
      * IV size for *most* modes is the same as the block size. For AES this
      * is 128 bits
      */
-//    auto cipher = EVP_get_cipherbynid(NID_grasshopper_cbc);
 
+//    auto cipher = EVP_get_cipherbynid(NID_grasshopper_cbc);
 //    if (!cipher) {
-//        //qWarning("[ChatCrypt::decrypt] Could not initialize Grasshopper cipher. Is the GOST library loaded?");
+//        SERVER_GOST_CTX_LOG.string_message =
+//                "EVP_get_cipherbynid(): Could not initialize Grasshopper cipher. Is the GOST library loaded?";
+//        SERVER_GOST_CTX_LOG.logger();
 //    }
 
-    if(1 != EVP_DecryptInit_ex(ctx,
-                               //cipher,
-                               EVP_aes_256_cbc(),
-                               NULL, key, iv))
-        handleErrors();
+    if(1 != EVP_DecryptInit_ex(ctx, /*cipher,*/ EVP_aes_256_cbc(), NULL, key, iv)) {
+        SERVER_GOST_CTX_LOG.string_message = "EVP_DecryptInit_ex(): ERROR";
+        SERVER_GOST_CTX_LOG.logger();
+    }
 
     /*
      * Provide the message to be decrypted, and obtain the plaintext output.
      * EVP_DecryptUpdate can be called multiple times if necessary.
      */
-    if(1 != EVP_DecryptUpdate(ctx, plaintext, &len, ciphertext, ciphertext_len))
-        handleErrors();
+
+    if(1 != EVP_DecryptUpdate(ctx, plaintext, &len, ciphertext, ciphertext_len)) {
+        SERVER_GOST_CTX_LOG.string_message = "EVP_DecryptUpdate(): ERROR";
+        SERVER_GOST_CTX_LOG.logger();
+    }
+
     plaintext_len = len;
 
     /*
      * Finalise the decryption. Further plaintext bytes may be written at
      * this stage.
      */
-    if(1 != EVP_DecryptFinal_ex(ctx, plaintext + len, &len))
-        handleErrors();
+
+    if(1 != EVP_DecryptFinal_ex(ctx, plaintext + len, &len)){
+        SERVER_GOST_CTX_LOG.string_message = "EVP_DecryptFinal_ex(): ERROR";
+        SERVER_GOST_CTX_LOG.logger();
+    }
+
     plaintext_len += len;
 
-    //EVP_CIPHER
     /* Clean up */
     EVP_CIPHER_CTX_free(ctx);
 
@@ -71,6 +83,7 @@ int ClassServerGost::decrypt(unsigned char *ciphertext, int ciphertext_len, unsi
 int ClassServerGost::encrypt(unsigned char *plaintext, int plaintext_len, unsigned char *key,
             unsigned char *iv, unsigned char *ciphertext)
 {
+    SERVER_GOST_CTX_LOG.string_void = "ClassServerGost::encrypt()";
     EVP_CIPHER_CTX *ctx;
 
     int len;
@@ -78,8 +91,10 @@ int ClassServerGost::encrypt(unsigned char *plaintext, int plaintext_len, unsign
     int ciphertext_len;
 
     /* Create and initialise the context */
-    if(!(ctx = EVP_CIPHER_CTX_new()))
-        handleErrors();
+    if(!(ctx = EVP_CIPHER_CTX_new())) {
+        SERVER_GOST_CTX_LOG.string_message = "EVP_CIPHER_CTX_new(): ERROR";
+        SERVER_GOST_CTX_LOG.logger();
+    }
 
     /*
      * Initialise the encryption operation. IMPORTANT - ensure you use a key
@@ -91,29 +106,37 @@ int ClassServerGost::encrypt(unsigned char *plaintext, int plaintext_len, unsign
 
 //    auto cipher = EVP_get_cipherbynid(NID_grasshopper_cbc);
 //    if (!cipher) {
-//        //qWarning("Could not initialize Grasshopper cipher. Is the GOST library loaded?\n");
+//        SERVER_GOST_CTX_LOG.string_message =
+//                "EVP_get_cipherbynid(): Could not initialize Grasshopper cipher. Is the GOST library loaded?";
 //    }
 
-    if(1 != EVP_EncryptInit_ex(ctx,
-                               //cipher,
-                               EVP_aes_256_cbc(),
-                               NULL, key, iv))
-        handleErrors();
+    if(1 != EVP_EncryptInit_ex(ctx, /*cipher,*/ EVP_aes_256_cbc(), NULL, key, iv)) {
+        SERVER_GOST_CTX_LOG.string_message = "EVP_EncryptInit_ex(): ERROR";
+        SERVER_GOST_CTX_LOG.logger();
+    }
 
     /*
      * Provide the message to be encrypted, and obtain the encrypted output.
      * EVP_EncryptUpdate can be called multiple times if necessary
      */
-    if(1 != EVP_EncryptUpdate(ctx, ciphertext, &len, plaintext, plaintext_len))
-        handleErrors();
+
+    if(1 != EVP_EncryptUpdate(ctx, ciphertext, &len, plaintext, plaintext_len)) {
+        SERVER_GOST_CTX_LOG.string_message = "EVP_EncryptUpdate(): ERROR";
+        SERVER_GOST_CTX_LOG.logger();
+    }
+
     ciphertext_len = len;
 
     /*
      * Finalise the encryption. Further ciphertext bytes may be written at
      * this stage.
      */
-    if(1 != EVP_EncryptFinal_ex(ctx, ciphertext + len, &len))
-        handleErrors();
+
+    if(1 != EVP_EncryptFinal_ex(ctx, ciphertext + len, &len)) {
+        SERVER_GOST_CTX_LOG.string_message = "EVP_EncryptFinal_ex(): ERROR";
+        SERVER_GOST_CTX_LOG.logger();
+    }
+
     ciphertext_len += len;
 
     /* Clean up */

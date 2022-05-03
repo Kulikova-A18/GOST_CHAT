@@ -6,6 +6,7 @@ using json = nlohmann::json;
 using namespace std;
 
 ClassServerGost SERVER_GOST_DATA;
+ClassServerGostLog SERVER_GOST_DATA_LOG;
 
 std::string check_json = "data/data_workers.json";
 
@@ -40,6 +41,7 @@ namespace ns_checking {
         std::string position; // position employee
         std::string login; // login employee
         std::string password; // password employee
+        std::string password_life; // password life employee
     };
 
     void to_json(json& j, const person& p) {
@@ -52,7 +54,8 @@ namespace ns_checking {
             { "year of birth" , p.year_of_birth },
             { "position" , p.position },
             { "login" , p.login },
-            { "password" , p.password }
+            { "password" , p.password },
+            {"password life"  , p.password_life }
 
         };
     }
@@ -65,7 +68,7 @@ namespace ns_checking {
         j.at("position").get_to(p.position);
         j.at("login").get_to(p.login);
         j.at("password").get_to(p.password);
-
+        j.at("password life").get_to(p.password_life);
     }
 }
 
@@ -83,6 +86,26 @@ std::string ClassServerGost::check_data(std::string _message) {
     _result = SERVER_GOST_DATA._find(_login, _password);
 
     return _result;
+}
+
+int number_of_days(int days) {
+    int result_days = 0;
+
+    /* choose today's date and time */
+    time_t t_now = time(0);
+    time_t t_days = t_now;
+
+    /* transfer to the date when the due date */
+    t_days = 24 * 3600 * days;
+
+    /* the number of days remaining days is greater than today's number */
+    time_t t_result;
+    t_result = t_days - t_now;
+
+    /* calculate remaining days */
+    result_days = (t_result / 3600)/24;
+
+    return result_days;
 }
 
 
@@ -121,10 +144,35 @@ std::string ClassServerGost::find_json(std::string _login, std::string _password
         if (in.is_open()) {
             in >> j;
             auto conversion = j.get<ns_checking::person>();
+
+            int int_PASSWORD_LIFETIME;
+            if(sscanf(conversion.password_life.c_str(), "%d", &int_PASSWORD_LIFETIME) != 1) { /* error*/ }
+            int result_PASSWORD_LIFETIME = number_of_days(int_PASSWORD_LIFETIME);
+
             if (conversion.login == _login && conversion.password == _password) {
-                message = SIMMETRIC_KEY;
+                if(result_PASSWORD_LIFETIME > 3) {
+                    message = SIMMETRIC_KEY;
+                }
+                if(result_PASSWORD_LIFETIME <= 3 && result_PASSWORD_LIFETIME > 0) {
+                    SERVER_GOST_DATA_LOG.string_void = "ClassServerGost::find_json()";
+                    SERVER_GOST_DATA_LOG.string_message = "Expired password. Change the password and notify the user. "
+                                        "user data: LOGIN: %s; PASSWORD: %s", _login.c_str(), _password.c_str();
+                    SERVER_GOST_DATA_LOG.logger();
+                    message = SIMMETRIC_KEY;
+                }
+                if(result_PASSWORD_LIFETIME == 0) {
+                    SERVER_GOST_DATA_LOG.string_void = "ClassServerGost::find_json()";
+                    SERVER_GOST_DATA_LOG.string_message = "password will expire soon. change password and notify user. "
+                                        "user data: LOGIN: %s; PASSWORD: %s", _login.c_str(), _password.c_str();
+                    SERVER_GOST_DATA_LOG.logger();
+                    message = "Invalid password";
+                }
             }
             if (conversion.login == _login && conversion.password != _password) {
+                SERVER_GOST_DATA_LOG.string_void = "ClassServerGost::find_json()";
+                SERVER_GOST_DATA_LOG.string_message = "sign in attempt. user data: "
+                                        "LOGIN: %s; PASSWORD: %s", _login.c_str(), _password.c_str();
+                SERVER_GOST_DATA_LOG.logger();
                 message = "Invalid password";
             }
         }

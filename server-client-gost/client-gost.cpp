@@ -3,11 +3,10 @@
 using namespace std;
 
 ClassClientGost CLIENT_GOST;
+ClassClientGostLog CLIENT_GOST_LOG;
 
 std::string login = "konovalov@gost_chat.com";
 std::string password = "E2WpF6qK";
-
-bool bool_get_symmetric_key = false;
 
 int main(int argc, char *argv[])
 {
@@ -22,7 +21,9 @@ int main(int argc, char *argv[])
 
     // Creating socket file descriptor
     if ((sockfd = socket(AF_INET, SOCK_DGRAM, 0)) < 0) {
-        perror("socket creation failed");
+        CLIENT_GOST_LOG.string_void = "main()";
+        CLIENT_GOST_LOG.string_message = "socket(): socket creation failed";
+        CLIENT_GOST_LOG.logger();
         exit(EXIT_FAILURE);
     }
 
@@ -104,9 +105,15 @@ int main(int argc, char *argv[])
     CLIENT_GOST.get_authorization((char *)b);
 
     if(remove("client-pubkey-server.pem")) {
+        CLIENT_GOST_LOG.string_void = "main()";
+        CLIENT_GOST_LOG.string_message = "remove(): Error removing client-pubkey-server.pem";
+        CLIENT_GOST_LOG.logger();
         //printf("Error removing file");
     }
     if(remove("client-pubkey-client.pem")) {
+        CLIENT_GOST_LOG.string_void = "main()";
+        CLIENT_GOST_LOG.string_message = "remove(): Error removing client-pubkey-client.pem";
+        CLIENT_GOST_LOG.logger();
         //printf("Error removing file");
     }
 
