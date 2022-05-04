@@ -9,6 +9,8 @@ EVP_PKEY *pkey = NULL;
 std::string pubkey_server = "server-pubkey-server.pem";
 std::string pubkey_client = "server-pubkey-client.pem";
 
+ClassServerGostLog SERVER_GOST_PKEY_LOG;
+
 std::string ClassServerGost::send_server_EVP_PKEY() {
     std::string line = "";
     std::string result = "";
@@ -29,6 +31,8 @@ std::string ClassServerGost::send_server_EVP_PKEY() {
 }
 
 unsigned char *ClassServerGost::create_EVP_PKEY() {
+    SERVER_GOST_PKEY_LOG.string_void = "ClassServerGost::create_EVP_PKEY()";
+
     std::cout << "=============== server EVP_PKEY ===============" << std::endl;
 
     /* Generate private and public keys */
@@ -49,7 +53,8 @@ unsigned char *ClassServerGost::create_EVP_PKEY() {
     out = BIO_new_file(pubkey_server.c_str(), "w+");
 
     if (!out) {
-        printf("BIO out is empty\n");
+        SERVER_GOST_PKEY_LOG.string_message = "BIO_new_file(): BIO out is empty";
+        SERVER_GOST_PKEY_LOG.logger();
     }
 
     PEM_write_bio_PUBKEY(out, pkey);
@@ -62,14 +67,15 @@ unsigned char *ClassServerGost::create_EVP_PKEY() {
 int ClassServerGost::write_client_pubkey_EVP_PKEY(char *clientkey) {
     std::ofstream out;
     out.open(pubkey_client);
-    if (out.is_open())
-    {
+    if (out.is_open()) {
         out << clientkey;
     }
     return 0;
 }
 
 unsigned char *ClassServerGost::read_EVP_PKEY() {
+    SERVER_GOST_PKEY_LOG.string_void = "ClassServerGost::read_EVP_PKEY()";
+
     /* Read Client's public key */
     FILE *keyfile = fopen(pubkey_client.c_str(), "r");
     EVP_PKEY *peerkey = NULL;
@@ -83,32 +89,42 @@ unsigned char *ClassServerGost::read_EVP_PKEY() {
     EVP_PKEY_CTX *ctx;
     unsigned char *skey;
     size_t skeylen;
+
     ctx = EVP_PKEY_CTX_new(pkey, NULL);
 
     if (!ctx) {
-        printf("CTX is empty\n");
+        SERVER_GOST_PKEY_LOG.string_message = "EVP_PKEY_CTX_new(): CTX is empty";
+        SERVER_GOST_PKEY_LOG.logger();
     }
 
     if (EVP_PKEY_derive_init(ctx) <= 0) {
-        printf("EVP_PKEY_derive_init(): EVP derive initialization failed\n");
+        SERVER_GOST_PKEY_LOG.string_message
+                = "EVP_PKEY_derive_init(): EVP derive initialization failed";
+        SERVER_GOST_PKEY_LOG.logger();
     }
 
     if (EVP_PKEY_derive_set_peer(ctx, peerkey) <= 0) {
-        printf("EVP_PKEY_derive_set_peer(): EVP derive set peer failed\n");
+        SERVER_GOST_PKEY_LOG.string_message
+                = "EVP_PKEY_derive_set_peer(): EVP derive set peer failed";
+        SERVER_GOST_PKEY_LOG.logger();
     }
 
     /* Determine buffer length */
     if (EVP_PKEY_derive(ctx, NULL, &skeylen) <= 0) {
-        printf("EVP_PKEY_derive(): EVP derive failed\n");
+        SERVER_GOST_PKEY_LOG.string_message = "EVP_PKEY_derive(): EVP derive failed";
+        SERVER_GOST_PKEY_LOG.logger();
     }
+
     skey = static_cast<uint8_t *>(OPENSSL_malloc(skeylen));
 
     if (!skey) {
-        printf("OpenSSL Malloc failed\n");
+        SERVER_GOST_PKEY_LOG.string_message = "OPENSSL_malloc(): OpenSSL Malloc failed";
+        SERVER_GOST_PKEY_LOG.logger();
     }
 
     if (EVP_PKEY_derive(ctx, skey, &skeylen) <= 0) {
-        printf("EVP_PKEY_derive(): Shared key derivation failed\n");
+        SERVER_GOST_PKEY_LOG.string_message = "EVP_PKEY_derive(): Shared key derivation failed";
+        SERVER_GOST_PKEY_LOG.logger();
     }
 
     std::cout << "=============== shared secret ===============" << std::endl;

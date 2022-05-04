@@ -31,6 +31,8 @@
 #define MAXLINE 1024
 #define PORT 48655
 
+using namespace std;
+
 class ClassClientGost {
     public:
         // client_ssl.cpp
@@ -55,6 +57,28 @@ class ClassClientGost {
         std::string send_client_EVP_PKEY();
         int write_server_pubkey_EVP_PKEY(char *clientkey);
         unsigned char *read_EVP_PKEY();
+};
+
+class ClassClientGostLog {
+    public:
+        std::string string_void;
+        std::string string_message;
+        std::string file_name = "gost-chat.log";
+
+        void logger() {
+            time_t     now = time(0);
+            struct tm  tstruct;
+            char       buf[80];
+            tstruct = *localtime(&now);
+            strftime(buf, sizeof(buf), "%Y-%m-%d.%X", &tstruct);
+
+            ofstream o(file_name,ios::ate|ios::out|ios::app);
+            o << buf << " " << string_void << " " << string_message << std::endl;
+            o.close();
+
+            // print from terminal
+            //printf("%s %s/%s\n", buf, string_void.c_str(), string_message.c_str());
+        }
 };
 
 #endif // CLIENTGOST_H
