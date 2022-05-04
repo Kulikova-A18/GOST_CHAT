@@ -2,11 +2,16 @@
 
 ClassClientGost CLIENT_GOST;
 
-std::string login = "konovalov@gost_chat.com";
-std::string password = "E2WpF6qK";
+std::string login = "kulikova@gost_chat.com";
+std::string password = "7777777777";
 
 int main(int arvc, char *argv[])
 {
+    std::cout << "=============== data ===============" << std::endl;
+    std::cout << "login: " << login << std::endl;
+    std::cout << "password: " << password << std::endl;
+    std::cout << "====================================" << std::endl << std::endl;
+
     SSL_CTX *ctx;
     int server;
     SSL *ssl;

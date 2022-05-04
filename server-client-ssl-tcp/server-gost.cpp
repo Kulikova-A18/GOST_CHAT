@@ -34,7 +34,9 @@ int main(int arvc, char *argv[])
     ctx = SERVER_GOST.init_server_CTX();                        //initialize SSL
     SERVER_GOST.load_certificates(ctx, CERT_PATH, KEY_PATH);    //load certs
     server = SERVER_GOST.open_listener(atoi(PORT_NUM));         //create server socket
-       struct sockaddr_in addr;
+    while(1)
+    {
+        struct sockaddr_in addr;
         socklen_t len = sizeof(addr);
         SSL *ssl;
 
@@ -44,7 +46,7 @@ int main(int arvc, char *argv[])
         SSL_set_fd(ssl, client);        //set connection socket to SSL state
 
         SERVER_GOST.servlet(ssl);       //service connection
-
+    }
     close(server);              //close server socket
     SSL_CTX_free(ctx);          //release context
 }
