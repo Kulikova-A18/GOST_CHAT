@@ -16,12 +16,12 @@ int is_root() {
 
 int main(int arvc, char *argv[])
 {
-    std::string login_admin = "", password_admin = "";
+    std::string login_admin = "root", password_admin = "root";
     std::cout << "=============== sign in ===============" << std::endl;
-    std::cout << "login: ";
-    std::cin >> login_admin;
-    std::cout << "\npassword: ";
-    std::cin >> password_admin;
+    std::cout << "login: " << login_admin << std::endl;
+    //std::cin >> login_admin;
+    std::cout << "password: " << password_admin << std::endl;
+    //std::cin >> password_admin;
 
     if(login_admin != "root" || password_admin != "root") {
         SERVER_GOST_LOG.string_void = "main()";

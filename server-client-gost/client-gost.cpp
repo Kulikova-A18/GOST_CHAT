@@ -5,8 +5,8 @@ using namespace std;
 ClassClientGost CLIENT_GOST;
 ClassClientGostLog CLIENT_GOST_LOG;
 
-std::string login = "konovalov@gost_chat.com";
-std::string password = "E2WpF6qK";
+std::string login = "kulikova@gost_chat.com";
+std::string password = "c0WpF6iK";
 
 int main(int argc, char *argv[])
 {
@@ -98,7 +98,21 @@ int main(int argc, char *argv[])
     n = recvfrom(sockfd, (char *)buffer, MAXLINE, MSG_WAITALL, (struct sockaddr *) &servaddr, &len);
     buffer[n] = '\0';
     cptr = reinterpret_cast<char*>(const_cast<uint8_t*>(buffer));
-    unsigned char* b = CLIENT_GOST.create_decrypt((unsigned char *)cptr, secretKey);
+    unsigned char *iv = (unsigned char *)"0123456789012345"; /* A 128 bit IV */
+    plain_len = strlen ((char *)buffer);
+    /* Buffer for the decrypted text */
+    unsigned char *decryptedtext;
+    decryptedtext = new unsigned char[plain_len + AES_BLOCK_SIZE];
+    /* fill buffer with zeros */
+    memset(decryptedtext,0,plain_len + AES_BLOCK_SIZE);
+    int decryptedtext_len;
+    /* Decrypt the ciphertext */
+    decryptedtext_len = CLIENT_GOST.decrypt((unsigned char *)buffer,
+                                            strlen((char *)buffer), secretKey, iv, decryptedtext);
+    /* Add a NULL terminator. We are expecting printable text */
+    decryptedtext[decryptedtext_len] = '\0';
+
+    unsigned char* b = decryptedtext;
     BIO_dump_fp (stdout, (char *)b, strlen((char *)b));
     std::cout << std::endl << std::endl;
 

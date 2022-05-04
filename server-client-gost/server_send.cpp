@@ -25,13 +25,15 @@ std::string ClassServerGost::check_authorization(std::string login, std::string 
 }
 
 std::string ClassServerGost::check_json_message(char *message) {
-    j = json::parse(message);
-
-    std::string LOGIN               = j["login"].get<std::string>();
-    std::string PASSWORD            = j["password"].get<std::string>();
-
     std::string response = "";
-    response = SERVER_GOST_SEND.check_data(message);
-    response = SERVER_GOST_SEND.check_authorization(LOGIN, PASSWORD, response);
+    if(message[0] == '{') {
+        j = json::parse(message);
+
+        std::string LOGIN               = j["login"].get<std::string>();
+        std::string PASSWORD            = j["password"].get<std::string>();
+
+        response = SERVER_GOST_SEND.check_data(message);
+        response = SERVER_GOST_SEND.check_authorization(LOGIN, PASSWORD, response);
+    }
     return response;
 }

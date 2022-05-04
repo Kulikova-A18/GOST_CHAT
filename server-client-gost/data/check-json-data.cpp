@@ -100,11 +100,13 @@ int number_of_days(int days) {
 
     /* the number of days remaining days is greater than today's number */
     time_t t_result;
+
     t_result = t_days - t_now;
 
-    /* calculate remaining days */
-    result_days = (t_result / 3600)/24;
-
+    if(t_now > t_days) {
+        /* calculate remaining days */
+        result_days = (t_result / 3600)/24;
+    }
     return result_days;
 }
 
@@ -153,28 +155,35 @@ std::string ClassServerGost::find_json(std::string _login, std::string _password
                 if(result_PASSWORD_LIFETIME > 3) {
                     message = SIMMETRIC_KEY;
                 }
-                if(result_PASSWORD_LIFETIME <= 3 && result_PASSWORD_LIFETIME > 0) {
+                else if(result_PASSWORD_LIFETIME <= 3 && result_PASSWORD_LIFETIME > 0) {
+                    char ac[1024] = {0};
+                    sprintf(ac, "Expired password. Change the password and notify the user. days left: %d."
+                                "user data: LOGIN: %s; PASSWORD: %s", result_PASSWORD_LIFETIME, _login.c_str(), _password.c_str());
                     SERVER_GOST_DATA_LOG.string_void = "ClassServerGost::find_json()";
-                    SERVER_GOST_DATA_LOG.string_message = "Expired password. Change the password and notify the user. "
-                                        "user data: LOGIN: %s; PASSWORD: %s", _login.c_str(), _password.c_str();
+                    SERVER_GOST_DATA_LOG.string_message = ac;
                     SERVER_GOST_DATA_LOG.logger();
                     message = SIMMETRIC_KEY;
                 }
-                if(result_PASSWORD_LIFETIME == 0) {
+                else if(result_PASSWORD_LIFETIME == 0) {
+                    char ac[1024] = {0};
+                    sprintf(ac, "password will expire soon. change password and notify user."
+                                " user data: LOGIN: %s; PASSWORD: %s", _login.c_str(), _password.c_str());
                     SERVER_GOST_DATA_LOG.string_void = "ClassServerGost::find_json()";
-                    SERVER_GOST_DATA_LOG.string_message = "password will expire soon. change password and notify user. "
-                                        "user data: LOGIN: %s; PASSWORD: %s", _login.c_str(), _password.c_str();
+                    SERVER_GOST_DATA_LOG.string_message = ac;
                     SERVER_GOST_DATA_LOG.logger();
                     message = "Invalid password";
                 }
+                else { /*error*/ }
             }
-            if (conversion.login == _login && conversion.password != _password) {
+            else if (conversion.login != _login || conversion.password != _password) {
+                char ac[1024] = {0};
+                sprintf(ac, "sign in attempt. user data: LOGIN: %s; PASSWORD: %s", _login.c_str(), _password.c_str());
                 SERVER_GOST_DATA_LOG.string_void = "ClassServerGost::find_json()";
-                SERVER_GOST_DATA_LOG.string_message = "sign in attempt. user data: "
-                                        "LOGIN: %s; PASSWORD: %s", _login.c_str(), _password.c_str();
+                SERVER_GOST_DATA_LOG.string_message = ac;
                 SERVER_GOST_DATA_LOG.logger();
                 message = "Invalid password";
             }
+            else { /*error*/ }
         }
         in.close();
     }
@@ -200,8 +209,13 @@ std::string ClassServerGost::_find(std::string argv1, std::string argv2) {
     if (text.find(argv1) != std::string::npos && text.find(argv2) != std::string::npos) {
         message = SERVER_GOST_DATA.find_json(argv1, argv2);
     }
-    if (text.find(argv1) == std::string::npos || text.find(argv2) == std::string::npos) {
+    else if (text.find(argv1) != std::string::npos || text.find(argv2) != std::string::npos) {
+        message = SERVER_GOST_DATA.find_json(argv1, argv2);
+    }
+    else if (text.find(argv1) == std::string::npos && text.find(argv2) == std::string::npos) {
         message = "Invalid password";
     }
+    else { /*error*/ }
+
     return message;
 }

@@ -73,7 +73,7 @@ namespace ns_create {
 void create_Kulikova() {
     /* transfer to the date when the due date */
     time_t t_days = time(0);
-    int days = 30;
+    int days = 0;
     days += (t_days / 3600)/24;
     std::string string_days = std::to_string(days);
 
