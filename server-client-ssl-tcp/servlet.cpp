@@ -13,10 +13,9 @@ void ClassServerGost::servlet(SSL* ssl) {
         ERR_print_errors_fp(stderr);
         exit(0);
     }
-        /* get any certificates */
+    /* get any certificates */
     SERVER_GOST_SERVLET.show_certs(ssl);
-//        while(1)
-//        {
+
     bytes = SSL_read(ssl, buf, sizeof(buf)); // get request
     buf[bytes] = '\0';
 
@@ -35,7 +34,6 @@ void ClassServerGost::servlet(SSL* ssl) {
         BIO_dump_fp (stdout, (const char *)reply, strlen((char *)reply));
     }
     else { ERR_print_errors_fp(stderr); }
-//         }
 
     sd = SSL_get_fd(ssl);   //get socket connection
     SSL_free(ssl);          //release SSL state
