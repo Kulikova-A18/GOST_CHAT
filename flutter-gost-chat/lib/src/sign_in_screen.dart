@@ -16,9 +16,14 @@ class SignInPage extends StatefulWidget {
 }
 
 class SignInPageState extends State<SignInPage> {
+  final TextEditingController _loginController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
   @override
   void initState() {
     super.initState();
+    _loginController.text = "kulikova@gost_chat.com";
+    _passwordController.text = "c0WpF6iK";
   }
 
   late bool _passwordVisible = false;
@@ -29,6 +34,11 @@ class SignInPageState extends State<SignInPage> {
         home: Home(),
       ),
     );
+  }
+
+  void _fun_sign(var argv1, var argv2) {
+    fun_sign_in_linux(StringUtf8Pointer(argv1).toNativeUtf8(),
+        StringUtf8Pointer(argv2).toNativeUtf8());
   }
 
   @override
@@ -80,7 +90,7 @@ class SignInPageState extends State<SignInPage> {
                             color: Colors.white,
                             child: TextFormField(
                               autofocus: true,
-                              //controller: _loginController,
+                              controller: _loginController,
                               decoration: const InputDecoration(
                                 hintText: "логин",
                                 border: InputBorder.none,
@@ -111,7 +121,7 @@ class SignInPageState extends State<SignInPage> {
                           Container(
                             child: TextFormField(
                               autofocus: true,
-                              //controller: _passwordController,
+                              controller: _passwordController,
                               obscureText: !_passwordVisible,
                               decoration: InputDecoration(
                                 hintText: "пароль",
@@ -166,7 +176,9 @@ class SignInPageState extends State<SignInPage> {
                                   borderRadius: BorderRadius.circular(20.0),
                                 ))),
                             onPressed: () {
-                              performNavigator_HomePage();
+                              _fun_sign(_loginController.text,
+                                  _passwordController.text);
+                              //performNavigator_HomePage();
                             }))
                   ]),
                 )),

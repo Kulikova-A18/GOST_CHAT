@@ -10,6 +10,33 @@
 #include <cstdlib>
 #include <stdio.h>
 #include <clocale>
+#include <stdlib.h>
+#include <unistd.h>
+#include <cstdio>
+#include <netdb.h>
+
+//Creating elliptic curve (x25519) cryptography key pairs
+#include "openssl/ssl.h"
+#include "openssl/err.h"
+#include <openssl/aes.h>
+#include <openssl/err.h>
+#include <openssl/evp.h>
+#include <openssl/pem.h>
+#include <openssl/bio.h>
+
+#include <sys/uio.h>
+#include <sys/time.h>
+#include <sys/wait.h>
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <sys/stat.h>
+
+#include <arpa/inet.h>
+#include <netinet/in.h>
+#include <fcntl.h>
+#include <malloc.h>
+#include <resolv.h>
+#include <errno.h>
 
 #ifdef _WIN32
 #include <Windows.h>
@@ -17,68 +44,53 @@
 #endif
 
 #include "json.hpp"
+using json = nlohmann::json;
 
 int _cleaning_logger_linux();
 const std::string currentDateTime();
 int _logger_linux(char* argv1, char* argv2);
 
-//Creating elliptic curve (x25519) cryptography key pairs
-#include <openssl/err.h>
-#include <openssl/evp.h>
-#include <openssl/pem.h>
-#include <openssl/bio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <string.h>
-#include <sys/types.h>
-#include <sys/socket.h>
-#include <arpa/inet.h>
-#include <netinet/in.h>
-#include <sys/stat.h>
-#include <cstdio>
-
-using json = nlohmann::json;
-
-#define PORT     8080
+#define FAIL    -1
 #define MAXLINE 1024
+#define PORT 9005
 
 using namespace std;
 
-int create_EVP_PKEY(char * a);
-string create_handshake();
-string check_authorization(string login, string password);
-string get_symmetric_key();
-string get_log(string log);
-int create_autorization(char *a);
-char *create_symmetric_key(char *a);
+class ClassClientGost {
+    public:
+        // client_ssl.cpp
+        int open_connection(const char *hostname, int port);
+        SSL_CTX* init_CTX(void);
 
-/*
-int _create_data_linux();
-void create_Moiseev();
-void create_Zimin();
-void create_Guseva();
-void create_Bykova();
-void create_Romanov();
-void create_Kulikova();
-void create_Doronina();
-void create_Doronin();
-void create_Kryukova();
-std::string ReplaceString(std::string subject, const std::string& search, const std::string& replace);
-void entrance_audit(std::string login, std::string password, std::string message);
-void entrance_person_audit(int id, std::string surname, std::string name, std::string patronymic, std::string message);
-std::string find_json(std::string _login, std::string _password);
-int find(std::string argv1, std::string argv2);
-*/
+        // send.cpp
+        std::string check_authorization(std::string login, std::string password);
+        void get_authorization(std::string a);
+
+        // EVP/client_EVP_CIPHER_CTX.cpp
+        int decrypt(unsigned char *ciphertext, int ciphertext_len, unsigned char *key,
+                    unsigned char *iv, unsigned char *plaintext);
+        int encrypt(unsigned char *plaintext, int plaintext_len, unsigned char *key,
+                    unsigned char *iv, unsigned char *ciphertext);
+
+        unsigned char *create_encrypt(unsigned char *plaintext, unsigned char *private_key);
+        unsigned char *create_decrypt(unsigned char *plaintext, unsigned char *private_key);
+
+        // EVP/client_EVP_PKEY.cpp
+        int create_EVP_PKEY();
+        std::string send_client_EVP_PKEY();
+        int write_server_pubkey_EVP_PKEY(char *clientkey);
+        unsigned char *read_EVP_PKEY();
+};
 
 // event logging
-class Class_Logger
+class ClassClientGostLog
 {
     public:
         std::string string_void;
         std::string string_message;
         std::string file_name = "/home/alyona/gost-chat-server/server-gost-chat.log";
 
-        void logger_server()
+        void logger()
         {
             time_t     now = time(0);
             struct tm  tstruct;

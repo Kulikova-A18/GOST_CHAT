@@ -73,19 +73,29 @@ namespace ns_checking {
 }
 
 std::string ClassServerGost::check_data(std::string _message) {
-    std::string _result = "";
+    try
+    {
+        std::string _result = "";
 
-    if(_message.empty()) {
-        _result = "Invalid password";
+        if(_message.empty()) {
+            _result = "Invalid password";
+        }
+
+        json j_message = json::parse(_message);
+        std::string _login = j_message["login"].get<std::string>();
+        std::string _password = j_message["password"].get<std::string>();
+
+        _result = SERVER_GOST_DATA._find(_login, _password);
+
+        return _result;
     }
-
-    json j_message = json::parse(_message);
-    std::string _login = j_message["login"].get<std::string>();
-    std::string _password = j_message["password"].get<std::string>();
-
-    _result = SERVER_GOST_DATA._find(_login, _password);
-
-    return _result;
+    catch (json::parse_error& e)
+    {
+        // output exception information
+        std::cout << "message: " << e.what() << '\n'
+                    << "exception id: " << e.id << '\n'
+                    << "byte position of error: " << e.byte << std::endl;
+    }
 }
 
 int number_of_days(int days) {
@@ -171,7 +181,7 @@ std::string ClassServerGost::find_json(std::string _login, std::string _password
                     SERVER_GOST_DATA_LOG.string_void = "ClassServerGost::find_json()";
                     SERVER_GOST_DATA_LOG.string_message = ac;
                     SERVER_GOST_DATA_LOG.logger();
-                    message = "Invalid password";
+                    message = SIMMETRIC_KEY;
                 }
                 else { /*error*/ }
             }
