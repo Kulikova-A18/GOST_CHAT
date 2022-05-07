@@ -1,8 +1,8 @@
-# Install script for directory: /home/alyona/GOST_CHAT/linux/flutter/ephemeral/.plugin_symlinks/plugin_linux/linux
+# Install script for directory: /home/alyona/GOST_CHAT/flutter-gost-chat/linux/flutter/ephemeral/.plugin_symlinks/plugin_linux/linux
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "/home/alyona/GOST_CHAT/build/linux/x64/release/bundle")
+  set(CMAKE_INSTALL_PREFIX "/home/alyona/GOST_CHAT/flutter-gost-chat/build/linux/x64/release/bundle")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
