@@ -5,7 +5,6 @@ char message_client_buf[255];
 
 bool bool_create_EVP_PKEY = false;
 bool bool_get_symmetric_key = false;
-
 int result_create_autorization;
 
 // Driver code
