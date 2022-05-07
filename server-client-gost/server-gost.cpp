@@ -139,11 +139,12 @@ int main(int arvc, char *argv[])
 
         std::cout << "=============== send message ===============" << std::endl;
         unsigned char *ciphertext;
-        ciphertext = new unsigned char[plain_len + AES_BLOCK_SIZE];
+        size_t plain_len_2 = strlen ((char *)ac_client_request);
+        ciphertext = new unsigned char[plain_len_2 + AES_BLOCK_SIZE];
         int ciphertext_len;
         /* Encrypt the plaintext */
         ciphertext_len = SERVER_GOST.encrypt((unsigned char *)ac_client_request,
-                                             strlen (ac_client_request), (unsigned char *)secretKey,
+                                             strlen ((char *)ac_client_request), (unsigned char *)secretKey,
                                              (unsigned char *)"0123456789012345", ciphertext);
         sendto(sockfd, (const char *)ciphertext, strlen((char *)ciphertext), MSG_CONFIRM,
                (const struct sockaddr *)&cliaddr, len);

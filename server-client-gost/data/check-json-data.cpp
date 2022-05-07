@@ -150,6 +150,7 @@ std::string ClassServerGost::find_json(std::string _login, std::string _password
 
     json j;
     std::string message = "";
+    bool result_check = false;
 
     for (int i = 0; i < length(list_person); i++) {
         std::ifstream in(list_person[i]);
@@ -172,7 +173,8 @@ std::string ClassServerGost::find_json(std::string _login, std::string _password
                     SERVER_GOST_DATA_LOG.string_void = "ClassServerGost::find_json()";
                     SERVER_GOST_DATA_LOG.string_message = ac;
                     SERVER_GOST_DATA_LOG.logger();
-                    message = SIMMETRIC_KEY;
+
+                    result_check = true;
                 }
                 else if(result_PASSWORD_LIFETIME == 0) {
                     char ac[1024] = {0};
@@ -181,7 +183,7 @@ std::string ClassServerGost::find_json(std::string _login, std::string _password
                     SERVER_GOST_DATA_LOG.string_void = "ClassServerGost::find_json()";
                     SERVER_GOST_DATA_LOG.string_message = ac;
                     SERVER_GOST_DATA_LOG.logger();
-                    message = SIMMETRIC_KEY;
+                    result_check = true;
                 }
                 else { /*error*/ }
             }
@@ -191,11 +193,17 @@ std::string ClassServerGost::find_json(std::string _login, std::string _password
                 SERVER_GOST_DATA_LOG.string_void = "ClassServerGost::find_json()";
                 SERVER_GOST_DATA_LOG.string_message = ac;
                 SERVER_GOST_DATA_LOG.logger();
-                message = "Invalid password";
             }
             else { /*error*/ }
         }
         in.close();
+    }
+
+    if(result_check == true) {
+        message = SIMMETRIC_KEY;
+    }
+    else {
+        message = "Invalid password";
     }
 
     return message;
