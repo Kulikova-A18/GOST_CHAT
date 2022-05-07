@@ -25,15 +25,25 @@ std::string ClassServerGost::check_authorization(std::string login, std::string 
 }
 
 std::string ClassServerGost::check_json_message(char *message) {
-    std::string response = "";
-    if(message[0] == '{') {
-        j = json::parse(message);
+    try
+    {
+        std::string response = "";
+        if(message[0] == '{') {
+            j = json::parse(message);
 
-        std::string LOGIN               = j["login"].get<std::string>();
-        std::string PASSWORD            = j["password"].get<std::string>();
+            std::string LOGIN               = j["login"].get<std::string>();
+            std::string PASSWORD            = j["password"].get<std::string>();
 
-        response = SERVER_GOST_SEND.check_data(message);
-        response = SERVER_GOST_SEND.check_authorization(LOGIN, PASSWORD, response);
+            response = SERVER_GOST_SEND.check_data(message);
+            response = SERVER_GOST_SEND.check_authorization(LOGIN, PASSWORD, response);
+        }
+        return response;
     }
-    return response;
+    catch (json::parse_error& e)
+    {
+        // output exception information
+        std::cout << "message: " << e.what() << '\n'
+                    << "exception id: " << e.id << '\n'
+                    << "byte position of error: " << e.byte << std::endl;
+    }
 }

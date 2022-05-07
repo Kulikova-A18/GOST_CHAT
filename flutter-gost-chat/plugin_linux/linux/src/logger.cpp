@@ -1,5 +1,5 @@
-#include "../gost_chat.h"
-#include "../export.h"
+#include "../include/gost_chat.h"
+#include "../include/export.h"
 
 using namespace std;
 

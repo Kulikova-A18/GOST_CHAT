@@ -35,7 +35,7 @@
 
 #define FAIL    -1
 #define MAXLINE 1024
-#define PORT 48655
+#define PORT 9005
 
 #define SIMMETRIC_KEY "mH70oa3013"
 

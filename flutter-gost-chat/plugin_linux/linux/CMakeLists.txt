@@ -13,19 +13,16 @@ add_library(${PLUGIN_NAME} SHARED
 
   "src/logger.cpp"
   "src/sign_in.cpp"
-  # "include/src/create_data.cpp"
-  # "include/src/checking_json.cpp"
-  "src/checking_bad_words.cpp"
 
-  "src/send_server/client-authorization.cpp"
-  "src/send_server/client-EVP-PKEY.cpp"
-  "src/send_server/client-symmetric-key.cpp"
-  "src/send_server/client-create-message.cpp"
-  # "include/src/send_server/client-gost-chat.cpp"
+  "src/send_server/send.cpp"
+
+  #EVP
+  "src/send_server/EVP/client_EVP_CIPHER_CTX.cpp"
+  "src/send_server/EVP/client_EVP_PKEY.cpp"
 )
 
-#set_property(TARGET ${PLUGIN_NAME} PROPERTY CXX_STANDARD 17)
-#set_property(TARGET ${PLUGIN_NAME} PROPERTY CXX_STANDARD_REQUIRED ON)
+set_property(TARGET ${PLUGIN_NAME} PROPERTY CXX_STANDARD 17)
+set_property(TARGET ${PLUGIN_NAME} PROPERTY CXX_STANDARD_REQUIRED ON)
 
 apply_standard_settings(${PLUGIN_NAME})
 set_target_properties(${PLUGIN_NAME} PROPERTIES

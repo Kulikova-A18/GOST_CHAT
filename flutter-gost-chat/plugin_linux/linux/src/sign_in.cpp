@@ -1,81 +1,139 @@
-#include "../gost_chat.h"
-#include "../export.h"
+#include "../include/gost_chat.h"
+#include "../include/export.h"
 
 using namespace std;
 
-/*
-list of return:
-
-0 - successfully
-1 - fields are empty
-2 - unsuccessful
-*/
-
-std::string message_client;
-char message_client_buf[255];
-
-bool bool_create_EVP_PKEY = false;
-int result_create_autorization;
-
-int result_sign_in_linux = 0;
+ClassClientGost CLIENT_GOST;
+ClassClientGostLog CLIENT_GOST_LOG;
 
 LIBRARY_API
-int _sign_in_linux (char *argv1, char *argv2) {
-
-    //_logger_void = "_sign_in_linux()";
-    if (!argv1[0] && !argv2[0]) {
+int _sign_in_linux(char *login, char *password)
+{
+    if (!login[0] && !password[0]) {
         //_logger(_logger_void,"all variables are empty");
         return 1;
     } 
 
-    if(bool_create_EVP_PKEY == false) {
-        // EVP-PKEY
-        printf("\n\nEVP-PKEY\n\n");
-        message_client = create_handshake();
-        strcpy(message_client_buf,message_client.c_str());
-        create_EVP_PKEY(message_client_buf);
-        bool_create_EVP_PKEY = true;
+    std::cout << "=============== data ===============" << std::endl;
+    std::cout << "login: " << login << std::endl;
+    std::cout << "password: " << password << std::endl;
+    std::cout << "====================================" << std::endl << std::endl;
+
+    int sockfd;
+    uint8_t buffer[MAXLINE];
+    struct sockaddr_in	 servaddr;
+
+    // Creating socket file descriptor
+    if ((sockfd = socket(AF_INET, SOCK_DGRAM, 0)) < 0) {
+        CLIENT_GOST_LOG.string_void = "main()";
+        CLIENT_GOST_LOG.string_message = "socket(): socket creation failed";
+        CLIENT_GOST_LOG.logger();
+        exit(EXIT_FAILURE);
     }
 
-    if(bool_create_EVP_PKEY == true) {
-            message_client = check_authorization(argv1, argv2);
-            strcpy(message_client_buf,message_client.c_str());
-            result_create_autorization = create_autorization(message_client_buf);
+    memset(&servaddr, 0, sizeof(servaddr));
 
-            switch (result_create_autorization) {
-                case 0:
-                    printf("successfully\n");
-                    result_sign_in_linux = 0;
-                    break;
-                case 1:
-                    printf("unsuccessful\n");
-                    result_sign_in_linux = 2;
-                    break;
-                default:
-                    break;
-            }
-        }
-        
-    return result_sign_in_linux;
-}
+    // Filling server information
+    servaddr.sin_family             = AF_INET;
+    servaddr.sin_port               = htons(PORT);
+    servaddr.sin_addr.s_addr        = INADDR_ANY;
 
-std::string read_user = "/home/alyona/gost-chat-server/user.txt";
+    //int len, n;
+    int n;
+    socklen_t len = sizeof(servaddr);
 
-LIBRARY_API
-char *_print_user_linux() {
-    std::string line, text;
-    
-    std::ifstream in(read_user);
-     if (in.is_open()) {
-        while (getline(in, line)) {
-            text += line;
-        }
+    // create evp pkey
+    CLIENT_GOST.create_EVP_PKEY();
+
+    std::cout << "=============== send message ===============" << std::endl;
+    std::string a = CLIENT_GOST.send_client_EVP_PKEY();
+    char arr[a.length() + 1];
+    strcpy(arr, a.c_str());
+    sendto(sockfd, (const char *)arr, strlen(arr), MSG_CONFIRM,
+           (const struct sockaddr *) &servaddr, sizeof(servaddr));
+    BIO_dump_fp (stdout, (const char *)arr, strlen((char *)arr));
+    std::cout << std::endl << std::endl;
+
+    //printf("get message\n");
+    std::cout << "=============== get message ===============" << std::endl;
+    n = recvfrom(sockfd, (char *)buffer, MAXLINE, MSG_WAITALL,
+                 (struct sockaddr *) &servaddr, &len);
+    buffer[n] = '\0';
+    char *cptr = reinterpret_cast<char*>(const_cast<uint8_t*>(buffer));
+    BIO_dump_fp (stdout, (const char *)cptr, strlen((char *)cptr));
+    CLIENT_GOST.write_server_pubkey_EVP_PKEY((char *)cptr);
+    std::cout << std::endl << std::endl;
+
+    unsigned char secretKey[AES_BLOCK_SIZE * 2] = {0,}; //32
+    unsigned char salt[] = {'G','O','S','T','-','C','H','A','T'}; // "GOST-CHAT"
+    /* A 256 bit key */
+    unsigned char *key = (unsigned char *)CLIENT_GOST.read_EVP_PKEY();
+
+    /*create secret key - SHARED SECRET*/
+    PKCS5_PBKDF2_HMAC_SHA1((const char *)key, strlen((char *)key),
+                                  salt, sizeof(salt),
+                                  20000 , AES_BLOCK_SIZE * 2, (unsigned char *)secretKey);
+
+    size_t plain_len = strlen ((char *)CLIENT_GOST.check_authorization(login, password).c_str());
+    /*
+    * Buffer for ciphertext. Ensure the buffer is long enough for the
+    * ciphertext which may be longer than the plaintext, depending on the
+    * algorithm and mode.
+    */
+    unsigned char *ciphertext;
+    ciphertext = new unsigned char[plain_len + AES_BLOCK_SIZE];
+    int ciphertext_len;
+    /* Encrypt the plaintext */
+    ciphertext_len = CLIENT_GOST.encrypt(
+               (unsigned char *)CLIENT_GOST.check_authorization(login, password).c_str(),
+               strlen ((char *)CLIENT_GOST.check_authorization(login, password).c_str()),
+               (unsigned char *)secretKey, (unsigned char *)"0123456789012345",
+                             ciphertext);
+
+    std::cout << "=============== send message ===============" << std::endl;
+    char ciphertext_request[1024] = {0};
+    sprintf(ciphertext_request, "%s", ciphertext);
+    sendto(sockfd, (const char *)ciphertext_request, strlen(ciphertext_request), MSG_CONFIRM,
+          (const struct sockaddr *) &servaddr, sizeof(servaddr));
+    BIO_dump_fp (stdout, (const char *)ciphertext, strlen((char *)ciphertext));
+    std::cout << std::endl << std::endl;
+
+    std::cout << "=============== get message ===============" << std::endl;
+    n = recvfrom(sockfd, (char *)buffer, MAXLINE, MSG_WAITALL, (struct sockaddr *) &servaddr, &len);
+    buffer[n] = '\0';
+    cptr = reinterpret_cast<char*>(const_cast<uint8_t*>(buffer));
+    unsigned char *iv = (unsigned char *)"0123456789012345"; /* A 128 bit IV */
+    plain_len = strlen ((char *)buffer);
+    /* Buffer for the decrypted text */
+    unsigned char *decryptedtext;
+    decryptedtext = new unsigned char[plain_len + AES_BLOCK_SIZE];
+    /* fill buffer with zeros */
+    memset(decryptedtext,0,plain_len + AES_BLOCK_SIZE);
+    int decryptedtext_len;
+    /* Decrypt the ciphertext */
+    decryptedtext_len = CLIENT_GOST.decrypt((unsigned char *)buffer,
+                                            strlen((char *)buffer), secretKey, iv, decryptedtext);
+    /* Add a NULL terminator. We are expecting printable text */
+    decryptedtext[decryptedtext_len] = '\0';
+
+    unsigned char* b = decryptedtext;
+    BIO_dump_fp (stdout, (char *)b, strlen((char *)b));
+    std::cout << std::endl << std::endl;
+
+    CLIENT_GOST.get_authorization((char *)b);
+
+    if(remove("client-pubkey-server.pem")) {
+        CLIENT_GOST_LOG.string_void = "main()";
+        CLIENT_GOST_LOG.string_message = "remove(): Error removing client-pubkey-server.pem";
+        CLIENT_GOST_LOG.logger();
+        //printf("Error removing file");
     }
-    in.close();
-    
-    char* c = const_cast<char*>(text.c_str());
-    char* result_argv = (char*) malloc(strlen(c)+1); 
-    strcpy(result_argv,c);
-    
-    return result_argv;
+    if(remove("client-pubkey-client.pem")) {
+        CLIENT_GOST_LOG.string_void = "main()";
+        CLIENT_GOST_LOG.string_message = "remove(): Error removing client-pubkey-client.pem";
+        CLIENT_GOST_LOG.logger();
+        //printf("Error removing file");
+    }
+
+    return 0;
 }
