@@ -13,10 +13,13 @@ add_library(${PLUGIN_NAME} SHARED
 
   "src/logger.cpp"
   "src/sign_in.cpp"
-
+  "src/message.cpp"
+  "src/user.cpp"
+  
+  #src/send_server
   "src/send_server/send.cpp"
-
-  #EVP
+  
+  #src/send_server/EVP
   "src/send_server/EVP/client_EVP_CIPHER_CTX.cpp"
   "src/send_server/EVP/client_EVP_PKEY.cpp"
 )

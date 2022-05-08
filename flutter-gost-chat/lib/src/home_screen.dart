@@ -1,9 +1,12 @@
 import 'dart:io';
 import 'dart:async';
 import 'dart:convert';
+import 'dart:ui';
 
+import 'package:ffi/ffi.dart';
 import 'package:flutter/material.dart';
 
+import '../dynamic_library/dynamic_library_linux.dart';
 import 'widgets/ClipPath.dart';
 
 void main() {
@@ -21,7 +24,11 @@ List<String> litems_time = [];
 ScrollController _scrollController = ScrollController();
 
 class _HomeState extends State<Home> {
+  final TextEditingController _messageController = TextEditingController();
+
   final _TextStyle = const TextStyle(
+      color: Colors.black, fontSize: 16, fontFamily: 'Source_Code_Pro');
+  final _TextStyle_message_user = const TextStyle(
       color: Colors.black, fontSize: 16, fontFamily: 'Source_Code_Pro');
   final _TextStyle_me = const TextStyle(
       color: Color.fromARGB(255, 255, 81, 0),
@@ -32,6 +39,7 @@ class _HomeState extends State<Home> {
   int _start = 10;
   var now;
 
+  bool isMe = false;
 /*
   now = DateTime.now();
   litems_name.add("Lena");
@@ -39,6 +47,10 @@ class _HomeState extends State<Home> {
   litems_time.add("${now.hour}:${now.minute}:${now.second}");
   lena = true;
 */
+
+  void send_message(var message) {
+    fun_encrypted_message(StringUtf8Pointer(message).toNativeUtf8());
+  }
 
   var Kulikova_Alyona = false;
   var Maximov_Oleg = false;
@@ -84,6 +96,27 @@ class _HomeState extends State<Home> {
     Bogdanova_Amelia = false;
   }
 
+  String getSender() {
+    final ptr = fun_get_sender();
+    final result = ptr.toDartString();
+    calloc.free(ptr);
+    return result;
+  }
+
+  String getMessage() {
+    final ptr = fun_get_message();
+    final result = ptr.toDartString();
+    calloc.free(ptr);
+    return result;
+  }
+
+  String getUser() {
+    final ptr = fun_get_user();
+    final result = ptr.toDartString();
+    calloc.free(ptr);
+    return result;
+  }
+
   void startTimer() {
     const oneSec = Duration(seconds: 1);
     _timer = Timer.periodic(
@@ -92,7 +125,6 @@ class _HomeState extends State<Home> {
         if (_start == 0) {
           create_false_list();
           setState(() {
-            //timer.cancel(); // stop timer
             _start = 60; // 60 sec
           });
         } else {
@@ -104,12 +136,113 @@ class _HomeState extends State<Home> {
     );
   }
 
-  bool isMe = false;
-  var username = "Lena";
+  void startTimer_RawDatagramSocket() {
+    const oneSec = Duration(seconds: 1);
+    _timer = Timer.periodic(
+      oneSec,
+      (Timer timer) {
+        if (_start == 0) {
+          _RawDatagramSocket();
+          setState(() {
+            _start = 1;
+          });
+        } else {
+          setState(() {
+            _start--;
+          });
+        }
+      },
+    );
+  }
+
+// ----------- udp -----------
+  //var DESTINATION_ADDRESS = InternetAddress("255.255.255.255");
+  var first_getSender;
+  var first_getMessage;
+
+  var last_getSender = "";
+  var last_getMessage = "";
+
+  void _RawDatagramSocket() {
+    first_getSender = getSender();
+    first_getMessage = getMessage();
+    now = DateTime.now();
+    if ((first_getMessage != last_getMessage) ||
+        (first_getSender != last_getSender)) {
+      litems_name.add(getSender());
+      litems_message.add(getMessage());
+      litems_time.add("${now.hour}:${now.minute}:${now.second}");
+      if (getSender() == "kulikova@gost_chat.com") Kulikova_Alyona = true;
+      if (getSender() == "maximov@gost_chat.com") Maximov_Oleg = true;
+      if (getSender() == "konovalov@gost_chat.com") Konovalov_Grigory = true;
+      if (getSender() == "kiseleva@gost_chat.com") Kiseleva_Amelia = true;
+      if (getSender() == "voronin@gost_chat.com") Voronin_Konstantin = true;
+      if (getSender() == "kasatkina@gost_chat.com") Kasatkina_Amelia = true;
+      if (getSender() == "homeland@gost_chat.com") Homeland_Matvey = true;
+      if (getSender() == "glebov@gost_chat.com") Glebov_Oleg = true;
+      if (getSender() == "grigoriev@gost_chat.com") Grigoriev_Oleg = true;
+      if (getSender() == "pavlov@gost_chat.com") Pavlov_Matvey = true;
+      if (getSender() == "antipova@gost_chat.com") Antipov_Grigory = true;
+      if (getSender() == "ilina@gost_chat.com") Ilina_Daria = true;
+      if (getSender() == "klimov@gost_chat.com") Klimov_Sergey = true;
+      if (getSender() == "kulikov@gost_chat.com") Kulikov_Nikita = true;
+      if (getSender() == "ilkina@gost_chat.com") Ilkin_Grigory = true;
+      if (getSender() == "markov@gost_chat.com") Markov_Sergey = true;
+      if (getSender() == "popova@gost_chat.com") Popova_Daria = true;
+      if (getSender() == "sidorov@gost_chat.com") Sidorov_Dmitry = true;
+      if (getSender() == "siporov@gost_chat.com") Siporov_Grigory = true;
+      if (getSender() == "bogdanova@gost_chat.com") Bogdanova_Amelia = true;
+      last_getMessage = first_getMessage;
+      last_getSender = first_getSender;
+    }
+
+    /*
+    RawDatagramSocket.bind(InternetAddress.anyIPv4, 48654)
+        .then((RawDatagramSocket udpSocket) {
+      udpSocket.broadcastEnabled = true;
+      udpSocket.listen((e) {
+        Datagram? dg = udpSocket.receive();
+        if (dg != null) {
+          fun_decipher_message(
+              StringUtf8Pointer(String.fromCharCodes(dg.data)).toNativeUtf8());
+          now = DateTime.now();
+          litems_name.add(getSender());
+          litems_message.add(getSender());
+          litems_time.add("${now.hour}:${now.minute}:${now.second}");
+          if (getSender() == "kulikova@gost_chat.com") Kulikova_Alyona = true;
+          if (getSender() == "maximov@gost_chat.com") Maximov_Oleg = true;
+          if (getSender() == "konovalov@gost_chat.com")
+            Konovalov_Grigory = true;
+          if (getSender() == "kiseleva@gost_chat.com") Kiseleva_Amelia = true;
+          if (getSender() == "voronin@gost_chat.com") Voronin_Konstantin = true;
+          if (getSender() == "kasatkina@gost_chat.com") Kasatkina_Amelia = true;
+          if (getSender() == "homeland@gost_chat.com") Homeland_Matvey = true;
+          if (getSender() == "glebov@gost_chat.com") Glebov_Oleg = true;
+          if (getSender() == "grigoriev@gost_chat.com") Grigoriev_Oleg = true;
+          if (getSender() == "pavlov@gost_chat.com") Pavlov_Matvey = true;
+          if (getSender() == "antipova@gost_chat.com") Antipov_Grigory = true;
+          if (getSender() == "ilina@gost_chat.com") Ilina_Daria = true;
+          if (getSender() == "klimov@gost_chat.com") Klimov_Sergey = true;
+          if (getSender() == "kulikov@gost_chat.com") Kulikov_Nikita = true;
+          if (getSender() == "ilkina@gost_chat.com") Ilkin_Grigory = true;
+          if (getSender() == "markov@gost_chat.com") Markov_Sergey = true;
+          if (getSender() == "popova@gost_chat.com") Popova_Daria = true;
+          if (getSender() == "sidorov@gost_chat.com") Sidorov_Dmitry = true;
+          if (getSender() == "siporov@gost_chat.com") Siporov_Grigory = true;
+          if (getSender() == "bogdanova@gost_chat.com") Bogdanova_Amelia = true;
+          //print("received ${String.fromCharCodes(dg.data)}");
+          //setState(() => litems.add(String.fromCharCodes(dg.data)));
+        }
+      });
+    });
+    */
+  }
 
   @override
   void initState() {
     startTimer();
+    //_RawDatagramSocket();
+    startTimer_RawDatagramSocket();
     super.initState();
   }
 
@@ -165,7 +298,7 @@ class _HomeState extends State<Home> {
                     Container(
                       //margin: const EdgeInsets.all(15.0),
                       //padding: const EdgeInsets.all(3.0),
-                      padding: EdgeInsets.all(10),
+                      padding: EdgeInsets.all(2),
                       color: Colors.white,
                       height: 650,
                       width: 300,
@@ -179,7 +312,7 @@ class _HomeState extends State<Home> {
                                 backgroundColor: Colors.transparent,
                               ),
                               Text(
-                                "Куликова Алена",
+                                getUser(),
                                 style: _TextStyle,
                               ),
                             ],
@@ -194,7 +327,7 @@ class _HomeState extends State<Home> {
                                 width: 10,
                               ),
                               Text(
-                                "Куликова Алена",
+                                "kulikova@gost_chat.com",
                                 style: !isMe ? _TextStyle : _TextStyle_me,
                               ),
                               const SizedBox(
@@ -218,7 +351,7 @@ class _HomeState extends State<Home> {
                                 width: 10,
                               ),
                               Text(
-                                "Максимов Олег",
+                                "maximov@gost_chat.com",
                                 style: !isMe ? _TextStyle : _TextStyle_me,
                               ),
                               const SizedBox(
@@ -242,7 +375,7 @@ class _HomeState extends State<Home> {
                                 width: 10,
                               ),
                               Text(
-                                "Коновалов Григорий",
+                                "konovalov@gost_chat.com",
                                 style: !isMe ? _TextStyle : _TextStyle_me,
                               ),
                               const SizedBox(
@@ -266,7 +399,7 @@ class _HomeState extends State<Home> {
                                 width: 10,
                               ),
                               Text(
-                                "Киселёва Амелия",
+                                "kiseleva@gost_chat.com",
                                 style: !isMe ? _TextStyle : _TextStyle_me,
                               ),
                               const SizedBox(
@@ -290,7 +423,7 @@ class _HomeState extends State<Home> {
                                 width: 10,
                               ),
                               Text(
-                                "Воронин Константин",
+                                "voronin@gost_chat.com",
                                 style: !isMe ? _TextStyle : _TextStyle_me,
                               ),
                               const SizedBox(
@@ -314,7 +447,7 @@ class _HomeState extends State<Home> {
                                 width: 10,
                               ),
                               Text(
-                                "Касаткина Амелия",
+                                "kasatkina@gost_chat.com",
                                 style: !isMe ? _TextStyle : _TextStyle_me,
                               ),
                               const SizedBox(
@@ -338,7 +471,7 @@ class _HomeState extends State<Home> {
                                 width: 10,
                               ),
                               Text(
-                                "Родина Матвея",
+                                "homeland@gost_chat.com",
                                 style: !isMe ? _TextStyle : _TextStyle_me,
                               ),
                               const SizedBox(
@@ -362,7 +495,7 @@ class _HomeState extends State<Home> {
                                 width: 10,
                               ),
                               Text(
-                                "Глебов Олег",
+                                "glebov@gost_chat.com",
                                 style: !isMe ? _TextStyle : _TextStyle_me,
                               ),
                               const SizedBox(
@@ -386,7 +519,7 @@ class _HomeState extends State<Home> {
                                 width: 10,
                               ),
                               Text(
-                                "Григорьев Олег",
+                                "grigoriev@gost_chat.com",
                                 style: !isMe ? _TextStyle : _TextStyle_me,
                               ),
                               const SizedBox(
@@ -410,7 +543,7 @@ class _HomeState extends State<Home> {
                                 width: 10,
                               ),
                               Text(
-                                "Павлов Матвей",
+                                "pavlov@gost_chat.com",
                                 style: !isMe ? _TextStyle : _TextStyle_me,
                               ),
                               const SizedBox(
@@ -434,7 +567,7 @@ class _HomeState extends State<Home> {
                                 width: 10,
                               ),
                               Text(
-                                "Антипов Григорий",
+                                "antipova@gost_chat.com",
                                 style: !isMe ? _TextStyle : _TextStyle_me,
                               ),
                               const SizedBox(
@@ -458,7 +591,7 @@ class _HomeState extends State<Home> {
                                 width: 10,
                               ),
                               Text(
-                                "Ильина Дарья",
+                                "ilina@gost_chat.com",
                                 style: !isMe ? _TextStyle : _TextStyle_me,
                               ),
                               const SizedBox(
@@ -482,7 +615,7 @@ class _HomeState extends State<Home> {
                                 width: 10,
                               ),
                               Text(
-                                "Климов Сергей",
+                                "klimov@gost_chat.com",
                                 style: !isMe ? _TextStyle : _TextStyle_me,
                               ),
                               const SizedBox(
@@ -506,7 +639,7 @@ class _HomeState extends State<Home> {
                                 width: 10,
                               ),
                               Text(
-                                "Куликов Никита",
+                                "kulikov@gost_chat.com",
                                 style: !isMe ? _TextStyle : _TextStyle_me,
                               ),
                               const SizedBox(
@@ -530,7 +663,7 @@ class _HomeState extends State<Home> {
                                 width: 10,
                               ),
                               Text(
-                                "Илькин Григорий",
+                                "ilkina@gost_chat.com",
                                 style: !isMe ? _TextStyle : _TextStyle_me,
                               ),
                               const SizedBox(
@@ -554,7 +687,7 @@ class _HomeState extends State<Home> {
                                 width: 10,
                               ),
                               Text(
-                                "Марков Сергей",
+                                "markov@gost_chat.com",
                                 style: !isMe ? _TextStyle : _TextStyle_me,
                               ),
                               const SizedBox(
@@ -578,7 +711,7 @@ class _HomeState extends State<Home> {
                                 width: 10,
                               ),
                               Text(
-                                "Попова Дарья",
+                                "popova@gost_chat.com",
                                 style: !isMe ? _TextStyle : _TextStyle_me,
                               ),
                               const SizedBox(
@@ -602,7 +735,7 @@ class _HomeState extends State<Home> {
                                 width: 10,
                               ),
                               Text(
-                                "Сидоров Дмитрий",
+                                "sidorov@gost_chat.com",
                                 style: !isMe ? _TextStyle : _TextStyle_me,
                               ),
                               const SizedBox(
@@ -626,7 +759,7 @@ class _HomeState extends State<Home> {
                                 width: 10,
                               ),
                               Text(
-                                "Сипоров Григорий",
+                                "siporov@gost_chat.com",
                                 style: !isMe ? _TextStyle : _TextStyle_me,
                               ),
                               const SizedBox(
@@ -650,7 +783,7 @@ class _HomeState extends State<Home> {
                                 width: 10,
                               ),
                               Text(
-                                "Богданова Амелия",
+                                "bogdanova@gost_chat.com",
                                 style: !isMe ? _TextStyle : _TextStyle_me,
                               ),
                               const SizedBox(
@@ -667,7 +800,6 @@ class _HomeState extends State<Home> {
                                     ),
                             ],
                           ),
-                          Text("timer: $_start"), //delete me
                         ],
                       ),
                     )
@@ -688,7 +820,8 @@ class _HomeState extends State<Home> {
                     child: Column(
                       children: [
                         Container(
-                          width: 900,
+                          alignment: Alignment.bottomCenter,
+                          width: 1300,
                           height: 550,
                           //color: Colors.red.withOpacity(0.9),
                           child: Row(
@@ -696,20 +829,21 @@ class _HomeState extends State<Home> {
                               Expanded(
                                   child: ListView.builder(
                                       itemCount: litems_message.length,
-                                      itemExtent: 150.0,
+                                      itemExtent: 170.0,
                                       itemBuilder:
                                           (BuildContext ctxt, int Index) {
                                         return Row(
                                           mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          //mainAxisSize: MainAxisSize.min,
+                                              MainAxisAlignment.end,
                                           children: <Widget>[
                                             Container(width: 20),
-                                            if (litems_name[Index] != username)
+                                            if (litems_name[Index] != getUser())
                                               Column(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.end,
                                                 children: [
                                                   const SizedBox(
-                                                    height: 60.0,
+                                                    width: 60.0,
                                                   ),
                                                   const Icon(
                                                     Icons.people,
@@ -718,11 +852,13 @@ class _HomeState extends State<Home> {
                                                   ),
                                                   Text(
                                                     litems_name[Index],
-                                                    style: _TextStyle,
+                                                    style:
+                                                        _TextStyle_message_user,
                                                   ),
                                                   Text(
                                                     litems_time[Index],
-                                                    style: _TextStyle,
+                                                    style:
+                                                        _TextStyle_message_user,
                                                   ),
                                                 ],
                                               )
@@ -738,7 +874,7 @@ class _HomeState extends State<Home> {
                                                       left: 15, right: 15),
                                                   alignment: Alignment.center,
                                                   child: SizedBox(
-                                                      width: 700,
+                                                      width: 1000,
                                                       height: 240,
                                                       child: Column(
                                                         crossAxisAlignment:
@@ -764,7 +900,7 @@ class _HomeState extends State<Home> {
                                             const SizedBox(
                                               width: 10.0,
                                             ),
-                                            if (litems_name[Index] != username)
+                                            if (litems_name[Index] != getUser())
                                               ClipPath(
                                                 clipper: ClipPathClass_Other(),
                                                 child: Container(
@@ -776,7 +912,7 @@ class _HomeState extends State<Home> {
                                                       left: 15, right: 15),
                                                   alignment: Alignment.center,
                                                   child: SizedBox(
-                                                      width: 700,
+                                                      width: 1000,
                                                       height: 240,
                                                       child: Column(
                                                         crossAxisAlignment:
@@ -812,11 +948,13 @@ class _HomeState extends State<Home> {
                                                   ),
                                                   Text(
                                                     litems_name[Index],
-                                                    style: _TextStyle,
+                                                    style:
+                                                        _TextStyle_message_user,
                                                   ),
                                                   Text(
                                                     litems_time[Index],
-                                                    style: _TextStyle,
+                                                    style:
+                                                        _TextStyle_message_user,
                                                   ),
                                                 ],
                                               ),
@@ -846,29 +984,29 @@ class _HomeState extends State<Home> {
                               children: [
                                 //Container(width: 100),
                                 Container(
-                                  width: 820,
+                                  width: 1200,
                                   height: 60,
-                                  decoration: BoxDecoration(
-                                    border: Border.all(
-                                      color: Colors.black,
-                                      width: 1,
-                                    ),
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(30.0)),
-                                  ),
+                                  // decoration: BoxDecoration(
+                                  //   border: Border.all(
+                                  //     color: Colors.black,
+                                  //     width: 1,
+                                  //   ),
+                                  //   borderRadius:
+                                  //       BorderRadius.all(Radius.circular(30.0)),
+                                  // ),
                                   child: Column(
                                     children: [
                                       Container(
                                         child: TextFormField(
                                           style: _TextStyle,
                                           autofocus: true,
-                                          //controller: _messageController,
+                                          controller: _messageController,
                                           decoration: const InputDecoration(
                                             border: InputBorder.none,
                                           ),
                                         ),
                                         height: 50,
-                                        width: 700.0,
+                                        width: 1100.0,
                                         padding:
                                             const EdgeInsets.only(top: 10.0),
                                       ),
@@ -877,7 +1015,9 @@ class _HomeState extends State<Home> {
                                 ),
                                 Container(width: 10),
                                 IconButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    send_message(_messageController.text);
+                                  },
                                   icon: const Icon(Icons.send),
                                   iconSize: 25,
                                 ),
