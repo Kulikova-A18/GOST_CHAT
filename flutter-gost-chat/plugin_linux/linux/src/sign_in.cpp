@@ -9,6 +9,8 @@ ClassClientGostLog CLIENT_GOST_LOG;
 LIBRARY_API
 int _sign_in_linux(char *login, char *password)
 {
+    setbuf(stdout, NULL);
+    
     if (!login[0] && !password[0]) {
         //_logger(_logger_void,"all variables are empty");
         return 1;

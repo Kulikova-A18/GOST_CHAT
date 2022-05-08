@@ -10,6 +10,8 @@ std::string password = "c0WpF6iK";
 
 int main(int argc, char *argv[])
 {
+    setbuf(stdout, NULL);
+
     std::cout << "=============== data ===============" << std::endl;
     std::cout << "login: " << login << std::endl;
     std::cout << "password: " << password << std::endl;

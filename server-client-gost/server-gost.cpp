@@ -16,6 +16,8 @@ int is_root() {
 
 int main(int arvc, char *argv[])
 {
+    setbuf(stdout, NULL);
+
     std::string login_admin = "root", password_admin = "root";
     std::cout << "=============== sign in ===============" << std::endl;
     std::cout << "login: " << login_admin << std::endl;

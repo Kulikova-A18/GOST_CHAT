@@ -14,7 +14,7 @@ unsigned char *iv = (unsigned char *)"0123456789012345";
 int ClassClientGost::decrypt(unsigned char *ciphertext, int ciphertext_len, unsigned char *key,
             unsigned char *iv, unsigned char *plaintext)
 {
-    CLIENT_GOST_CTX_LOG.string_void = "ClassServerGost::decrypt()";
+    CLIENT_GOST_CTX_LOG.string_void = "ClassClientGost::decrypt()";
     EVP_CIPHER_CTX *ctx;
 
     int len;
@@ -80,7 +80,7 @@ int ClassClientGost::decrypt(unsigned char *ciphertext, int ciphertext_len, unsi
 int ClassClientGost::encrypt(unsigned char *plaintext, int plaintext_len, unsigned char *key,
             unsigned char *iv, unsigned char *ciphertext)
 {
-    CLIENT_GOST_CTX_LOG.string_void = "ClassServerGost::encrypt()";
+    CLIENT_GOST_CTX_LOG.string_void = "ClassClientGost::encrypt()";
     EVP_CIPHER_CTX *ctx;
 
     int len;
