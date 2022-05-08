@@ -10,10 +10,7 @@ final DynamicLibrary plugin_linuxLib = Platform.isAndroid
     ? DynamicLibrary.open('libplugin_linux.so')
     : DynamicLibrary.process();
 
-final int Function(Pointer<Utf8> str) fun_check = plugin_linuxLib
-    .lookup<NativeFunction<Int32 Function(ffi.Pointer<Utf8>)>>("_check")
-    .asFunction();
-
+// ============ sign_in.cpp ============
 final int Function(Pointer<Utf8> str1, Pointer<Utf8> str2) fun_sign_in_linux =
     plugin_linuxLib
         .lookup<
@@ -22,6 +19,23 @@ final int Function(Pointer<Utf8> str1, Pointer<Utf8> str2) fun_sign_in_linux =
                     ffi.Pointer<Utf8>, ffi.Pointer<Utf8>)>>("_sign_in_linux")
         .asFunction();
 
-final Pointer<Utf8> Function() fun_print_user_linux = plugin_linuxLib
-    .lookupFunction<Pointer<Utf8> Function(), Pointer<Utf8> Function()>(
-        '_print_user_linux');
+// ============ message.cpp ============
+// ---- send ----
+final int Function(Pointer<Utf8> str1) fun_encrypted_message = plugin_linuxLib
+    .lookup<NativeFunction<Int32 Function(ffi.Pointer<Utf8>)>>(
+        "encrypted_message")
+    .asFunction();
+// ---- get ----
+final int Function(Pointer<Utf8> str1) fun_decipher_message = plugin_linuxLib
+    .lookup<NativeFunction<Int32 Function(ffi.Pointer<Utf8>)>>(
+        "decipher_message")
+    .asFunction();
+// ---- print ----
+final Pointer<Utf8> Function() fun_get_sender = plugin_linuxLib.lookupFunction<
+    Pointer<Utf8> Function(), Pointer<Utf8> Function()>('get_sender');
+final Pointer<Utf8> Function() fun_get_message = plugin_linuxLib.lookupFunction<
+    Pointer<Utf8> Function(), Pointer<Utf8> Function()>('get_message');
+
+// ============ user.cpp ============
+final Pointer<Utf8> Function() fun_get_user = plugin_linuxLib.lookupFunction<
+    Pointer<Utf8> Function(), Pointer<Utf8> Function()>('get_user');

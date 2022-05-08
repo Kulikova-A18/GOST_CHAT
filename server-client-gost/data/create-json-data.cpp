@@ -281,7 +281,7 @@ void create_Klimov() {
     days += (t_days / 3600)/24;
     std::string string_days = std::to_string(days);
 
-    ns_create::person p {12,"Klimov", "Sergey","Semenovich","01/01/1991","technical manager","ilina@gost_chat.com","vJ30VEgI", string_days};
+    ns_create::person p {12,"Klimov", "Sergey","Semenovich","01/01/1991","technical manager","klimov@gost_chat.com","vJ30VEgI", string_days};
     json j = p;
         std::ofstream o(create_json_Klimov);
         o << std::setw(4) << j;

@@ -11,10 +11,10 @@ import 'package:window_size/window_size.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   if (Platform.isLinux) {
-    setWindowMaxSize(const Size(1400, 900));
-    setWindowMinSize(const Size(1400, 900));
+    setWindowMaxSize(const Size(1800, 900));
+    setWindowMinSize(const Size(1800, 900));
   }
-  runApp(SignInPage());
+  //runApp(SignInPage());
   //runApp(AuthorizationPage());
-  //runApp(Home());
+  runApp(Home());
 }
