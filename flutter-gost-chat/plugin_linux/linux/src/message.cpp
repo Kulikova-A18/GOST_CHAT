@@ -18,15 +18,15 @@ int encrypted_message(char *text) {
             std::string login   = j["login"].get<std::string>();
             
             /* A 256 bit key */
-            char strcpy_key[key.length() + 1];
-            strcpy(strcpy_key, key.c_str());
+            char strcpy_key[1024] = {0};
+            sprintf(strcpy_key, "%s", key.c_str());
 
             /* create a message form */
             std::string message_text = "";
             j =
                 {
                     { "sender", login },
-                    { "message" , text },
+                    { "message" , text }
                 };
             message_text = j.dump();
             char ac_client_request[1024] = {0};
@@ -34,7 +34,7 @@ int encrypted_message(char *text) {
 
             /*create secret key - SHARED SECRET*/
             unsigned char secretKey[AES_BLOCK_SIZE * 2] = {0,}; //32
-            unsigned char salt[] = {'G','O','S','T','-','C','H','A','T'}; // "GOST-CHAT"
+            unsigned char salt[] = {'G','O','S','T','-','C','H','A','T','G','O','S','T','-','C','H'}; // "GOST-CHAT"
             unsigned char *iv = (unsigned char *)"0123456789012345"; /* A 128 bit IV */
             PKCS5_PBKDF2_HMAC_SHA1((const char *)strcpy_key, strlen((char *)strcpy_key),
                               salt, sizeof(salt), 20000 , AES_BLOCK_SIZE * 2, (unsigned char *)secretKey);
@@ -49,6 +49,7 @@ int encrypted_message(char *text) {
                                             iv, ciphertext);
 
             /* print bio */
+            cout << endl;
             BIO_dump_fp (stdout, (const char *)ciphertext, strlen((char *)ciphertext));
 
             /* send a message broadcast */
@@ -138,28 +139,83 @@ int decipher_message(char *text) {
 
 LIBRARY_API 
 char *get_sender() {
-    std::ifstream ifs("get_message.json");
-    json j = json::parse(ifs);
-    std::string sender     = j["sender"].get<std::string>();
-
     char* result_argv;
-    char* c = const_cast<char*>(sender.c_str());
-    result_argv = (char*) malloc(strlen(c)+1);
-    strcpy(result_argv,c);
+    std::string a = "", line;
+    std::ifstream in("get_message.json");
+    if (in.is_open())
+    {
+        while (getline(in, line))
+        {
+            a += line;
+        }
+    }
+    in.close();
+    if(a.find("{") != std::string::npos) {
+        
+        try
+        {
+            std::ifstream ifs("get_message.json");
+            json j = json::parse(ifs);
+            std::string sender     = j["sender"].get<std::string>();
 
-    return result_argv;
+            char* c = const_cast<char*>(sender.c_str());
+            result_argv = (char*) malloc(strlen(c)+1);
+            strcpy(result_argv,c);
+        }
+        catch (json::parse_error& e)
+        {
+            // output exception information
+            std::cout << "message: " << e.what() << '\n'
+                        << "exception id: " << e.id << '\n'
+                        << "byte position of error: " << e.byte << std::endl;
+        }
+        // ofstream rewrite("get_message.json");
+        // rewrite.write("", 0);
+        // rewrite.close();
+        return result_argv;
+    }
+
+    return (char *)" ";
 }
 
 LIBRARY_API 
-char *get_message() {  
-    std::ifstream ifs("get_message.json");
-    json j = json::parse(ifs);
-    std::string message     = j["message"].get<std::string>();
-   
+char *get_message() {
     char* result_argv;
-    char* c = const_cast<char*>(message.c_str());
-    result_argv = (char*) malloc(strlen(c)+1);
-    strcpy(result_argv,c);
+    std::string a = "", line;
+    std::ifstream in("get_message.json");
+    if (in.is_open())
+    {
+        while (getline(in, line))
+        {
+            a += line;
+        }
+    }
+    in.close();
 
-    return result_argv;
+    if(a.find("{") != std::string::npos) {
+        try
+            {  
+                std::ifstream ifs("get_message.json");
+                json j = json::parse(ifs);
+                std::string message     = j["message"].get<std::string>();
+            
+                char* c = const_cast<char*>(message.c_str());
+                result_argv = (char*) malloc(strlen(c)+1);
+                strcpy(result_argv,c);
+            }
+            catch (json::parse_error& e)
+            {
+                // output exception information
+                std::cout << "message: " << e.what() << '\n'
+                            << "exception id: " << e.id << '\n'
+                            << "byte position of error: " << e.byte << std::endl;
+            }
+
+            // ofstream rewrite("get_message.json");
+            // rewrite.write("", 0);
+            // rewrite.close();
+        return result_argv;
+    }
+    
+    return (char *)" ";
 }

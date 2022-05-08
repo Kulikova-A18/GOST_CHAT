@@ -136,10 +136,67 @@ class _HomeState extends State<Home> {
     );
   }
 
+  void startTimer_RawDatagramSocket() {
+    const oneSec = Duration(seconds: 1);
+    _timer = Timer.periodic(
+      oneSec,
+      (Timer timer) {
+        if (_start == 0) {
+          _RawDatagramSocket();
+          setState(() {
+            _start = 1;
+          });
+        } else {
+          setState(() {
+            _start--;
+          });
+        }
+      },
+    );
+  }
+
 // ----------- udp -----------
-  var DESTINATION_ADDRESS = InternetAddress("255.255.255.255");
+  //var DESTINATION_ADDRESS = InternetAddress("255.255.255.255");
+  var first_getSender;
+  var first_getMessage;
+
+  var last_getSender = "";
+  var last_getMessage = "";
 
   void _RawDatagramSocket() {
+    first_getSender = getSender();
+    first_getMessage = getMessage();
+    now = DateTime.now();
+    if ((first_getMessage != last_getMessage) ||
+        (first_getSender != last_getSender)) {
+      litems_name.add(getSender());
+      litems_message.add(getMessage());
+      litems_time.add("${now.hour}:${now.minute}:${now.second}");
+      if (getSender() == "kulikova@gost_chat.com") Kulikova_Alyona = true;
+      if (getSender() == "maximov@gost_chat.com") Maximov_Oleg = true;
+      if (getSender() == "konovalov@gost_chat.com") Konovalov_Grigory = true;
+      if (getSender() == "kiseleva@gost_chat.com") Kiseleva_Amelia = true;
+      if (getSender() == "voronin@gost_chat.com") Voronin_Konstantin = true;
+      if (getSender() == "kasatkina@gost_chat.com") Kasatkina_Amelia = true;
+      if (getSender() == "homeland@gost_chat.com") Homeland_Matvey = true;
+      if (getSender() == "glebov@gost_chat.com") Glebov_Oleg = true;
+      if (getSender() == "grigoriev@gost_chat.com") Grigoriev_Oleg = true;
+      if (getSender() == "pavlov@gost_chat.com") Pavlov_Matvey = true;
+      if (getSender() == "antipova@gost_chat.com") Antipov_Grigory = true;
+      if (getSender() == "ilina@gost_chat.com") Ilina_Daria = true;
+      if (getSender() == "klimov@gost_chat.com") Klimov_Sergey = true;
+      if (getSender() == "kulikov@gost_chat.com") Kulikov_Nikita = true;
+      if (getSender() == "ilkina@gost_chat.com") Ilkin_Grigory = true;
+      if (getSender() == "markov@gost_chat.com") Markov_Sergey = true;
+      if (getSender() == "popova@gost_chat.com") Popova_Daria = true;
+      if (getSender() == "sidorov@gost_chat.com") Sidorov_Dmitry = true;
+      if (getSender() == "siporov@gost_chat.com") Siporov_Grigory = true;
+      if (getSender() == "bogdanova@gost_chat.com") Bogdanova_Amelia = true;
+      last_getMessage = first_getMessage;
+      last_getSender = first_getSender;
+    }
+
+    /*
     RawDatagramSocket.bind(InternetAddress.anyIPv4, 48654)
         .then((RawDatagramSocket udpSocket) {
       udpSocket.broadcastEnabled = true;
@@ -178,12 +235,14 @@ class _HomeState extends State<Home> {
         }
       });
     });
+    */
   }
 
   @override
   void initState() {
     startTimer();
-    _RawDatagramSocket();
+    //_RawDatagramSocket();
+    startTimer_RawDatagramSocket();
     super.initState();
   }
 
