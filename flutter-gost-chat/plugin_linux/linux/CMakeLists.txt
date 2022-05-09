@@ -15,6 +15,7 @@ add_library(${PLUGIN_NAME} SHARED
   "src/sign_in.cpp"
   "src/message.cpp"
   "src/user.cpp"
+  "src/check_password.cpp"
   
   #src/send_server
   "src/send_server/send.cpp"
