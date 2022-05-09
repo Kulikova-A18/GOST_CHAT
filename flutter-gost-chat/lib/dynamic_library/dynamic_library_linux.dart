@@ -11,6 +11,12 @@ final DynamicLibrary plugin_linuxLib = Platform.isAndroid
     : DynamicLibrary.process();
 
 // ============ sign_in.cpp ============
+final int Function(Pointer<Utf8> str1) fun_password_check_linux =
+    plugin_linuxLib
+        .lookup<NativeFunction<Int32 Function(ffi.Pointer<Utf8>)>>(
+            "_password_check_linux")
+        .asFunction();
+
 final int Function(Pointer<Utf8> str1, Pointer<Utf8> str2) fun_sign_in_linux =
     plugin_linuxLib
         .lookup<

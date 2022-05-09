@@ -14,7 +14,7 @@ void main() {
     setWindowMaxSize(const Size(1800, 900));
     setWindowMinSize(const Size(1800, 900));
   }
-  //runApp(SignInPage());
+  runApp(SignInPage());
   //runApp(AuthorizationPage());
-  runApp(Home());
+  //runApp(Home());
 }

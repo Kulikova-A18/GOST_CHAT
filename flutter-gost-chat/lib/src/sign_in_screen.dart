@@ -5,9 +5,14 @@ import 'home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:ffi/ffi.dart';
 import 'dart:ui';
+import 'dart:io';
 
 void main() {
-  runApp(SignInPage());
+  runApp(
+    MaterialApp(
+      home: SignInPage(),
+    ),
+  );
 }
 
 class SignInPage extends StatefulWidget {
@@ -36,9 +41,42 @@ class SignInPageState extends State<SignInPage> {
     );
   }
 
-  void _fun_sign(var argv1, var argv2) {
-    fun_sign_in_linux(StringUtf8Pointer(argv1).toNativeUtf8(),
-        StringUtf8Pointer(argv2).toNativeUtf8());
+  var fun_alert = "";
+  void _fun_sign(var login_, var passw_) {
+    int fun_result =
+        fun_password_check_linux(StringUtf8Pointer(passw_).toNativeUtf8());
+
+    switch (fun_result) {
+      case 0:
+        fun_alert = "Successful sign in";
+        //fun_sign_in_linux(StringUtf8Pointer(login_).toNativeUtf8(),StringUtf8Pointer(passw_).toNativeUtf8())
+        break;
+      case 1:
+        fun_alert = "Data is empty";
+        break;
+      case 2:
+        fun_alert = "The password must be at least 8 characters long";
+        break;
+      case 3:
+        fun_alert = "Password must not contain space";
+        break;
+      case 4:
+        fun_alert = "Password must contain at least 1 upper case letter";
+        break;
+      case 5:
+        fun_alert = "Password must contain at least 1 lower case letter";
+        break;
+      case 6:
+        fun_alert = "Password must contain at least 1 number";
+        break;
+      case 7:
+        fun_alert =
+            "Password must contain at least 1 special character:\t+-=%?*()@#&!,";
+        break;
+      default:
+        break;
+    }
+    print(fun_alert);
   }
 
   @override
@@ -48,7 +86,7 @@ class SignInPageState extends State<SignInPage> {
         body: Stack(
           children: [
             Container(
-              width: 1400,
+              width: 1800,
               height: 900,
               color: Colors.white,
             ),
