@@ -58,6 +58,10 @@ std::string ClassServerGost::check_data(std::string _message) {
 
         if(_message.empty()) {
             _result = "Invalid password";
+
+            SERVER_GOST_DATA_LOG.string_void = "ClassServerGost::check_data";
+            SERVER_GOST_DATA_LOG.string_message = "Invalid password";
+            SERVER_GOST_DATA_LOG.logger();
         }
 
         json j_message = json::parse(_message);
@@ -102,10 +106,8 @@ std::string ClassServerGost::find_json(std::string _login, std::string _password
                 result_check = true;
             }
             else {
-                char ac[1024] = {0};
-                sprintf(ac, "sign in attempt. user data: LOGIN: %s", _login.c_str());
                 SERVER_GOST_DATA_LOG.string_void = "ClassServerGost::find_json()";
-                SERVER_GOST_DATA_LOG.string_message = ac;
+                SERVER_GOST_DATA_LOG.string_message = "sign in attempt";
                 SERVER_GOST_DATA_LOG.logger();
             }
         }
@@ -117,6 +119,10 @@ std::string ClassServerGost::find_json(std::string _login, std::string _password
     }
     else {
         message = "Invalid password";
+
+        SERVER_GOST_DATA_LOG.string_void = "ClassServerGost::find_json()";
+        SERVER_GOST_DATA_LOG.string_message = "login denied";
+        SERVER_GOST_DATA_LOG.logger();
     }
 
     return message;
@@ -142,6 +148,10 @@ std::string ClassServerGost::_find(std::string argv1, std::string argv2) {
     }
     else {
         message = "Invalid password";
+
+        SERVER_GOST_DATA_LOG.string_void = "ClassServerGost::find_json()";
+        SERVER_GOST_DATA_LOG.string_message = "login denied";
+        SERVER_GOST_DATA_LOG.logger();
     }
 
     return message;
