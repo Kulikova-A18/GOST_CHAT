@@ -29,7 +29,7 @@
 
 #define FAIL    -1
 #define MAXLINE 1024
-#define PORT 48655
+#define PORT 58053
 
 using namespace std;
 
@@ -57,6 +57,10 @@ class ClassClientGost {
         std::string send_client_EVP_PKEY();
         int write_server_pubkey_EVP_PKEY(char *clientkey);
         unsigned char *read_EVP_PKEY();
+
+        // EVP/EVP_MD_CTX.cpp
+        bool create_password_hash(const std::string& unhashed_password,
+                           std::string& hashed_password);
 };
 
 class ClassClientGostLog {

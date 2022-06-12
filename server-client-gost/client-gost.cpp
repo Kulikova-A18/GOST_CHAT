@@ -14,7 +14,10 @@ int main(int argc, char *argv[])
 
     std::cout << "=============== data ===============" << std::endl;
     std::cout << "login: " << login << std::endl;
-    std::cout << "password: " << password << std::endl;
+    //std::cout << "password: " << password << std::endl;
+    std::cout << "password: ";
+    for(int i = 0; i < password.length(); i++) printf("*");
+    std::cout << std::endl;
     std::cout << "====================================" << std::endl << std::endl;
 
     int sockfd;
@@ -34,7 +37,8 @@ int main(int argc, char *argv[])
     // Filling server information
     servaddr.sin_family             = AF_INET;
     servaddr.sin_port               = htons(PORT);
-    servaddr.sin_addr.s_addr        = INADDR_ANY;
+//    servaddr.sin_addr.s_addr    = INADDR_ANY;
+    servaddr.sin_addr.s_addr    = inet_addr("127.0.0.1");
 
     //int len, n;
     int n;
