@@ -34,7 +34,7 @@ include rules.ninja
 # Utility command for install/strip
 
 build CMakeFiles/install/strip.util: CUSTOM_COMMAND all
-  COMMAND = cd /home/alyona/GOST_CHAT/flutter-gost-chat/build/linux/x64/debug && /snap/flutter/111/usr/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
+  COMMAND = cd /home/alyona/GOST_CHAT/flutter-gost-chat/build/linux/x64/debug && /snap/flutter/126/usr/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
   DESC = Installing the project stripped...
   pool = console
   restat = 1
@@ -44,7 +44,7 @@ build install/strip: phony CMakeFiles/install/strip.util
 # Utility command for edit_cache
 
 build CMakeFiles/edit_cache.util: CUSTOM_COMMAND
-  COMMAND = cd /home/alyona/GOST_CHAT/flutter-gost-chat/build/linux/x64/debug && /snap/flutter/111/usr/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
+  COMMAND = cd /home/alyona/GOST_CHAT/flutter-gost-chat/build/linux/x64/debug && /snap/flutter/126/usr/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
   DESC = No interactive CMake dialog available...
   restat = 1
 build edit_cache: phony CMakeFiles/edit_cache.util
@@ -99,7 +99,7 @@ build intermediates_do_not_run/gost_chat: CXX_EXECUTABLE_LINKER__gost_chat CMake
 # Utility command for rebuild_cache
 
 build CMakeFiles/rebuild_cache.util: CUSTOM_COMMAND
-  COMMAND = cd /home/alyona/GOST_CHAT/flutter-gost-chat/build/linux/x64/debug && /snap/flutter/111/usr/bin/cmake -H/home/alyona/GOST_CHAT/flutter-gost-chat/linux -B/home/alyona/GOST_CHAT/flutter-gost-chat/build/linux/x64/debug
+  COMMAND = cd /home/alyona/GOST_CHAT/flutter-gost-chat/build/linux/x64/debug && /snap/flutter/126/usr/bin/cmake -H/home/alyona/GOST_CHAT/flutter-gost-chat/linux -B/home/alyona/GOST_CHAT/flutter-gost-chat/build/linux/x64/debug
   DESC = Running CMake to regenerate build system...
   pool = console
   restat = 1
@@ -114,7 +114,7 @@ build list_install_components: phony
 # Utility command for install/local
 
 build CMakeFiles/install/local.util: CUSTOM_COMMAND all
-  COMMAND = cd /home/alyona/GOST_CHAT/flutter-gost-chat/build/linux/x64/debug && /snap/flutter/111/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+  COMMAND = cd /home/alyona/GOST_CHAT/flutter-gost-chat/build/linux/x64/debug && /snap/flutter/126/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
   DESC = Installing only the local directory...
   pool = console
   restat = 1
@@ -124,7 +124,7 @@ build install/local: phony CMakeFiles/install/local.util
 # Utility command for install
 
 build CMakeFiles/install.util: CUSTOM_COMMAND all
-  COMMAND = cd /home/alyona/GOST_CHAT/flutter-gost-chat/build/linux/x64/debug && /snap/flutter/111/usr/bin/cmake -P cmake_install.cmake
+  COMMAND = cd /home/alyona/GOST_CHAT/flutter-gost-chat/build/linux/x64/debug && /snap/flutter/126/usr/bin/cmake -P cmake_install.cmake
   DESC = Install the project...
   pool = console
   restat = 1
@@ -139,7 +139,7 @@ build install: phony CMakeFiles/install.util
 # Utility command for install/strip
 
 build flutter/CMakeFiles/install/strip.util: CUSTOM_COMMAND flutter/all
-  COMMAND = cd /home/alyona/GOST_CHAT/flutter-gost-chat/build/linux/x64/debug/flutter && /snap/flutter/111/usr/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
+  COMMAND = cd /home/alyona/GOST_CHAT/flutter-gost-chat/build/linux/x64/debug/flutter && /snap/flutter/126/usr/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
   DESC = Installing the project stripped...
   pool = console
   restat = 1
@@ -149,7 +149,7 @@ build flutter/install/strip: phony flutter/CMakeFiles/install/strip.util
 # Utility command for install/local
 
 build flutter/CMakeFiles/install/local.util: CUSTOM_COMMAND flutter/all
-  COMMAND = cd /home/alyona/GOST_CHAT/flutter-gost-chat/build/linux/x64/debug/flutter && /snap/flutter/111/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+  COMMAND = cd /home/alyona/GOST_CHAT/flutter-gost-chat/build/linux/x64/debug/flutter && /snap/flutter/126/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
   DESC = Installing only the local directory...
   pool = console
   restat = 1
@@ -164,7 +164,7 @@ build flutter/flutter_assemble: phony flutter/CMakeFiles/flutter_assemble /home/
 # Utility command for edit_cache
 
 build flutter/CMakeFiles/edit_cache.util: CUSTOM_COMMAND
-  COMMAND = cd /home/alyona/GOST_CHAT/flutter-gost-chat/build/linux/x64/debug/flutter && /snap/flutter/111/usr/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
+  COMMAND = cd /home/alyona/GOST_CHAT/flutter-gost-chat/build/linux/x64/debug/flutter && /snap/flutter/126/usr/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
   DESC = No interactive CMake dialog available...
   restat = 1
 build flutter/edit_cache: phony flutter/CMakeFiles/edit_cache.util
@@ -173,7 +173,7 @@ build flutter/edit_cache: phony flutter/CMakeFiles/edit_cache.util
 # Utility command for rebuild_cache
 
 build flutter/CMakeFiles/rebuild_cache.util: CUSTOM_COMMAND
-  COMMAND = cd /home/alyona/GOST_CHAT/flutter-gost-chat/build/linux/x64/debug/flutter && /snap/flutter/111/usr/bin/cmake -H/home/alyona/GOST_CHAT/flutter-gost-chat/linux -B/home/alyona/GOST_CHAT/flutter-gost-chat/build/linux/x64/debug
+  COMMAND = cd /home/alyona/GOST_CHAT/flutter-gost-chat/build/linux/x64/debug/flutter && /snap/flutter/126/usr/bin/cmake -H/home/alyona/GOST_CHAT/flutter-gost-chat/linux -B/home/alyona/GOST_CHAT/flutter-gost-chat/build/linux/x64/debug
   DESC = Running CMake to regenerate build system...
   pool = console
   restat = 1
@@ -188,7 +188,7 @@ build flutter/list_install_components: phony
 # Utility command for install
 
 build flutter/CMakeFiles/install.util: CUSTOM_COMMAND flutter/all
-  COMMAND = cd /home/alyona/GOST_CHAT/flutter-gost-chat/build/linux/x64/debug/flutter && /snap/flutter/111/usr/bin/cmake -P cmake_install.cmake
+  COMMAND = cd /home/alyona/GOST_CHAT/flutter-gost-chat/build/linux/x64/debug/flutter && /snap/flutter/126/usr/bin/cmake -P cmake_install.cmake
   DESC = Install the project...
   pool = console
   restat = 1
@@ -203,7 +203,7 @@ build flutter/CMakeFiles/flutter_assemble: phony /home/alyona/GOST_CHAT/flutter-
 # Custom command for /home/alyona/GOST_CHAT/flutter-gost-chat/linux/flutter/ephemeral/libflutter_linux_gtk.so
 
 build /home/alyona/GOST_CHAT/flutter-gost-chat/linux/flutter/ephemeral/libflutter_linux_gtk.so /home/alyona/GOST_CHAT/flutter-gost-chat/linux/flutter/ephemeral/flutter_linux/fl_basic_message_channel.h /home/alyona/GOST_CHAT/flutter-gost-chat/linux/flutter/ephemeral/flutter_linux/fl_binary_codec.h /home/alyona/GOST_CHAT/flutter-gost-chat/linux/flutter/ephemeral/flutter_linux/fl_binary_messenger.h /home/alyona/GOST_CHAT/flutter-gost-chat/linux/flutter/ephemeral/flutter_linux/fl_dart_project.h /home/alyona/GOST_CHAT/flutter-gost-chat/linux/flutter/ephemeral/flutter_linux/fl_engine.h /home/alyona/GOST_CHAT/flutter-gost-chat/linux/flutter/ephemeral/flutter_linux/fl_json_message_codec.h /home/alyona/GOST_CHAT/flutter-gost-chat/linux/flutter/ephemeral/flutter_linux/fl_json_method_codec.h /home/alyona/GOST_CHAT/flutter-gost-chat/linux/flutter/ephemeral/flutter_linux/fl_message_codec.h /home/alyona/GOST_CHAT/flutter-gost-chat/linux/flutter/ephemeral/flutter_linux/fl_method_call.h /home/alyona/GOST_CHAT/flutter-gost-chat/linux/flutter/ephemeral/flutter_linux/fl_method_channel.h /home/alyona/GOST_CHAT/flutter-gost-chat/linux/flutter/ephemeral/flutter_linux/fl_method_codec.h /home/alyona/GOST_CHAT/flutter-gost-chat/linux/flutter/ephemeral/flutter_linux/fl_method_response.h /home/alyona/GOST_CHAT/flutter-gost-chat/linux/flutter/ephemeral/flutter_linux/fl_plugin_registrar.h /home/alyona/GOST_CHAT/flutter-gost-chat/linux/flutter/ephemeral/flutter_linux/fl_plugin_registry.h /home/alyona/GOST_CHAT/flutter-gost-chat/linux/flutter/ephemeral/flutter_linux/fl_standard_message_codec.h /home/alyona/GOST_CHAT/flutter-gost-chat/linux/flutter/ephemeral/flutter_linux/fl_standard_method_codec.h /home/alyona/GOST_CHAT/flutter-gost-chat/linux/flutter/ephemeral/flutter_linux/fl_string_codec.h /home/alyona/GOST_CHAT/flutter-gost-chat/linux/flutter/ephemeral/flutter_linux/fl_value.h /home/alyona/GOST_CHAT/flutter-gost-chat/linux/flutter/ephemeral/flutter_linux/fl_view.h /home/alyona/GOST_CHAT/flutter-gost-chat/linux/flutter/ephemeral/flutter_linux/flutter_linux.h flutter/_phony_: CUSTOM_COMMAND
-  COMMAND = cd /home/alyona/GOST_CHAT/flutter-gost-chat/build/linux/x64/debug/flutter && /snap/flutter/111/usr/bin/cmake -E env FLUTTER_ROOT=/home/alyona/snap/flutter/common/flutter PROJECT_DIR=/home/alyona/GOST_CHAT/flutter-gost-chat DART_DEFINES=RkxVVFRFUl9XRUJfQVVUT19ERVRFQ1Q9dHJ1ZQ== DART_OBFUSCATION=false TRACK_WIDGET_CREATION=true TREE_SHAKE_ICONS=false PACKAGE_CONFIG=/home/alyona/GOST_CHAT/flutter-gost-chat/.dart_tool/package_config.json FLUTTER_TARGET=/home/alyona/GOST_CHAT/flutter-gost-chat/lib/main.dart /home/alyona/snap/flutter/common/flutter/packages/flutter_tools/bin/tool_backend.sh linux-x64 Debug
+  COMMAND = cd /home/alyona/GOST_CHAT/flutter-gost-chat/build/linux/x64/debug/flutter && /snap/flutter/126/usr/bin/cmake -E env FLUTTER_ROOT=/home/alyona/snap/flutter/common/flutter PROJECT_DIR=/home/alyona/GOST_CHAT/flutter-gost-chat DART_DEFINES=RkxVVFRFUl9XRUJfQVVUT19ERVRFQ1Q9dHJ1ZQ== DART_OBFUSCATION=false TRACK_WIDGET_CREATION=true TREE_SHAKE_ICONS=false PACKAGE_CONFIG=/home/alyona/GOST_CHAT/flutter-gost-chat/.dart_tool/package_config.json FLUTTER_TARGET=/home/alyona/GOST_CHAT/flutter-gost-chat/lib/main.dart /home/alyona/snap/flutter/common/flutter/packages/flutter_tools/bin/tool_backend.sh linux-x64 Debug
   DESC = Generating /home/alyona/GOST_CHAT/flutter-gost-chat/linux/flutter/ephemeral/libflutter_linux_gtk.so, /home/alyona/GOST_CHAT/flutter-gost-chat/linux/flutter/ephemeral/flutter_linux/fl_basic_message_channel.h, /home/alyona/GOST_CHAT/flutter-gost-chat/linux/flutter/ephemeral/flutter_linux/fl_binary_codec.h, /home/alyona/GOST_CHAT/flutter-gost-chat/linux/flutter/ephemeral/flutter_linux/fl_binary_messenger.h, /home/alyona/GOST_CHAT/flutter-gost-chat/linux/flutter/ephemeral/flutter_linux/fl_dart_project.h, /home/alyona/GOST_CHAT/flutter-gost-chat/linux/flutter/ephemeral/flutter_linux/fl_engine.h, /home/alyona/GOST_CHAT/flutter-gost-chat/linux/flutter/ephemeral/flutter_linux/fl_json_message_codec.h, /home/alyona/GOST_CHAT/flutter-gost-chat/linux/flutter/ephemeral/flutter_linux/fl_json_method_codec.h, /home/alyona/GOST_CHAT/flutter-gost-chat/linux/flutter/ephemeral/flutter_linux/fl_message_codec.h, /home/alyona/GOST_CHAT/flutter-gost-chat/linux/flutter/ephemeral/flutter_linux/fl_method_call.h, /home/alyona/GOST_CHAT/flutter-gost-chat/linux/flutter/ephemeral/flutter_linux/fl_method_channel.h, /home/alyona/GOST_CHAT/flutter-gost-chat/linux/flutter/ephemeral/flutter_linux/fl_method_codec.h, /home/alyona/GOST_CHAT/flutter-gost-chat/linux/flutter/ephemeral/flutter_linux/fl_method_response.h, /home/alyona/GOST_CHAT/flutter-gost-chat/linux/flutter/ephemeral/flutter_linux/fl_plugin_registrar.h, /home/alyona/GOST_CHAT/flutter-gost-chat/linux/flutter/ephemeral/flutter_linux/fl_plugin_registry.h, /home/alyona/GOST_CHAT/flutter-gost-chat/linux/flutter/ephemeral/flutter_linux/fl_standard_message_codec.h, /home/alyona/GOST_CHAT/flutter-gost-chat/linux/flutter/ephemeral/flutter_linux/fl_standard_method_codec.h, /home/alyona/GOST_CHAT/flutter-gost-chat/linux/flutter/ephemeral/flutter_linux/fl_string_codec.h, /home/alyona/GOST_CHAT/flutter-gost-chat/linux/flutter/ephemeral/flutter_linux/fl_value.h, /home/alyona/GOST_CHAT/flutter-gost-chat/linux/flutter/ephemeral/flutter_linux/fl_view.h, /home/alyona/GOST_CHAT/flutter-gost-chat/linux/flutter/ephemeral/flutter_linux/flutter_linux.h, _phony_
   restat = 1
 # =============================================================================
@@ -216,7 +216,7 @@ build /home/alyona/GOST_CHAT/flutter-gost-chat/linux/flutter/ephemeral/libflutte
 # Utility command for install/strip
 
 build plugins/plugin_linux/CMakeFiles/install/strip.util: CUSTOM_COMMAND plugins/plugin_linux/all
-  COMMAND = cd /home/alyona/GOST_CHAT/flutter-gost-chat/build/linux/x64/debug/plugins/plugin_linux && /snap/flutter/111/usr/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
+  COMMAND = cd /home/alyona/GOST_CHAT/flutter-gost-chat/build/linux/x64/debug/plugins/plugin_linux && /snap/flutter/126/usr/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
   DESC = Installing the project stripped...
   pool = console
   restat = 1
@@ -226,7 +226,7 @@ build plugins/plugin_linux/install/strip: phony plugins/plugin_linux/CMakeFiles/
 # Utility command for edit_cache
 
 build plugins/plugin_linux/CMakeFiles/edit_cache.util: CUSTOM_COMMAND
-  COMMAND = cd /home/alyona/GOST_CHAT/flutter-gost-chat/build/linux/x64/debug/plugins/plugin_linux && /snap/flutter/111/usr/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
+  COMMAND = cd /home/alyona/GOST_CHAT/flutter-gost-chat/build/linux/x64/debug/plugins/plugin_linux && /snap/flutter/126/usr/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
   DESC = No interactive CMake dialog available...
   restat = 1
 build plugins/plugin_linux/edit_cache: phony plugins/plugin_linux/CMakeFiles/edit_cache.util
@@ -235,7 +235,7 @@ build plugins/plugin_linux/edit_cache: phony plugins/plugin_linux/CMakeFiles/edi
 # Utility command for rebuild_cache
 
 build plugins/plugin_linux/CMakeFiles/rebuild_cache.util: CUSTOM_COMMAND
-  COMMAND = cd /home/alyona/GOST_CHAT/flutter-gost-chat/build/linux/x64/debug/plugins/plugin_linux && /snap/flutter/111/usr/bin/cmake -H/home/alyona/GOST_CHAT/flutter-gost-chat/linux -B/home/alyona/GOST_CHAT/flutter-gost-chat/build/linux/x64/debug
+  COMMAND = cd /home/alyona/GOST_CHAT/flutter-gost-chat/build/linux/x64/debug/plugins/plugin_linux && /snap/flutter/126/usr/bin/cmake -H/home/alyona/GOST_CHAT/flutter-gost-chat/linux -B/home/alyona/GOST_CHAT/flutter-gost-chat/build/linux/x64/debug
   DESC = Running CMake to regenerate build system...
   pool = console
   restat = 1
@@ -250,7 +250,7 @@ build plugins/plugin_linux/list_install_components: phony
 # Utility command for install/local
 
 build plugins/plugin_linux/CMakeFiles/install/local.util: CUSTOM_COMMAND plugins/plugin_linux/all
-  COMMAND = cd /home/alyona/GOST_CHAT/flutter-gost-chat/build/linux/x64/debug/plugins/plugin_linux && /snap/flutter/111/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+  COMMAND = cd /home/alyona/GOST_CHAT/flutter-gost-chat/build/linux/x64/debug/plugins/plugin_linux && /snap/flutter/126/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
   DESC = Installing only the local directory...
   pool = console
   restat = 1
@@ -343,7 +343,7 @@ build plugins/plugin_linux/libplugin_linux_plugin.so: CXX_SHARED_LIBRARY_LINKER_
 # Utility command for install
 
 build plugins/plugin_linux/CMakeFiles/install.util: CUSTOM_COMMAND plugins/plugin_linux/all
-  COMMAND = cd /home/alyona/GOST_CHAT/flutter-gost-chat/build/linux/x64/debug/plugins/plugin_linux && /snap/flutter/111/usr/bin/cmake -P cmake_install.cmake
+  COMMAND = cd /home/alyona/GOST_CHAT/flutter-gost-chat/build/linux/x64/debug/plugins/plugin_linux && /snap/flutter/126/usr/bin/cmake -P cmake_install.cmake
   DESC = Install the project...
   pool = console
   restat = 1
@@ -358,7 +358,7 @@ build plugins/plugin_linux/install: phony plugins/plugin_linux/CMakeFiles/instal
 # Utility command for install/strip
 
 build plugins/window_size/CMakeFiles/install/strip.util: CUSTOM_COMMAND plugins/window_size/all
-  COMMAND = cd /home/alyona/GOST_CHAT/flutter-gost-chat/build/linux/x64/debug/plugins/window_size && /snap/flutter/111/usr/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
+  COMMAND = cd /home/alyona/GOST_CHAT/flutter-gost-chat/build/linux/x64/debug/plugins/window_size && /snap/flutter/126/usr/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
   DESC = Installing the project stripped...
   pool = console
   restat = 1
@@ -368,7 +368,7 @@ build plugins/window_size/install/strip: phony plugins/window_size/CMakeFiles/in
 # Utility command for edit_cache
 
 build plugins/window_size/CMakeFiles/edit_cache.util: CUSTOM_COMMAND
-  COMMAND = cd /home/alyona/GOST_CHAT/flutter-gost-chat/build/linux/x64/debug/plugins/window_size && /snap/flutter/111/usr/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
+  COMMAND = cd /home/alyona/GOST_CHAT/flutter-gost-chat/build/linux/x64/debug/plugins/window_size && /snap/flutter/126/usr/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
   DESC = No interactive CMake dialog available...
   restat = 1
 build plugins/window_size/edit_cache: phony plugins/window_size/CMakeFiles/edit_cache.util
@@ -411,7 +411,7 @@ build plugins/window_size/libwindow_size_plugin.so: CXX_SHARED_LIBRARY_LINKER__w
 # Utility command for rebuild_cache
 
 build plugins/window_size/CMakeFiles/rebuild_cache.util: CUSTOM_COMMAND
-  COMMAND = cd /home/alyona/GOST_CHAT/flutter-gost-chat/build/linux/x64/debug/plugins/window_size && /snap/flutter/111/usr/bin/cmake -H/home/alyona/GOST_CHAT/flutter-gost-chat/linux -B/home/alyona/GOST_CHAT/flutter-gost-chat/build/linux/x64/debug
+  COMMAND = cd /home/alyona/GOST_CHAT/flutter-gost-chat/build/linux/x64/debug/plugins/window_size && /snap/flutter/126/usr/bin/cmake -H/home/alyona/GOST_CHAT/flutter-gost-chat/linux -B/home/alyona/GOST_CHAT/flutter-gost-chat/build/linux/x64/debug
   DESC = Running CMake to regenerate build system...
   pool = console
   restat = 1
@@ -426,7 +426,7 @@ build plugins/window_size/list_install_components: phony
 # Utility command for install/local
 
 build plugins/window_size/CMakeFiles/install/local.util: CUSTOM_COMMAND plugins/window_size/all
-  COMMAND = cd /home/alyona/GOST_CHAT/flutter-gost-chat/build/linux/x64/debug/plugins/window_size && /snap/flutter/111/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+  COMMAND = cd /home/alyona/GOST_CHAT/flutter-gost-chat/build/linux/x64/debug/plugins/window_size && /snap/flutter/126/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
   DESC = Installing only the local directory...
   pool = console
   restat = 1
@@ -436,7 +436,7 @@ build plugins/window_size/install/local: phony plugins/window_size/CMakeFiles/in
 # Utility command for install
 
 build plugins/window_size/CMakeFiles/install.util: CUSTOM_COMMAND plugins/window_size/all
-  COMMAND = cd /home/alyona/GOST_CHAT/flutter-gost-chat/build/linux/x64/debug/plugins/window_size && /snap/flutter/111/usr/bin/cmake -P cmake_install.cmake
+  COMMAND = cd /home/alyona/GOST_CHAT/flutter-gost-chat/build/linux/x64/debug/plugins/window_size && /snap/flutter/126/usr/bin/cmake -P cmake_install.cmake
   DESC = Install the project...
   pool = console
   restat = 1
@@ -489,13 +489,13 @@ default all
 #############################################
 # Re-run CMake if any of its inputs changed.
 
-build build.ninja: RERUN_CMAKE | /home/alyona/GOST_CHAT/flutter-gost-chat/linux/CMakeLists.txt /home/alyona/GOST_CHAT/flutter-gost-chat/linux/flutter/CMakeLists.txt /home/alyona/GOST_CHAT/flutter-gost-chat/linux/flutter/ephemeral/.plugin_symlinks/plugin_linux/linux/CMakeLists.txt /home/alyona/GOST_CHAT/flutter-gost-chat/linux/flutter/ephemeral/.plugin_symlinks/window_size/linux/CMakeLists.txt /home/alyona/GOST_CHAT/flutter-gost-chat/linux/flutter/ephemeral/generated_config.cmake /home/alyona/GOST_CHAT/flutter-gost-chat/linux/flutter/generated_plugins.cmake /snap/flutter/111/usr/share/cmake-3.10/Modules/CMakeCXXInformation.cmake /snap/flutter/111/usr/share/cmake-3.10/Modules/CMakeCommonLanguageInclude.cmake /snap/flutter/111/usr/share/cmake-3.10/Modules/CMakeGenericSystem.cmake /snap/flutter/111/usr/share/cmake-3.10/Modules/CMakeLanguageInformation.cmake /snap/flutter/111/usr/share/cmake-3.10/Modules/CMakeSystemSpecificInformation.cmake /snap/flutter/111/usr/share/cmake-3.10/Modules/CMakeSystemSpecificInitialize.cmake /snap/flutter/111/usr/share/cmake-3.10/Modules/Compiler/CMakeCommonCompilerMacros.cmake /snap/flutter/111/usr/share/cmake-3.10/Modules/Compiler/Clang-CXX.cmake /snap/flutter/111/usr/share/cmake-3.10/Modules/Compiler/Clang.cmake /snap/flutter/111/usr/share/cmake-3.10/Modules/Compiler/GNU.cmake /snap/flutter/111/usr/share/cmake-3.10/Modules/FindOpenSSL.cmake /snap/flutter/111/usr/share/cmake-3.10/Modules/FindPackageHandleStandardArgs.cmake /snap/flutter/111/usr/share/cmake-3.10/Modules/FindPackageMessage.cmake /snap/flutter/111/usr/share/cmake-3.10/Modules/FindPkgConfig.cmake /snap/flutter/111/usr/share/cmake-3.10/Modules/Platform/Linux-Clang-CXX.cmake /snap/flutter/111/usr/share/cmake-3.10/Modules/Platform/Linux-GNU-CXX.cmake /snap/flutter/111/usr/share/cmake-3.10/Modules/Platform/Linux-GNU.cmake /snap/flutter/111/usr/share/cmake-3.10/Modules/Platform/Linux.cmake /snap/flutter/111/usr/share/cmake-3.10/Modules/Platform/UnixPaths.cmake CMakeCache.txt CMakeFiles/3.10.2/CMakeCXXCompiler.cmake CMakeFiles/3.10.2/CMakeSystem.cmake
+build build.ninja: RERUN_CMAKE | /home/alyona/GOST_CHAT/flutter-gost-chat/linux/CMakeLists.txt /home/alyona/GOST_CHAT/flutter-gost-chat/linux/flutter/CMakeLists.txt /home/alyona/GOST_CHAT/flutter-gost-chat/linux/flutter/ephemeral/.plugin_symlinks/plugin_linux/linux/CMakeLists.txt /home/alyona/GOST_CHAT/flutter-gost-chat/linux/flutter/ephemeral/.plugin_symlinks/window_size/linux/CMakeLists.txt /home/alyona/GOST_CHAT/flutter-gost-chat/linux/flutter/ephemeral/generated_config.cmake /home/alyona/GOST_CHAT/flutter-gost-chat/linux/flutter/generated_plugins.cmake /snap/flutter/126/usr/share/cmake-3.10/Modules/CMakeCXXInformation.cmake /snap/flutter/126/usr/share/cmake-3.10/Modules/CMakeCommonLanguageInclude.cmake /snap/flutter/126/usr/share/cmake-3.10/Modules/CMakeGenericSystem.cmake /snap/flutter/126/usr/share/cmake-3.10/Modules/CMakeLanguageInformation.cmake /snap/flutter/126/usr/share/cmake-3.10/Modules/CMakeSystemSpecificInformation.cmake /snap/flutter/126/usr/share/cmake-3.10/Modules/CMakeSystemSpecificInitialize.cmake /snap/flutter/126/usr/share/cmake-3.10/Modules/Compiler/CMakeCommonCompilerMacros.cmake /snap/flutter/126/usr/share/cmake-3.10/Modules/Compiler/Clang-CXX.cmake /snap/flutter/126/usr/share/cmake-3.10/Modules/Compiler/Clang.cmake /snap/flutter/126/usr/share/cmake-3.10/Modules/Compiler/GNU.cmake /snap/flutter/126/usr/share/cmake-3.10/Modules/FindOpenSSL.cmake /snap/flutter/126/usr/share/cmake-3.10/Modules/FindPackageHandleStandardArgs.cmake /snap/flutter/126/usr/share/cmake-3.10/Modules/FindPackageMessage.cmake /snap/flutter/126/usr/share/cmake-3.10/Modules/FindPkgConfig.cmake /snap/flutter/126/usr/share/cmake-3.10/Modules/Platform/Linux-Clang-CXX.cmake /snap/flutter/126/usr/share/cmake-3.10/Modules/Platform/Linux-GNU-CXX.cmake /snap/flutter/126/usr/share/cmake-3.10/Modules/Platform/Linux-GNU.cmake /snap/flutter/126/usr/share/cmake-3.10/Modules/Platform/Linux.cmake /snap/flutter/126/usr/share/cmake-3.10/Modules/Platform/UnixPaths.cmake CMakeCache.txt CMakeFiles/3.10.2/CMakeCXXCompiler.cmake CMakeFiles/3.10.2/CMakeSystem.cmake
   pool = console
 
 #############################################
 # A missing CMake input file is not an error.
 
-build /home/alyona/GOST_CHAT/flutter-gost-chat/linux/CMakeLists.txt /home/alyona/GOST_CHAT/flutter-gost-chat/linux/flutter/CMakeLists.txt /home/alyona/GOST_CHAT/flutter-gost-chat/linux/flutter/ephemeral/.plugin_symlinks/plugin_linux/linux/CMakeLists.txt /home/alyona/GOST_CHAT/flutter-gost-chat/linux/flutter/ephemeral/.plugin_symlinks/window_size/linux/CMakeLists.txt /home/alyona/GOST_CHAT/flutter-gost-chat/linux/flutter/ephemeral/generated_config.cmake /home/alyona/GOST_CHAT/flutter-gost-chat/linux/flutter/generated_plugins.cmake /snap/flutter/111/usr/share/cmake-3.10/Modules/CMakeCXXInformation.cmake /snap/flutter/111/usr/share/cmake-3.10/Modules/CMakeCommonLanguageInclude.cmake /snap/flutter/111/usr/share/cmake-3.10/Modules/CMakeGenericSystem.cmake /snap/flutter/111/usr/share/cmake-3.10/Modules/CMakeLanguageInformation.cmake /snap/flutter/111/usr/share/cmake-3.10/Modules/CMakeSystemSpecificInformation.cmake /snap/flutter/111/usr/share/cmake-3.10/Modules/CMakeSystemSpecificInitialize.cmake /snap/flutter/111/usr/share/cmake-3.10/Modules/Compiler/CMakeCommonCompilerMacros.cmake /snap/flutter/111/usr/share/cmake-3.10/Modules/Compiler/Clang-CXX.cmake /snap/flutter/111/usr/share/cmake-3.10/Modules/Compiler/Clang.cmake /snap/flutter/111/usr/share/cmake-3.10/Modules/Compiler/GNU.cmake /snap/flutter/111/usr/share/cmake-3.10/Modules/FindOpenSSL.cmake /snap/flutter/111/usr/share/cmake-3.10/Modules/FindPackageHandleStandardArgs.cmake /snap/flutter/111/usr/share/cmake-3.10/Modules/FindPackageMessage.cmake /snap/flutter/111/usr/share/cmake-3.10/Modules/FindPkgConfig.cmake /snap/flutter/111/usr/share/cmake-3.10/Modules/Platform/Linux-Clang-CXX.cmake /snap/flutter/111/usr/share/cmake-3.10/Modules/Platform/Linux-GNU-CXX.cmake /snap/flutter/111/usr/share/cmake-3.10/Modules/Platform/Linux-GNU.cmake /snap/flutter/111/usr/share/cmake-3.10/Modules/Platform/Linux.cmake /snap/flutter/111/usr/share/cmake-3.10/Modules/Platform/UnixPaths.cmake CMakeCache.txt CMakeFiles/3.10.2/CMakeCXXCompiler.cmake CMakeFiles/3.10.2/CMakeSystem.cmake: phony
+build /home/alyona/GOST_CHAT/flutter-gost-chat/linux/CMakeLists.txt /home/alyona/GOST_CHAT/flutter-gost-chat/linux/flutter/CMakeLists.txt /home/alyona/GOST_CHAT/flutter-gost-chat/linux/flutter/ephemeral/.plugin_symlinks/plugin_linux/linux/CMakeLists.txt /home/alyona/GOST_CHAT/flutter-gost-chat/linux/flutter/ephemeral/.plugin_symlinks/window_size/linux/CMakeLists.txt /home/alyona/GOST_CHAT/flutter-gost-chat/linux/flutter/ephemeral/generated_config.cmake /home/alyona/GOST_CHAT/flutter-gost-chat/linux/flutter/generated_plugins.cmake /snap/flutter/126/usr/share/cmake-3.10/Modules/CMakeCXXInformation.cmake /snap/flutter/126/usr/share/cmake-3.10/Modules/CMakeCommonLanguageInclude.cmake /snap/flutter/126/usr/share/cmake-3.10/Modules/CMakeGenericSystem.cmake /snap/flutter/126/usr/share/cmake-3.10/Modules/CMakeLanguageInformation.cmake /snap/flutter/126/usr/share/cmake-3.10/Modules/CMakeSystemSpecificInformation.cmake /snap/flutter/126/usr/share/cmake-3.10/Modules/CMakeSystemSpecificInitialize.cmake /snap/flutter/126/usr/share/cmake-3.10/Modules/Compiler/CMakeCommonCompilerMacros.cmake /snap/flutter/126/usr/share/cmake-3.10/Modules/Compiler/Clang-CXX.cmake /snap/flutter/126/usr/share/cmake-3.10/Modules/Compiler/Clang.cmake /snap/flutter/126/usr/share/cmake-3.10/Modules/Compiler/GNU.cmake /snap/flutter/126/usr/share/cmake-3.10/Modules/FindOpenSSL.cmake /snap/flutter/126/usr/share/cmake-3.10/Modules/FindPackageHandleStandardArgs.cmake /snap/flutter/126/usr/share/cmake-3.10/Modules/FindPackageMessage.cmake /snap/flutter/126/usr/share/cmake-3.10/Modules/FindPkgConfig.cmake /snap/flutter/126/usr/share/cmake-3.10/Modules/Platform/Linux-Clang-CXX.cmake /snap/flutter/126/usr/share/cmake-3.10/Modules/Platform/Linux-GNU-CXX.cmake /snap/flutter/126/usr/share/cmake-3.10/Modules/Platform/Linux-GNU.cmake /snap/flutter/126/usr/share/cmake-3.10/Modules/Platform/Linux.cmake /snap/flutter/126/usr/share/cmake-3.10/Modules/Platform/UnixPaths.cmake CMakeCache.txt CMakeFiles/3.10.2/CMakeCXXCompiler.cmake CMakeFiles/3.10.2/CMakeSystem.cmake: phony
 
 #############################################
 # Clean all the built files.

@@ -7,6 +7,7 @@ using json = nlohmann::json;
 using namespace std;
 
 ClassServerGost SERVER_GOST_SEND;
+ClassServerGostLog SERVER_GOST_SEND_LOG;
 
 std::string message_text = "";
 json j;

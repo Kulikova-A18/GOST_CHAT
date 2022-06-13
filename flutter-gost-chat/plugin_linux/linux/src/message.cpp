@@ -4,6 +4,61 @@
 ClassClientGost CLIENT_GOST_MESSAGE;
 ClassClientGostLog CLIENT_GOST_MESSAGE_LOG;
 
+std::string result_key(char *key_text) {
+    std::string result = "", string_text = key_text;
+
+    //kulikova@gost_chat.com
+    if(string_text.find("[kulikova@gost_chat.com from maximov@gost_chat.com]") != std::string::npos) {
+        std::ifstream ifs("client.json");
+        json j = json::parse(ifs);
+        std::string key     = j["maximov"].get<std::string>();
+        result = key;
+    }
+    else if(string_text.find("[kulikova@gost_chat.com from konovalov@gost_chat.com]") != std::string::npos) {
+        std::ifstream ifs("client.json");
+        json j = json::parse(ifs);
+        std::string key     = j["konovalov"].get<std::string>();
+        result = key;
+    }
+    
+    //maximov@gost_chat.com
+    else if(string_text.find("[maximov@gost_chat.com from kulikova@gost_chat.com]") != std::string::npos) {
+        std::ifstream ifs("client.json");
+        json j = json::parse(ifs);
+        std::string key     = j["kulikova"].get<std::string>();
+        result = key;
+    }
+    else if(string_text.find("[maximov@gost_chat.com from konovalov@gost_chat.com]") != std::string::npos) {
+        std::ifstream ifs("client.json");
+        json j = json::parse(ifs);
+        std::string key     = j["konovalov"].get<std::string>();
+        result = key;
+    }
+    
+    //konovalov@gost_chat.com
+    else if(string_text.find("[konovalov@gost_chat.com from maximov@gost_chat.com]") != std::string::npos) {
+        std::ifstream ifs("client.json");
+        json j = json::parse(ifs);
+        std::string key     = j["maximov"].get<std::string>();
+        result = key;
+    }
+    else if(string_text.find("[konovalov@gost_chat.com from kulikova@gost_chat.com]") != std::string::npos) {
+        std::ifstream ifs("client.json");
+        json j = json::parse(ifs);
+        std::string key     = j["kulikova"].get<std::string>();
+        result = key;
+    }
+
+    else {
+        std::ifstream ifs("client.json");
+        json j = json::parse(ifs);
+        std::string key     = j["response server"].get<std::string>();
+        result = key;
+    }
+
+    return result;
+}
+
 LIBRARY_API 
 int encrypted_message(char *text) {
     setbuf(stdout, NULL);
@@ -14,7 +69,8 @@ int encrypted_message(char *text) {
             /* get data (login and password) */
             std::ifstream ifs("client.json");
             json j = json::parse(ifs);
-            std::string key     = j["response server"].get<std::string>();
+            //std::string key     = j["response server"].get<std::string>();
+            std::string key     = result_key(text);
             std::string login   = j["login"].get<std::string>();
             
             /* A 256 bit key */
@@ -34,7 +90,7 @@ int encrypted_message(char *text) {
 
             /*create secret key - SHARED SECRET*/
             unsigned char secretKey[AES_BLOCK_SIZE * 2] = {0,}; //32
-            unsigned char salt[] = {'G','O','S','T','-','C','H','A','T','G','O','S','T','-','C','H'}; // "GOST-CHAT"
+            unsigned char salt[] = {'G','O','S','T','-','C','H','A','T','G','O','S','T'}; // "GOST-CHAT"
             unsigned char *iv = (unsigned char *)"0123456789012345"; /* A 128 bit IV */
             PKCS5_PBKDF2_HMAC_SHA1((const char *)strcpy_key, strlen((char *)strcpy_key),
                               salt, sizeof(salt), 20000 , AES_BLOCK_SIZE * 2, (unsigned char *)secretKey);
@@ -59,10 +115,12 @@ int encrypted_message(char *text) {
         }    
         catch (json::parse_error& e)
         {
+            CLIENT_GOST_MESSAGE_LOG.string_void = "";
             // output exception information
-            std::cout << "message: " << e.what() << '\n'
-                        << "exception id: " << e.id << '\n'
-                        << "byte position of error: " << e.byte << std::endl;
+            char ac[1024] = {0};
+            sprintf(ac, "message: %s\nexception id: %s\nbyte position of error: %s", e.what(), e.id, e.byte);
+            CLIENT_GOST_MESSAGE_LOG.string_message = ac;
+            CLIENT_GOST_MESSAGE_LOG.logger();
         }
     }
     catch(...)

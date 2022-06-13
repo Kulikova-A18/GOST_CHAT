@@ -14,9 +14,9 @@ class ClipPathClass_Other extends CustomClipper<Path> {
 
     var path2 = Path();
     path2.addRRect(RRect.fromLTRBAndCorners(
-        size.height * (-10), size.height - bubbleRadius, -40, 0,
+        size.height * (-20), size.height - bubbleRadius, -280, 0,
         bottomRight: Radius.circular(fourthEdgeRadius)));
-    path.addPath(path2, Offset(size.width - 60, size.height - 45));
+    path.addPath(path2, Offset(size.width - 80, size.height - 45));
     path.close();
     return path;
   }
