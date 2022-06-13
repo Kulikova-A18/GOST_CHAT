@@ -13,23 +13,6 @@ std::string check_json = "data/data_workers.json";
 std::string check_json_Kulikova    =   "data/Kulikova.json";
 std::string check_json_Maximov     =   "data/Maximov.json";
 std::string check_json_Konovalov   =   "data/Konovalov.json";
-std::string check_json_Kiseleva    =   "data/Kiseleva.json";
-std::string check_json_Voronin     =   "data/Voronin.json";
-std::string check_json_Kasatkina   =   "data/Kasatkina.json";
-std::string check_json_Homeland    =   "data/Homeland.json";
-std::string check_json_Glebov      =   "data/Glebov.json";
-std::string check_json_Grigoriev   =   "data/Grigoriev.json";
-std::string check_json_Pavlov      =   "data/Pavlov.json";
-std::string check_json_Antipova    =   "data/Antipova.json";
-std::string check_json_Ilina       =   "data/Ilina.json";
-std::string check_json_Klimov      =   "data/Klimov.json";
-std::string check_json_Kulikov     =   "data/Kulikov.json";
-std::string check_json_Ilkina      =   "data/Ilkina.json";
-std::string check_json_Markov      =   "data/Markov.json";
-std::string check_json_Popova      =   "data/Popova.json";
-std::string check_json_Sidorov     =   "data/Sidorov.json";
-std::string check_json_Siporov     =   "data/Siporov.json";
-std::string check_json_Bogdanova   =   "data/Bogdanova.json";
 
 namespace ns_checking {
     struct person {
@@ -41,7 +24,6 @@ namespace ns_checking {
         std::string position; // position employee
         std::string login; // login employee
         std::string password; // password employee
-        std::string password_life; // password life employee
     };
 
     void to_json(json& j, const person& p) {
@@ -55,8 +37,6 @@ namespace ns_checking {
             { "position" , p.position },
             { "login" , p.login },
             { "password" , p.password },
-            {"password life"  , p.password_life }
-
         };
     }
     void from_json(const json& j, person& p) {
@@ -68,7 +48,6 @@ namespace ns_checking {
         j.at("position").get_to(p.position);
         j.at("login").get_to(p.login);
         j.at("password").get_to(p.password);
-        j.at("password life").get_to(p.password_life);
     }
 }
 
@@ -79,6 +58,10 @@ std::string ClassServerGost::check_data(std::string _message) {
 
         if(_message.empty()) {
             _result = "Invalid password";
+
+            SERVER_GOST_DATA_LOG.string_void = "ClassServerGost::check_data";
+            SERVER_GOST_DATA_LOG.string_message = "Invalid password";
+            SERVER_GOST_DATA_LOG.logger();
         }
 
         json j_message = json::parse(_message);
@@ -98,28 +81,6 @@ std::string ClassServerGost::check_data(std::string _message) {
     }
 }
 
-int number_of_days(int days) {
-    int result_days = 0;
-
-    /* choose today's date and time */
-    time_t t_now = time(0);
-    time_t t_days = t_now;
-
-    /* transfer to the date when the due date */
-    t_days = 24 * 3600 * days;
-
-    /* the number of days remaining days is greater than today's number */
-    time_t t_result;
-
-    t_result = t_days - t_now;
-
-    if(t_now > t_days) {
-        /* calculate remaining days */
-        result_days = (t_result / 3600)/24;
-    }
-    return result_days;
-}
-
 
 #define length(array) ((sizeof(array)) / (sizeof(array[0])))
 
@@ -128,24 +89,7 @@ std::string ClassServerGost::find_json(std::string _login, std::string _password
     {
         check_json_Kulikova.c_str(),
         check_json_Maximov.c_str(),
-        check_json_Konovalov.c_str(),
-        check_json_Kiseleva.c_str(),
-        check_json_Voronin.c_str(),
-        check_json_Kasatkina.c_str(),
-        check_json_Homeland.c_str(),
-        check_json_Glebov.c_str(),
-        check_json_Grigoriev.c_str(),
-        check_json_Pavlov.c_str(),
-        check_json_Antipova.c_str(),
-        check_json_Ilina.c_str(),
-        check_json_Klimov.c_str(),
-        check_json_Kulikov.c_str(),
-        check_json_Ilkina.c_str(),
-        check_json_Markov.c_str(),
-        check_json_Popova.c_str(),
-        check_json_Sidorov.c_str(),
-        check_json_Siporov.c_str(),
-        check_json_Bogdanova.c_str()
+        check_json_Konovalov.c_str()
     };
 
     json j;
@@ -158,43 +102,14 @@ std::string ClassServerGost::find_json(std::string _login, std::string _password
             in >> j;
             auto conversion = j.get<ns_checking::person>();
 
-            int int_PASSWORD_LIFETIME;
-            if(sscanf(conversion.password_life.c_str(), "%d", &int_PASSWORD_LIFETIME) != 1) { /* error*/ }
-            int result_PASSWORD_LIFETIME = number_of_days(int_PASSWORD_LIFETIME);
-
             if (conversion.login == _login && conversion.password == _password) {
-                if(result_PASSWORD_LIFETIME > 3) {
-                    message = SIMMETRIC_KEY;
-                }
-                else if(result_PASSWORD_LIFETIME <= 3 && result_PASSWORD_LIFETIME > 0) {
-                    char ac[1024] = {0};
-                    sprintf(ac, "Expired password. Change the password and notify the user. days left: %d."
-                                "user data: LOGIN: %s; PASSWORD: %s", result_PASSWORD_LIFETIME, _login.c_str(), _password.c_str());
-                    SERVER_GOST_DATA_LOG.string_void = "ClassServerGost::find_json()";
-                    SERVER_GOST_DATA_LOG.string_message = ac;
-                    SERVER_GOST_DATA_LOG.logger();
-
-                    result_check = true;
-                }
-                else if(result_PASSWORD_LIFETIME == 0) {
-                    char ac[1024] = {0};
-                    sprintf(ac, "password will expire soon. change password and notify user."
-                                " user data: LOGIN: %s; PASSWORD: %s", _login.c_str(), _password.c_str());
-                    SERVER_GOST_DATA_LOG.string_void = "ClassServerGost::find_json()";
-                    SERVER_GOST_DATA_LOG.string_message = ac;
-                    SERVER_GOST_DATA_LOG.logger();
-                    result_check = true;
-                }
-                else { /*error*/ }
+                result_check = true;
             }
-            else if (conversion.login != _login || conversion.password != _password) {
-                char ac[1024] = {0};
-                sprintf(ac, "sign in attempt. user data: LOGIN: %s; PASSWORD: %s", _login.c_str(), _password.c_str());
+            else {
                 SERVER_GOST_DATA_LOG.string_void = "ClassServerGost::find_json()";
-                SERVER_GOST_DATA_LOG.string_message = ac;
+                SERVER_GOST_DATA_LOG.string_message = "sign in attempt";
                 SERVER_GOST_DATA_LOG.logger();
             }
-            else { /*error*/ }
         }
         in.close();
     }
@@ -204,6 +119,10 @@ std::string ClassServerGost::find_json(std::string _login, std::string _password
     }
     else {
         message = "Invalid password";
+
+        SERVER_GOST_DATA_LOG.string_void = "ClassServerGost::find_json()";
+        SERVER_GOST_DATA_LOG.string_message = "login denied";
+        SERVER_GOST_DATA_LOG.logger();
     }
 
     return message;
@@ -227,13 +146,13 @@ std::string ClassServerGost::_find(std::string argv1, std::string argv2) {
     if (text.find(argv1) != std::string::npos && text.find(argv2) != std::string::npos) {
         message = SERVER_GOST_DATA.find_json(argv1, argv2);
     }
-    else if (text.find(argv1) != std::string::npos || text.find(argv2) != std::string::npos) {
-        message = SERVER_GOST_DATA.find_json(argv1, argv2);
-    }
-    else if (text.find(argv1) == std::string::npos && text.find(argv2) == std::string::npos) {
+    else {
         message = "Invalid password";
+
+        SERVER_GOST_DATA_LOG.string_void = "ClassServerGost::find_json()";
+        SERVER_GOST_DATA_LOG.string_message = "login denied";
+        SERVER_GOST_DATA_LOG.logger();
     }
-    else { /*error*/ }
 
     return message;
 }

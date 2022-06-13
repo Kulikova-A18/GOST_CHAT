@@ -15,6 +15,7 @@ add_executable(server-gost
     #EVP
     EVP/EVP_CIPHER_CTX.cpp
     EVP/EVP_PKEY.cpp
+    EVP/EVP_MD_CTX.cpp
     )
 target_link_libraries(server-gost OpenSSL::SSL OpenSSL::Crypto)
 
@@ -25,5 +26,6 @@ add_executable(client-gost
     #EVP
     EVP/client_EVP_CIPHER_CTX.cpp
     EVP/client_EVP_PKEY.cpp
+    EVP/client_EVP_MD_CTX.cpp
     )
 target_link_libraries(client-gost OpenSSL::SSL OpenSSL::Crypto)

@@ -7,19 +7,61 @@ using json = nlohmann::json;
 using namespace std;
 
 ClassServerGost SERVER_GOST_SEND;
+ClassServerGostLog SERVER_GOST_SEND_LOG;
 
 std::string message_text = "";
 json j;
 
 std::string ClassServerGost::check_authorization(std::string login, std::string password, std::string response) {
-    j =
-        {
-            { "sender", "server" },
-            { "message" , "response server" },
-            { "login", login },
-            { "password" , password },
-            { "response server" , response },
-        };
+    if(login == "kulikova@gost_chat.com") {
+        j =
+            {
+                { "sender", "server" },
+                { "message" , "response server" },
+                { "login", login },
+                { "password" , password },
+                { "response server" , response },
+                { "kulikova" , "" },
+                { "maximov" , KULIKOVA_MAXIMOV },
+                { "konovalov" , KULIKOVA_KONOVALOV },
+            };
+    }
+    else if(login == "maximov@gost_chat.com") {
+        j =
+            {
+                { "sender", "server" },
+                { "message" , "response server" },
+                { "login", login },
+                { "password" , password },
+                { "response server" , response },
+                { "kulikova" , KULIKOVA_MAXIMOV },
+                { "maximov" , "" },
+                { "konovalov" , MAXIMOV_KONOVALOV },
+            };
+    }
+    else if(login == "konovalov@gost_chat.com") {
+        j =
+            {
+                { "sender", "server" },
+                { "message" , "response server" },
+                { "login", login },
+                { "password" , password },
+                { "response server" , response },
+                { "kulikova" , KULIKOVA_KONOVALOV },
+                { "maximov" , MAXIMOV_KONOVALOV },
+                { "konovalov" , "" },
+            };
+    }
+    else {
+        j =
+            {
+                { "sender", "server" },
+                { "message" , "response server" },
+                { "login", login },
+                { "password" , password },
+                { "response server" , response },
+            };
+    }
     message_text = j.dump();
     return message_text;
 }

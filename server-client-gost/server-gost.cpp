@@ -1,10 +1,8 @@
 #include "server-gost.h"
 
-using namespace std;
+#include <sys/stat.h>
 
-// path to cert end private key
-char *CERT_PATH = (char *)"/etc/ssl/certs/server_gost_ca.pem";
-char *KEY_PATH  = (char *)"/etc/ssl/private/server_gost_privateKey.pem";
+using namespace std;
 
 ClassServerGost SERVER_GOST;
 ClassServerGostLog SERVER_GOST_LOG;
@@ -22,7 +20,9 @@ int main(int arvc, char *argv[])
     std::cout << "=============== sign in ===============" << std::endl;
     std::cout << "login: " << login_admin << std::endl;
     //std::cin >> login_admin;
-    std::cout << "password: " << password_admin << std::endl;
+    std::cout << "password: ";
+    for(int i = 0; i < password_admin.length(); i++) printf("*");
+    std::cout << std::endl;
     //std::cin >> password_admin;
 
     if(login_admin != "root" || password_admin != "root") {
@@ -36,6 +36,10 @@ int main(int arvc, char *argv[])
     }
 
     std::cout << "\n\n";
+
+    struct stat st = {0};
+    if (stat("data", &st) == -1) { mkdir("data", 0700); }
+
 
     SERVER_GOST.create_all();   // create data about people
     SERVER_GOST.create_EVP_PKEY(); // create public and private evp pkey
@@ -63,7 +67,8 @@ int main(int arvc, char *argv[])
 
     // Filling server information
     servaddr.sin_family         = AF_INET; // IPv4
-    servaddr.sin_addr.s_addr    = INADDR_ANY;
+//    servaddr.sin_addr.s_addr    = INADDR_ANY;
+    servaddr.sin_addr.s_addr    = inet_addr("127.0.0.1");
     servaddr.sin_port           = htons(PORT);
 
     // Bind the socket with the server address
@@ -94,8 +99,7 @@ int main(int arvc, char *argv[])
         strcpy(arr, a.c_str());
 
         std::cout << "=============== send message ===============" << std::endl;
-        sendto(sockfd, (const char *)arr, strlen(arr), MSG_CONFIRM,
-               (const struct sockaddr *)&cliaddr, len);
+        sendto(sockfd, (const char *)arr, strlen(arr), MSG_CONFIRM, (const struct sockaddr *)&cliaddr, len);
         BIO_dump_fp (stdout, (const char *)arr, strlen((char *)arr));
         std::cout << std::endl << std::endl;
 
@@ -153,6 +157,7 @@ int main(int arvc, char *argv[])
         BIO_dump_fp (stdout, (const char *)ciphertext, strlen((char *)ciphertext));
         std::cout << std::endl << std::endl;
 
+        // ======== remove pem ========
         if(remove("server-pubkey-server.pem")) {
             SERVER_GOST_LOG.string_void = "main()";
             SERVER_GOST_LOG.string_message = "remove(): Error removing server-pubkey-server.pem";

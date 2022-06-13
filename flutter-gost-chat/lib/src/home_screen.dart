@@ -27,12 +27,12 @@ class _HomeState extends State<Home> {
   final TextEditingController _messageController = TextEditingController();
 
   final _TextStyle = const TextStyle(
-      color: Colors.black, fontSize: 16, fontFamily: 'Source_Code_Pro');
+      color: Colors.black, fontSize: 18, fontFamily: 'Source_Code_Pro');
   final _TextStyle_message_user = const TextStyle(
-      color: Colors.black, fontSize: 16, fontFamily: 'Source_Code_Pro');
+      color: Colors.black, fontSize: 18, fontFamily: 'Source_Code_Pro');
   final _TextStyle_me = const TextStyle(
       color: Color.fromARGB(255, 255, 81, 0),
-      fontSize: 16,
+      fontSize: 18,
       fontFamily: 'Source_Code_Pro');
 
   late Timer _timer;
@@ -40,13 +40,6 @@ class _HomeState extends State<Home> {
   var now;
 
   bool isMe = false;
-/*
-  now = DateTime.now();
-  litems_name.add("Lena");
-  litems_message.add("Nice to see you, Vadim!");
-  litems_time.add("${now.hour}:${now.minute}:${now.second}");
-  lena = true;
-*/
 
   void send_message(var message) {
     fun_encrypted_message(StringUtf8Pointer(message).toNativeUtf8());
@@ -55,45 +48,11 @@ class _HomeState extends State<Home> {
   var Kulikova_Alyona = false;
   var Maximov_Oleg = false;
   var Konovalov_Grigory = false;
-  var Kiseleva_Amelia = false;
-  var Voronin_Konstantin = false;
-  var Kasatkina_Amelia = false;
-  var Homeland_Matvey = false;
-  var Glebov_Oleg = false;
-  var Grigoriev_Oleg = false;
-  var Pavlov_Matvey = false;
-  var Antipov_Grigory = false;
-  var Ilina_Daria = false;
-  var Klimov_Sergey = false;
-  var Kulikov_Nikita = false;
-  var Ilkin_Grigory = false;
-  var Markov_Sergey = false;
-  var Popova_Daria = false;
-  var Sidorov_Dmitry = false;
-  var Siporov_Grigory = false;
-  var Bogdanova_Amelia = false;
 
   void create_false_list() {
     Kulikova_Alyona = false;
     Maximov_Oleg = false;
     Konovalov_Grigory = false;
-    Kiseleva_Amelia = false;
-    Voronin_Konstantin = false;
-    Kasatkina_Amelia = false;
-    Homeland_Matvey = false;
-    Glebov_Oleg = false;
-    Grigoriev_Oleg = false;
-    Pavlov_Matvey = false;
-    Antipov_Grigory = false;
-    Ilina_Daria = false;
-    Klimov_Sergey = false;
-    Kulikov_Nikita = false;
-    Ilkin_Grigory = false;
-    Markov_Sergey = false;
-    Popova_Daria = false;
-    Sidorov_Dmitry = false;
-    Siporov_Grigory = false;
-    Bogdanova_Amelia = false;
   }
 
   String getSender() {
@@ -175,67 +134,9 @@ class _HomeState extends State<Home> {
       if (getSender() == "kulikova@gost_chat.com") Kulikova_Alyona = true;
       if (getSender() == "maximov@gost_chat.com") Maximov_Oleg = true;
       if (getSender() == "konovalov@gost_chat.com") Konovalov_Grigory = true;
-      if (getSender() == "kiseleva@gost_chat.com") Kiseleva_Amelia = true;
-      if (getSender() == "voronin@gost_chat.com") Voronin_Konstantin = true;
-      if (getSender() == "kasatkina@gost_chat.com") Kasatkina_Amelia = true;
-      if (getSender() == "homeland@gost_chat.com") Homeland_Matvey = true;
-      if (getSender() == "glebov@gost_chat.com") Glebov_Oleg = true;
-      if (getSender() == "grigoriev@gost_chat.com") Grigoriev_Oleg = true;
-      if (getSender() == "pavlov@gost_chat.com") Pavlov_Matvey = true;
-      if (getSender() == "antipova@gost_chat.com") Antipov_Grigory = true;
-      if (getSender() == "ilina@gost_chat.com") Ilina_Daria = true;
-      if (getSender() == "klimov@gost_chat.com") Klimov_Sergey = true;
-      if (getSender() == "kulikov@gost_chat.com") Kulikov_Nikita = true;
-      if (getSender() == "ilkina@gost_chat.com") Ilkin_Grigory = true;
-      if (getSender() == "markov@gost_chat.com") Markov_Sergey = true;
-      if (getSender() == "popova@gost_chat.com") Popova_Daria = true;
-      if (getSender() == "sidorov@gost_chat.com") Sidorov_Dmitry = true;
-      if (getSender() == "siporov@gost_chat.com") Siporov_Grigory = true;
-      if (getSender() == "bogdanova@gost_chat.com") Bogdanova_Amelia = true;
       last_getMessage = first_getMessage;
       last_getSender = first_getSender;
     }
-
-    /*
-    RawDatagramSocket.bind(InternetAddress.anyIPv4, 48654)
-        .then((RawDatagramSocket udpSocket) {
-      udpSocket.broadcastEnabled = true;
-      udpSocket.listen((e) {
-        Datagram? dg = udpSocket.receive();
-        if (dg != null) {
-          fun_decipher_message(
-              StringUtf8Pointer(String.fromCharCodes(dg.data)).toNativeUtf8());
-          now = DateTime.now();
-          litems_name.add(getSender());
-          litems_message.add(getSender());
-          litems_time.add("${now.hour}:${now.minute}:${now.second}");
-          if (getSender() == "kulikova@gost_chat.com") Kulikova_Alyona = true;
-          if (getSender() == "maximov@gost_chat.com") Maximov_Oleg = true;
-          if (getSender() == "konovalov@gost_chat.com")
-            Konovalov_Grigory = true;
-          if (getSender() == "kiseleva@gost_chat.com") Kiseleva_Amelia = true;
-          if (getSender() == "voronin@gost_chat.com") Voronin_Konstantin = true;
-          if (getSender() == "kasatkina@gost_chat.com") Kasatkina_Amelia = true;
-          if (getSender() == "homeland@gost_chat.com") Homeland_Matvey = true;
-          if (getSender() == "glebov@gost_chat.com") Glebov_Oleg = true;
-          if (getSender() == "grigoriev@gost_chat.com") Grigoriev_Oleg = true;
-          if (getSender() == "pavlov@gost_chat.com") Pavlov_Matvey = true;
-          if (getSender() == "antipova@gost_chat.com") Antipov_Grigory = true;
-          if (getSender() == "ilina@gost_chat.com") Ilina_Daria = true;
-          if (getSender() == "klimov@gost_chat.com") Klimov_Sergey = true;
-          if (getSender() == "kulikov@gost_chat.com") Kulikov_Nikita = true;
-          if (getSender() == "ilkina@gost_chat.com") Ilkin_Grigory = true;
-          if (getSender() == "markov@gost_chat.com") Markov_Sergey = true;
-          if (getSender() == "popova@gost_chat.com") Popova_Daria = true;
-          if (getSender() == "sidorov@gost_chat.com") Sidorov_Dmitry = true;
-          if (getSender() == "siporov@gost_chat.com") Siporov_Grigory = true;
-          if (getSender() == "bogdanova@gost_chat.com") Bogdanova_Amelia = true;
-          //print("received ${String.fromCharCodes(dg.data)}");
-          //setState(() => litems.add(String.fromCharCodes(dg.data)));
-        }
-      });
-    });
-    */
   }
 
   @override
@@ -304,7 +205,7 @@ class _HomeState extends State<Home> {
                       width: 300,
                       child: Column(
                         children: [
-                          Row(
+                          Column(
                             children: [
                               const CircleAvatar(
                                 radius: 50.0,
@@ -320,485 +221,146 @@ class _HomeState extends State<Home> {
                           const SizedBox(
                             height: 20,
                           ),
-                          Row(
-                            children: [
-                              Icon(Icons.people),
-                              const SizedBox(
-                                width: 10,
+                          Container(
+                            child: Column(
+                              children: [
+                                IconButton(
+                                  icon: Icon(
+                                    Icons.people,
+                                  ),
+                                  iconSize: 50,
+                                  onPressed: () {
+                                    _messageController.text =
+                                        "[${getUser()} from kulikova@gost_chat.com]";
+                                  },
+                                ),
+                                Text(
+                                  "kulikova@gost_chat.com",
+                                  style: !isMe ? _TextStyle : _TextStyle_me,
+                                ),
+                                const SizedBox(
+                                  width: 10,
+                                ),
+                                !Maximov_Oleg
+                                    ? Text(
+                                        "(не в сети)",
+                                        style:
+                                            !isMe ? _TextStyle : _TextStyle_me,
+                                      )
+                                    : Text(
+                                        "(в сети)",
+                                        style:
+                                            !isMe ? _TextStyle : _TextStyle_me,
+                                      ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                              ],
+                            ),
+                            width: 300,
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                color: Colors.black,
+                                width: 2,
                               ),
-                              Text(
-                                "kulikova@gost_chat.com",
-                                style: !isMe ? _TextStyle : _TextStyle_me,
-                              ),
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              !Kulikova_Alyona
-                                  ? Text(
-                                      "(не в сети)",
-                                      style: !isMe ? _TextStyle : _TextStyle_me,
-                                    )
-                                  : Text(
-                                      "(в сети)",
-                                      style: !isMe ? _TextStyle : _TextStyle_me,
-                                    ),
-                            ],
+                              borderRadius: BorderRadius.circular(12),
+                            ),
                           ),
-                          Row(
-                            children: [
-                              Icon(Icons.people),
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              Text(
-                                "maximov@gost_chat.com",
-                                style: !isMe ? _TextStyle : _TextStyle_me,
-                              ),
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              !Maximov_Oleg
-                                  ? Text(
-                                      "(не в сети)",
-                                      style: !isMe ? _TextStyle : _TextStyle_me,
-                                    )
-                                  : Text(
-                                      "(в сети)",
-                                      style: !isMe ? _TextStyle : _TextStyle_me,
-                                    ),
-                            ],
+                          const SizedBox(
+                            height: 20,
                           ),
-                          Row(
-                            children: [
-                              Icon(Icons.people),
-                              const SizedBox(
-                                width: 10,
+                          Container(
+                            child: Column(
+                              children: [
+                                IconButton(
+                                  icon: Icon(
+                                    Icons.people,
+                                  ),
+                                  iconSize: 50,
+                                  onPressed: () {
+                                    _messageController.text =
+                                        "[${getUser()} from maximov@gost_chat.com]";
+                                  },
+                                ),
+                                Text(
+                                  "maximov@gost_chat.com",
+                                  style: !isMe ? _TextStyle : _TextStyle_me,
+                                ),
+                                const SizedBox(
+                                  width: 10,
+                                ),
+                                !Maximov_Oleg
+                                    ? Text(
+                                        "(не в сети)",
+                                        style:
+                                            !isMe ? _TextStyle : _TextStyle_me,
+                                      )
+                                    : Text(
+                                        "(в сети)",
+                                        style:
+                                            !isMe ? _TextStyle : _TextStyle_me,
+                                      ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                              ],
+                            ),
+                            width: 300,
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                color: Colors.black,
+                                width: 2,
                               ),
-                              Text(
-                                "konovalov@gost_chat.com",
-                                style: !isMe ? _TextStyle : _TextStyle_me,
-                              ),
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              !Konovalov_Grigory
-                                  ? Text(
-                                      "(не в сети)",
-                                      style: !isMe ? _TextStyle : _TextStyle_me,
-                                    )
-                                  : Text(
-                                      "(в сети)",
-                                      style: !isMe ? _TextStyle : _TextStyle_me,
-                                    ),
-                            ],
+                              borderRadius: BorderRadius.circular(12),
+                            ),
                           ),
-                          Row(
-                            children: [
-                              Icon(Icons.people),
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              Text(
-                                "kiseleva@gost_chat.com",
-                                style: !isMe ? _TextStyle : _TextStyle_me,
-                              ),
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              !Kiseleva_Amelia
-                                  ? Text(
-                                      "(не в сети)",
-                                      style: !isMe ? _TextStyle : _TextStyle_me,
-                                    )
-                                  : Text(
-                                      "(в сети)",
-                                      style: !isMe ? _TextStyle : _TextStyle_me,
-                                    ),
-                            ],
+                          const SizedBox(
+                            height: 20,
                           ),
-                          Row(
-                            children: [
-                              Icon(Icons.people),
-                              const SizedBox(
-                                width: 10,
+                          Container(
+                            child: Column(
+                              children: [
+                                IconButton(
+                                  icon: Icon(
+                                    Icons.people,
+                                  ),
+                                  iconSize: 50,
+                                  onPressed: () {
+                                    _messageController.text =
+                                        "[${getUser()} from konovalov@gost_chat.com]";
+                                  },
+                                ),
+                                Text(
+                                  "konovalov@gost_chat.com",
+                                  style: !isMe ? _TextStyle : _TextStyle_me,
+                                ),
+                                const SizedBox(
+                                  width: 10,
+                                ),
+                                !Maximov_Oleg
+                                    ? Text(
+                                        "(не в сети)",
+                                        style:
+                                            !isMe ? _TextStyle : _TextStyle_me,
+                                      )
+                                    : Text(
+                                        "(в сети)",
+                                        style:
+                                            !isMe ? _TextStyle : _TextStyle_me,
+                                      ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                              ],
+                            ),
+                            width: 300,
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                color: Colors.black,
+                                width: 2,
                               ),
-                              Text(
-                                "voronin@gost_chat.com",
-                                style: !isMe ? _TextStyle : _TextStyle_me,
-                              ),
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              !Voronin_Konstantin
-                                  ? Text(
-                                      "(не в сети)",
-                                      style: !isMe ? _TextStyle : _TextStyle_me,
-                                    )
-                                  : Text(
-                                      "(в сети)",
-                                      style: !isMe ? _TextStyle : _TextStyle_me,
-                                    ),
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              Icon(Icons.people),
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              Text(
-                                "kasatkina@gost_chat.com",
-                                style: !isMe ? _TextStyle : _TextStyle_me,
-                              ),
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              !Kasatkina_Amelia
-                                  ? Text(
-                                      "(не в сети)",
-                                      style: !isMe ? _TextStyle : _TextStyle_me,
-                                    )
-                                  : Text(
-                                      "(в сети)",
-                                      style: !isMe ? _TextStyle : _TextStyle_me,
-                                    ),
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              Icon(Icons.people),
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              Text(
-                                "homeland@gost_chat.com",
-                                style: !isMe ? _TextStyle : _TextStyle_me,
-                              ),
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              !Homeland_Matvey
-                                  ? Text(
-                                      "(не в сети)",
-                                      style: !isMe ? _TextStyle : _TextStyle_me,
-                                    )
-                                  : Text(
-                                      "(в сети)",
-                                      style: !isMe ? _TextStyle : _TextStyle_me,
-                                    ),
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              Icon(Icons.people),
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              Text(
-                                "glebov@gost_chat.com",
-                                style: !isMe ? _TextStyle : _TextStyle_me,
-                              ),
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              !Glebov_Oleg
-                                  ? Text(
-                                      "(не в сети)",
-                                      style: !isMe ? _TextStyle : _TextStyle_me,
-                                    )
-                                  : Text(
-                                      "(в сети)",
-                                      style: !isMe ? _TextStyle : _TextStyle_me,
-                                    ),
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              Icon(Icons.people),
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              Text(
-                                "grigoriev@gost_chat.com",
-                                style: !isMe ? _TextStyle : _TextStyle_me,
-                              ),
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              !Grigoriev_Oleg
-                                  ? Text(
-                                      "(не в сети)",
-                                      style: !isMe ? _TextStyle : _TextStyle_me,
-                                    )
-                                  : Text(
-                                      "(в сети)",
-                                      style: !isMe ? _TextStyle : _TextStyle_me,
-                                    ),
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              Icon(Icons.people),
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              Text(
-                                "pavlov@gost_chat.com",
-                                style: !isMe ? _TextStyle : _TextStyle_me,
-                              ),
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              !Pavlov_Matvey
-                                  ? Text(
-                                      "(не в сети)",
-                                      style: !isMe ? _TextStyle : _TextStyle_me,
-                                    )
-                                  : Text(
-                                      "(в сети)",
-                                      style: !isMe ? _TextStyle : _TextStyle_me,
-                                    ),
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              Icon(Icons.people),
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              Text(
-                                "antipova@gost_chat.com",
-                                style: !isMe ? _TextStyle : _TextStyle_me,
-                              ),
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              !Antipov_Grigory
-                                  ? Text(
-                                      "(не в сети)",
-                                      style: !isMe ? _TextStyle : _TextStyle_me,
-                                    )
-                                  : Text(
-                                      "(в сети)",
-                                      style: !isMe ? _TextStyle : _TextStyle_me,
-                                    ),
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              Icon(Icons.people),
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              Text(
-                                "ilina@gost_chat.com",
-                                style: !isMe ? _TextStyle : _TextStyle_me,
-                              ),
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              !Ilina_Daria
-                                  ? Text(
-                                      "(не в сети)",
-                                      style: !isMe ? _TextStyle : _TextStyle_me,
-                                    )
-                                  : Text(
-                                      "(в сети)",
-                                      style: !isMe ? _TextStyle : _TextStyle_me,
-                                    ),
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              Icon(Icons.people),
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              Text(
-                                "klimov@gost_chat.com",
-                                style: !isMe ? _TextStyle : _TextStyle_me,
-                              ),
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              !Klimov_Sergey
-                                  ? Text(
-                                      "(не в сети)",
-                                      style: !isMe ? _TextStyle : _TextStyle_me,
-                                    )
-                                  : Text(
-                                      "(в сети)",
-                                      style: !isMe ? _TextStyle : _TextStyle_me,
-                                    ),
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              Icon(Icons.people),
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              Text(
-                                "kulikov@gost_chat.com",
-                                style: !isMe ? _TextStyle : _TextStyle_me,
-                              ),
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              !Kulikov_Nikita
-                                  ? Text(
-                                      "(не в сети)",
-                                      style: !isMe ? _TextStyle : _TextStyle_me,
-                                    )
-                                  : Text(
-                                      "(в сети)",
-                                      style: !isMe ? _TextStyle : _TextStyle_me,
-                                    ),
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              Icon(Icons.people),
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              Text(
-                                "ilkina@gost_chat.com",
-                                style: !isMe ? _TextStyle : _TextStyle_me,
-                              ),
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              !Ilkin_Grigory
-                                  ? Text(
-                                      "(не в сети)",
-                                      style: !isMe ? _TextStyle : _TextStyle_me,
-                                    )
-                                  : Text(
-                                      "(в сети)",
-                                      style: !isMe ? _TextStyle : _TextStyle_me,
-                                    ),
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              Icon(Icons.people),
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              Text(
-                                "markov@gost_chat.com",
-                                style: !isMe ? _TextStyle : _TextStyle_me,
-                              ),
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              !Markov_Sergey
-                                  ? Text(
-                                      "(не в сети)",
-                                      style: !isMe ? _TextStyle : _TextStyle_me,
-                                    )
-                                  : Text(
-                                      "(в сети)",
-                                      style: !isMe ? _TextStyle : _TextStyle_me,
-                                    ),
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              Icon(Icons.people),
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              Text(
-                                "popova@gost_chat.com",
-                                style: !isMe ? _TextStyle : _TextStyle_me,
-                              ),
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              !Popova_Daria
-                                  ? Text(
-                                      "(не в сети)",
-                                      style: !isMe ? _TextStyle : _TextStyle_me,
-                                    )
-                                  : Text(
-                                      "(в сети)",
-                                      style: !isMe ? _TextStyle : _TextStyle_me,
-                                    ),
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              Icon(Icons.people),
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              Text(
-                                "sidorov@gost_chat.com",
-                                style: !isMe ? _TextStyle : _TextStyle_me,
-                              ),
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              !Sidorov_Dmitry
-                                  ? Text(
-                                      "(не в сети)",
-                                      style: !isMe ? _TextStyle : _TextStyle_me,
-                                    )
-                                  : Text(
-                                      "(в сети)",
-                                      style: !isMe ? _TextStyle : _TextStyle_me,
-                                    ),
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              Icon(Icons.people),
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              Text(
-                                "siporov@gost_chat.com",
-                                style: !isMe ? _TextStyle : _TextStyle_me,
-                              ),
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              !Siporov_Grigory
-                                  ? Text(
-                                      "(не в сети)",
-                                      style: !isMe ? _TextStyle : _TextStyle_me,
-                                    )
-                                  : Text(
-                                      "(в сети)",
-                                      style: !isMe ? _TextStyle : _TextStyle_me,
-                                    ),
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              Icon(Icons.people),
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              Text(
-                                "bogdanova@gost_chat.com",
-                                style: !isMe ? _TextStyle : _TextStyle_me,
-                              ),
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              !Bogdanova_Amelia
-                                  ? Text(
-                                      "(не в сети)",
-                                      style: !isMe ? _TextStyle : _TextStyle_me,
-                                    )
-                                  : Text(
-                                      "(в сети)",
-                                      style: !isMe ? _TextStyle : _TextStyle_me,
-                                    ),
-                            ],
+                              borderRadius: BorderRadius.circular(12),
+                            ),
                           ),
                         ],
                       ),
@@ -836,7 +398,7 @@ class _HomeState extends State<Home> {
                                           mainAxisAlignment:
                                               MainAxisAlignment.end,
                                           children: <Widget>[
-                                            Container(width: 20),
+                                            Container(width: 10),
                                             if (litems_name[Index] != getUser())
                                               Column(
                                                 mainAxisAlignment:
@@ -986,14 +548,6 @@ class _HomeState extends State<Home> {
                                 Container(
                                   width: 1200,
                                   height: 60,
-                                  // decoration: BoxDecoration(
-                                  //   border: Border.all(
-                                  //     color: Colors.black,
-                                  //     width: 1,
-                                  //   ),
-                                  //   borderRadius:
-                                  //       BorderRadius.all(Radius.circular(30.0)),
-                                  // ),
                                   child: Column(
                                     children: [
                                       Container(

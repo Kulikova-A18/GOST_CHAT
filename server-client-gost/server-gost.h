@@ -1,4 +1,4 @@
-#ifndef SERVERGOST_H
+﻿#ifndef SERVERGOST_H
 #define SERVERGOST_H
 
 #define _CRT_SECURE_NO_WARNINGS
@@ -35,9 +35,12 @@
 
 #define FAIL    -1
 #define MAXLINE 1024
-#define PORT 9005
+#define PORT 58053
 
-#define SIMMETRIC_KEY "mH70oa3013"
+#define SIMMETRIC_KEY       "mH70oa3013"
+#define KULIKOVA_MAXIMOV    "TTjiTKK5ls"
+#define KULIKOVA_KONOVALOV  "i09tV2h70M"
+#define MAXIMOV_KONOVALOV   "DweN77YxPp"
 
 using namespace std;
 
@@ -66,6 +69,10 @@ class ClassServerGost {
         int write_client_pubkey_EVP_PKEY(char *clientkey);
         unsigned char *read_EVP_PKEY();
         std::string send_server_EVP_PKEY();
+
+        // EVP/EVP_MD_CTX.cpp
+        bool create_password_hash(const std::string& unhashed_password,
+                           std::string& hashed_password);
 };
 
 class ClassServerGostLog {
